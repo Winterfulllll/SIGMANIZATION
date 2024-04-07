@@ -1,4 +1,5 @@
-from configuration import db, ma
+from configuration import db
+from datetime import datetime, timezone
 
 
 class User(db.Model):
@@ -11,13 +12,16 @@ class User(db.Model):
     patronymic = db.Column(db.String(50))
 
 
-class User_schema(ma.SQLAlchemyAutoSchema):
-    class Meta:
-        model = User
-        load_instance = True
-        session = db.session
+class Preference(db.Model):
+    __tablename__ = "preferences"
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.String(25), db.ForeignKey('users.username'),
+                        nullable=False)
+    preference = db.Column(db.Text, nullable=False)
+    timestamp = db.Column(db.DateTime, default=datetime.now(timezone.utc))
+
+    user = db.relationship('User',
+                           backref=db.backref('preferences', lazy=True))
 
 
-user_schema = User_schema()
-users_schema = User_schema(many=True)
 db.create_all()
