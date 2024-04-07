@@ -13,10 +13,12 @@ connexion_app = connexion.App(__name__, specification_dir=base_dir)
 load_dotenv()
 app = connexion_app.app
 
-app.config["MOVIES_API"] = os.getenv("MOVIES_API")
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + \
     str(base_dir / "data" / "reco.sqlite")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+app.config['WTF_CSRF_ENABLED'] = False
+app.config['SECRET_KEY'] = os.getenv("SECRET_KEY")
+app.config["MOVIES_API"] = os.getenv("MOVIES_API")
 
 db = SQLAlchemy(app)
 ma = Marshmallow(app)

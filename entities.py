@@ -1,4 +1,4 @@
-from configuration import db
+from configuration import db, app
 from datetime import datetime, timezone
 
 
@@ -22,3 +22,7 @@ class Preference(db.Model):
 
     user = db.relationship('User',
                            backref=db.backref('preferences', lazy=True))
+
+
+with app.app_context():
+    db.create_all()

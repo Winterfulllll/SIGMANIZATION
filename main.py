@@ -1,6 +1,5 @@
 from flask import render_template
-from entities import User, Preference
-from configuration import connexion_app, db
+from configuration import connexion_app
 
 app = connexion_app
 app.add_api("swagger.yml")
