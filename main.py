@@ -1,8 +1,9 @@
 from flask import render_template
-from configuration import connexion_app
+from entities import User, Preference
+from configuration import connexion_app, db
 
 app = connexion_app
-# app.add_api("swagger.yml")
+app.add_api("swagger.yml")
 
 
 @app.route("/")
@@ -11,5 +12,4 @@ def home():
 
 
 if __name__ == "__main__":
-    app.run("main:app", host="0.0.0.0", port=8000) 
-        
+    app.run("main:app", host="0.0.0.0", port=8000)

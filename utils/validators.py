@@ -3,7 +3,7 @@ import re
 from email_validator import validate_email, EmailNotValidError
 
 
-def validate_username(username):
+def validate_username(username: str) -> bool:
     """
     Валидирует username:
     - Длина от 3 до 25 символов
@@ -19,7 +19,7 @@ def validate_username(username):
     return True
 
 
-def validate_email(email):
+def validate_email(email: str) -> bool:
     """
     Валидирует email с использованием библиотеки email-validator.
     """

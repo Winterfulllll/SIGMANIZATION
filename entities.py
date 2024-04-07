@@ -22,6 +22,3 @@ class Preference(db.Model):
 
     user = db.relationship('User',
                            backref=db.backref('preferences', lazy=True))
-
-
-db.create_all()

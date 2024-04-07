@@ -1,6 +1,4 @@
 from cryptography.fernet import Fernet
-import os
-
 
 class Encryptor:
     def __init__(self, secret_key):
@@ -14,5 +12,3 @@ class Encryptor:
         decrypted_data = self.cipher.decrypt(encrypted_data).decode("utf-8")
         return decrypted_data
 
-
-encryptor = Encryptor(os.getenv("SECRET_KEY"))

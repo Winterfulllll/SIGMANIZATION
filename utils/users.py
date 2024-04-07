@@ -1,12 +1,10 @@
-from utils import encryptor
-from entities import User
 from flask import abort
-from jsonschema import ValidationError
 
-from configuration import db, ma
-from entities import User, users_schema, user_schema
+from configuration import db, ma, encryptor
+from entities import User
+from schemas import users_schema, user_schema
 from forms import UserForm
-from utils import encryptor, validators
+from utils.validators import validate_username, validate_email
 
 
 def get_all_users():
@@ -35,10 +33,10 @@ def register_user(body):
         password = form.password.data
 
         try:
-            if not validators.validate_username(username):
+            if not validate_username(username):
                 return abort(400, f"Invalid username format")
 
-            if not validators.validate_email(email):
+            if not validate_email(email):
                 return abort(400, f"Invalid email format")
 
             existing_user = User.query.filter(
@@ -144,7 +142,7 @@ def update_user(current_username, body):
 
         new_email = body.get('email')
         if new_email and new_email != user.email:
-            if not validators.validate_email(new_email):
+            if not validate_email(new_email):
                 return abort(400, "Invalid email format")
             existing_user = User.query.filter_by(email=new_email).one_or_none()
             if existing_user is not None:
