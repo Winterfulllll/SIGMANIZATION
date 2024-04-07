@@ -1,6 +1,7 @@
 from flask import abort
+from sqlalchemy.exc import DBAPIError
 
-from configuration import db, ma, encryptor
+from configuration import db, encryptor
 from entities import User
 from schemas import users_schema, user_schema
 from forms import UserForm
@@ -58,9 +59,9 @@ def register_user(body):
 
             return user_schema.dump(new_user), 201
 
-        except Exception:
+        except DBAPIError as e:
             db.session.rollback()
-            return {"error": "Internal Server Error"}, 500
+            return {"error": str(e)}, 500
     else:
         errors = {}
         for field, field_errors in form.errors.items():
@@ -88,9 +89,9 @@ def delete_user(username):
         db.session.commit()
         return f"User with username '{username}' has been successfully deleted", 204
 
-    except Exception:
+    except DBAPIError as e:
         db.session.rollback()
-        return {"error": "Internal Server Error"}, 500
+        return {"error": str(e)}, 500
 
 
 def get_user(username):
@@ -111,8 +112,9 @@ def get_user(username):
 
         return user_schema.dump(user), 200
 
-    except Exception:
-        return {"error": "Internal Server Error"}, 500
+    except DBAPIError as e:
+        db.session.rollback()
+        return {"error": str(e)}, 500
 
 
 def update_user(current_username, body):
@@ -162,6 +164,6 @@ def update_user(current_username, body):
         db.session.commit()
         return user_schema.dump(user), 200
 
-    except Exception:
+    except DBAPIError as e:
         db.session.rollback()
-        return {"error": "Internal Server Error"}, 500
+        return {"error": str(e)}, 500
