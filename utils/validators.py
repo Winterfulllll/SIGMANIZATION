@@ -1,7 +1,5 @@
 import re
 
-from email_validator import validate_email, EmailNotValidError
-
 
 def validate_username(username: str) -> bool:
     """
@@ -17,14 +15,3 @@ def validate_username(username: str) -> bool:
     if username.startswith('_') or username.endswith('_'):
         return False
     return True
-
-
-def validate_email(email: str) -> bool:
-    """
-    Валидирует email с использованием библиотеки email-validator.
-    """
-    try:
-        validate_email(email)
-        return True
-    except EmailNotValidError:
-        return False

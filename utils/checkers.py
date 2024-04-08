@@ -1,7 +1,7 @@
 from flask import request, jsonify
 from entities import User
-from utils.validators import validate_username, validate_email
-
+from utils.validators import validate_username
+from email_validator import validate_email
 
 def check_username():
     username = request.args.get('username')

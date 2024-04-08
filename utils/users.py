@@ -5,7 +5,8 @@ from configuration import db, encryptor
 from entities import User
 from schemas import users_schema, user_schema
 from forms import UserForm
-from utils.validators import validate_username, validate_email
+from utils.validators import validate_username
+from email_validator import validate_email
 
 
 def get_all_users():
@@ -117,12 +118,12 @@ def get_user(username):
         return {"error": str(e)}, 500
 
 
-def update_user(current_username, body):
+def update_user(username, body):
     """
     Обновляет параметры пользователя, включая возможность изменения username.
 
     Args:
-        current_username: Текущее имя пользователя.
+        username: Текущее имя пользователя.
         body: Словарь с новыми данными пользователя.
 
     Returns:
@@ -130,12 +131,12 @@ def update_user(current_username, body):
         или словарь с ошибкой и соответствующий код состояния при ошибке.
     """
     try:
-        user = User.query.filter_by(username=current_username).one_or_none()
+        user = User.query.filter_by(username=username).one_or_none()
         if user is None:
-            return abort(404, f"User with username '{current_username}' not found")
+            return abort(404, f"User with username '{username}' not found")
 
         new_username = body.get('username')
-        if new_username and new_username != current_username:
+        if new_username and new_username != username:
             existing_user = User.query.filter_by(
                 username=new_username).one_or_none()
             if existing_user is not None:
