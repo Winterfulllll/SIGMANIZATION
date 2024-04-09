@@ -90,11 +90,47 @@ paths:
         '404':
           description: User not found.
 
+    patch:
+      summary: Partially update a user by username.
+      tags:
+        - Users
+      operationId: utils.users.partial_update_user
+      parameters:
+        - $ref: '#/components/parameters/username'
+      requestBody:
+        description: User object with fields to update.
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+                  format: password
+                surname:
+                  type: string
+                name:
+                  type: string
+                patronymic:
+                  type: string
+      responses:
+        '200':
+          description: User updated successfully.
+        '400':
+          description: Invalid input.
+        '404':
+          description: User not found.
+
     put:
       summary: Update a user by username.
       tags:
         - Users
-      operationId: utils.users.update_user
+      operationId: utils.users.full_update_user
       parameters:
         - $ref: '#/components/parameters/username'
       requestBody:

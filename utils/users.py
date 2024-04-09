@@ -118,7 +118,7 @@ def get_user(username):
         return {"error": str(e)}, 500
 
 
-def update_user(username, body):
+def full_update_user(username, body):
     """
     Обновляет параметры пользователя, включая возможность изменения username.
 
@@ -159,6 +159,55 @@ def update_user(username, body):
             user.surname = body['surname']
         if 'name' in body:
             user.name = body['name']
+        if 'patronymic' in body:
+            user.patronymic = body['patronymic']
+
+        db.session.commit()
+        return user_schema.dump(user), 200
+
+    except DBAPIError as e:
+        db.session.rollback()
+        return {"error": str(e)}, 500
+
+
+def partial_update_user(username, body):
+    """
+    Частично обновляет параметры пользователя.
+
+    Args:
+        username: Имя пользователя.
+        body: Словарь с данными для обновления.
+
+    Returns:
+        JSON-представление обновленного пользователя и код состояния 200 (OK) при успехе,
+        или словарь с ошибкой и соответствующий код состояния при ошибке.
+    """
+    try:
+        user = User.query.filter_by(username=username).one_or_none()
+        if user is None:
+            return abort(404, f"User with username '{username}' not found")
+
+        if 'email' in body:
+            new_email = body['email']
+            if new_email != user.email:
+                if not validate_email(new_email):
+                    return abort(400, "Invalid email format")
+                existing_user = User.query.filter_by(
+                    email=new_email).one_or_none()
+                if existing_user is not None:
+                    return abort(409, f"Email '{new_email}' already exists")
+                user.email = new_email
+
+        if 'password' in body:
+            hashed_password = encryptor.encrypt_data(body['password'])
+            user.password = hashed_password
+
+        if 'surname' in body:
+            user.surname = body['surname']
+
+        if 'name' in body:
+            user.name = body['name']
+
         if 'patronymic' in body:
             user.patronymic = body['patronymic']
 
