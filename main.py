@@ -10,6 +10,9 @@ app = connexion.App(__name__, specification_dir="./")
 def home():
     return render_template("index.html")
 
+@app.route("/profile")
+def profile():
+    return render_template("profile.html")
 
 if __name__ == "__main__":
     app.run("main:app", host="0.0.0.0", port=8000) 
