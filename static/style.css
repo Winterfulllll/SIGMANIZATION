@@ -53,3 +53,21 @@ body {
 .default_text{
     color: white;
 }
+
+#button_profile{
+    background-color: #1f1b2e;
+    color: white;
+    margin-left: 5px;
+}
+
+#button_main{
+    background-color: #1f1b2e;
+    color: white;
+    
+}
+
+
+.modal-background{
+    height: 200px;
+    width: 200px;
+}
