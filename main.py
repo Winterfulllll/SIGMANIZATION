@@ -1,17 +1,21 @@
-import connexion
-import requests
 from flask import render_template
+from configuration import connexion_app
+from flask_jwt_extended import jwt_required, get_jwt_identity
 
-app = connexion.App(__name__, specification_dir="./")
-# app.add_api("swagger.yml")
+
+app = connexion_app
+app.add_api("swagger.yml")
 
 
 @app.route("/")
 def home():
     return render_template("index.html")
 
+
 @app.route("/profile")
+@jwt_required()
 def profile():
+    current_user = get_jwt_identity()
     return render_template("profile.html")
 
 @app.route("/settings")
@@ -19,5 +23,4 @@ def settings():
     return render_template("settings.html")
 
 if __name__ == "__main__":
-    app.run("main:app", host="0.0.0.0", port=8000) 
-        
+    app.run("main:app", host="0.0.0.0", port=8000)
