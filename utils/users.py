@@ -1,5 +1,6 @@
-from flask import abort
+from flask import abort, jsonify, make_response
 from sqlalchemy.exc import DBAPIError
+from flask_jwt_extended import create_access_token
 
 from configuration import db, encryptor
 from entities import User
@@ -216,4 +217,39 @@ def partial_update_user(username, body):
 
     except DBAPIError as e:
         db.session.rollback()
+        return {"error": str(e)}, 500
+
+
+def login(body):
+    """
+    Аутентифицирует пользователя и возвращает JWT-токен.
+
+    Args:
+        body: Словарь с данными пользователя (username, password, remember_me).
+
+    Returns:
+        JSON-объект с JWT-токеном и кодом состояния 200 при успехе,
+        или словарь с ошибкой и соответствующий код состояния при ошибке.
+    """
+    try:
+        username = body.get('username', None)
+        password = body.get('password', None)
+        remember_me = body.get('remember_me', False)
+
+        user = User.query.filter_by(username=username).one_or_none()
+        if user is None:
+            return abort(404, f"User with username '{username}' not found")
+
+        if not encryptor.check_equivalence(password, user.password):
+            return abort(401, "Invalid password")
+
+        access_token = create_access_token(
+            identity=username, expires_delta=False if remember_me else None)
+
+        response = make_response(jsonify(access_token=access_token), 200)
+        response.set_cookie('jwt_token', access_token,
+                            httponly=True, secure=True)
+        return response
+
+    except DBAPIError as e:
         return {"error": str(e)}, 500

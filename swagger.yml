@@ -1,11 +1,11 @@
 openapi: 3.0.0
 info:
   title: User API
-  version: 1.0.0
+  version: 1.1.0
   description: API for managing users.
 
 servers:
-  - url: /api  # Replace with your actual API base URL
+  - url: /api
 
 components:
   schemas:
@@ -160,3 +160,36 @@ paths:
           description: User deleted successfully.
         '404':
           description: User not found.
+
+  /login:
+    post:
+      summary: Login user and get JWT token.
+      tags:
+        - Auth
+      operationId: utils.users.login
+      requestBody:
+        description: User credentials
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+                remember_me:
+                  type: boolean
+      responses:
+        '200':
+          description: Successful login
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  access_token:
+                    type: string
+        '401':
+          description: Invalid credentials
