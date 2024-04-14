@@ -18,10 +18,29 @@ class Preference(db.Model):
     user_id = db.Column(db.String(25), db.ForeignKey('users.username'),
                         nullable=False)
     preference = db.Column(db.Text, nullable=False)
+    # Тип в рамках Kinopoisk API: "genre", "year" и т.т.
+    type = db.Column(db.String(50), nullable=False)
+    # Категория: "film", "book" и т.п.
+    category = db.Column(db.String(50), nullable=False)
     timestamp = db.Column(db.DateTime, default=datetime.now(timezone.utc))
 
     user = db.relationship('User',
                            backref=db.backref('preferences', lazy=True))
+
+
+class Review(db.Model):
+    __tablename__ = "reviews"
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.String(25), db.ForeignKey('users.username'),
+                        nullable=False)
+    item_id = db.Column(db.Integer, nullable=False)
+    item_type = db.Column(db.String(50), nullable=False)
+    review = db.Column(db.Text)
+    rating = db.Column(db.Integer)
+    timestamp = db.Column(db.DateTime, default=datetime.now(timezone.utc))
+
+    user = db.relationship('User',
+                           backref=db.backref('reviews', lazy=True))
 
 
 with app.app_context():
