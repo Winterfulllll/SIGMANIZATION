@@ -33,6 +33,46 @@ def search_filter(filters: dict, count=10):
     return response["docs"]
 
 
+def get_full_info(id: int):
+    url = f"https://api.kinopoisk.dev/v1.4/movie/{id}"
+    response = requests.get(url, headers=headers).json()
+    res = {
+        "name": response["name"],
+        "year": response["year"],
+        "type": response["type"],
+        "movieLength": response["movieLength"],
+        "countries": [],
+        "genres": [],
+        "rating": [response["rating"]["kp"], response["rating"]["imdb"]],
+        "trailerUrls": [],
+        "shortDescription": response["shortDescription"],
+        "description": response["description"],
+        "similar_movies": response["similarMovies"],
+        "persons": response["persons"],
+        "poster": response["poster"]["url"],
+        "backdrop": response["backdrop"]["url"],
+        "ageRating": response["ageRating"],
+        "photos": [],
+        "watchability": response["watchability"]["items"],
+        "5reviews": [],
+        "facts": response["facts"],
+    }
+    for genre in response["genres"]:
+        res["genres"].append(genre["name"])
+    for country in response["countries"]:
+        res["countries"].append(country["name"])
+    for tr_url in response["videos"]["trailers"]:
+        response["trailerUrls"].append(tr_url["url"])
+    url = f"https://api.kinopoisk.dev/v1.4/review?page=1&limit=5&selectFields=&movieId={id}&type=%D0%9F%D0%BE%D0%B7%D0%B8%D1%82%D0%B8%D0%B2%D0%BD%D1%8B%D0%B9"
+    res["5reviews"] = requests.get(url, headers=headers).json()
+    return res
+
+
+def get_all_reviews(id: int, page_number: int):
+    url = f"https://api.kinopoisk.dev/v1.4/review?page={page_number}&limit=5&selectFields=&movieId={id}"
+    return requests.get(url, headers=headers).json()
+
+
 filters = {
     "type": [],
     "genres.name": [],
