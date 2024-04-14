@@ -29,6 +29,32 @@ components:
           type: string
         patronymic:
           type: string
+    
+    Preference:
+      type: object
+      required:
+        - id
+        - preference
+      properties:
+        id:
+          type: integer
+        user_id:
+          type: string
+        preference:
+          type: string
+        type:
+          type: string
+        category:
+          type: string
+        timestamp:
+          type: string
+        user:
+          type: string
+    
+    Preferences:
+      type: array
+      items: 
+        $ref: '#/components/schemas/Preference'
 
   parameters:
     username:
@@ -193,3 +219,55 @@ paths:
                     type: string
         '401':
           description: Invalid credentials
+  
+  /preferences/{username}:
+    get:
+      summary: get a list of user's preferences
+      tags:
+      - Preferences
+      operationId: utils.preferences.get_preference
+      parameters:
+      - $ref: '#/components/parameters/username'
+      responses:
+        '200':
+          description: successfully get a list of user's preferences.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Preferences'
+        '404':
+          description: user not found
+    
+    post:
+      summary: Create a new preference.
+      tags:
+        - Preferences
+      operationId: utils.preferences.post_preference
+      parameters:
+      - $ref: '#/components/parameters/username'
+      requestBody:
+        description: Preference object to create.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Preferences'
+      responses:
+        '201':
+          description: Preference created successfully.
+        '408':
+          description: Invalid input or user not found.
+    
+    delete:
+      summary: Delete a preference by username.
+      tags:
+        - Preferences
+      operationId: utils.preferences.delete_preference
+      parameters:
+        - $ref: '#/components/parameters/username'
+      responses:
+        '204':
+          description: Preference deleted successfully.
+        '404':
+          description: User not found.
+      
