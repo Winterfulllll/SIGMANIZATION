@@ -35,6 +35,7 @@ class Review(db.Model):
                         nullable=False)
     item_id = db.Column(db.Integer, nullable=False)
     item_type = db.Column(db.String(50), nullable=False)
+    viewed = db.Column(db.Boolean, default=False)
     review = db.Column(db.Text)
     rating = db.Column(db.Integer)
     timestamp = db.Column(db.DateTime, default=datetime.now(timezone.utc))

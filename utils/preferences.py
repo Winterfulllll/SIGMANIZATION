@@ -34,7 +34,7 @@ def post_preference(username, body):
         db.session.rollback()
         return {"error": str(e)}, 500
 
-def delete_preference(username):
+def delete_all_preferences(username):
     try:
         preference = Preference.query.filter_by(username=username).one_or_none()
         if preference is None:
@@ -42,7 +42,21 @@ def delete_preference(username):
 
         db.session.delete(preference)
         db.session.commit()
-        return f"Preference of user with username '{username}' has been successfully deleted", 204
+        return f"All preferences of user with username '{username}' has been successfully deleted", 204
+
+    except DBAPIError as e:
+        db.session.rollback()
+        return {"error": str(e)}, 500
+
+def delete_preference(id):
+    try:
+        preference = Preference.query.filter_by(id=id).one_or_none()
+        if preference is None:
+            return abort(404, f"Preference with id '{id}' not found")
+
+        db.session.delete(preference)
+        db.session.commit()
+        return f"Preference with id '{id}' has been successfully deleted", 204
 
     except DBAPIError as e:
         db.session.rollback()
