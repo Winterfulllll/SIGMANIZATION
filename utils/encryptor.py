@@ -1,5 +1,6 @@
 from cryptography.fernet import Fernet
 
+
 class Encryptor:
     def __init__(self, secret_key):
         self.cipher = Fernet(secret_key)

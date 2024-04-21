@@ -1,14 +1,15 @@
-from flask import abort, jsonify, make_response
+from flask import abort
 from sqlalchemy.exc import DBAPIError
-from flask_jwt_extended import create_access_token
 
-from configuration import db, encryptor
+from configuration import db
 from entities import Preference
-from schemas import preferences_schema, preference_schema
+from schemas import preference_schema
+
 
 def get_preference(username):
     try:
-        preference = Preference.query.filter_by(username=username).one_or_none()
+        preference = Preference.query.filter_by(
+            username=username).one_or_none()
         if preference is None:
             return abort(404, f"User with username '{username}' not found")
 
@@ -18,9 +19,11 @@ def get_preference(username):
         db.session.rollback()
         return {"error": str(e)}, 500
 
+
 def post_preference(username, body):
     try:
-        existing_preference = Preference.query.filter_by(username=username).one_or_none()
+        existing_preference = Preference.query.filter_by(
+            username=username).one_or_none()
         if existing_preference is None:
             return abort(408, f"Invalid input or user with username '{username}' is not found.")
 
@@ -34,9 +37,11 @@ def post_preference(username, body):
         db.session.rollback()
         return {"error": str(e)}, 500
 
+
 def delete_all_preferences(username):
     try:
-        preference = Preference.query.filter_by(username=username).one_or_none()
+        preference = Preference.query.filter_by(
+            username=username).one_or_none()
         if preference is None:
             return abort(404, f"User with username '{username}' not found")
 
@@ -47,6 +52,7 @@ def delete_all_preferences(username):
     except DBAPIError as e:
         db.session.rollback()
         return {"error": str(e)}, 500
+
 
 def delete_preference(id):
     try:

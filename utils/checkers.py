@@ -3,6 +3,7 @@ from entities import User
 from utils.validators import validate_username
 from email_validator import validate_email
 
+
 def check_username():
     username = request.args.get('username')
     if not validate_username(username):

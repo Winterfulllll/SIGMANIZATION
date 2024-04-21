@@ -1,10 +1,10 @@
-from flask import abort, jsonify, make_response
+from flask import abort
 from sqlalchemy.exc import DBAPIError
-from flask_jwt_extended import create_access_token
 
-from configuration import db, encryptor
+from configuration import db
 from entities import Review
-from schemas import reviews_schema, review_schema
+from schemas import review_schema
+
 
 def get_review(username):
     try:
@@ -18,9 +18,11 @@ def get_review(username):
         db.session.rollback()
         return {"error": str(e)}, 500
 
+
 def post_review(username, body):
     try:
-        existing_review = Review.query.filter_by(username=username).one_or_none()
+        existing_review = Review.query.filter_by(
+            username=username).one_or_none()
         if existing_review is None:
             return abort(408, f"Invalid input or user with username '{username}' is not found.")
 
@@ -33,6 +35,7 @@ def post_review(username, body):
     except DBAPIError as e:
         db.session.rollback()
         return {"error": str(e)}, 500
+
 
 def delete_all_reviews(username):
     try:
@@ -48,6 +51,7 @@ def delete_all_reviews(username):
         db.session.rollback()
         return {"error": str(e)}, 500
 
+
 def delete_review(id):
     try:
         review = Review.query.filter_by(id=id).one_or_none()
@@ -61,6 +65,7 @@ def delete_review(id):
     except DBAPIError as e:
         db.session.rollback()
         return {"error": str(e)}, 500
+
 
 def partial_update_review(id, body):
     try:
