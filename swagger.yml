@@ -29,7 +29,7 @@ components:
           type: string
         patronymic:
           type: string
-    
+
     Preference:
       type: object
       required:
@@ -50,12 +50,12 @@ components:
           type: string
         user:
           type: string
-    
+
     Preferences:
       type: array
-      items: 
-        $ref: '#/components/schemas/Preference'
-    
+      items:
+        $ref: "#/components/schemas/Preference"
+
     Review:
       type: object
       required:
@@ -81,11 +81,11 @@ components:
           type: string
         user:
           type: string
-    
+
     Reviews:
       type: array
-      items: 
-        $ref: '#/components/schemas/Review'
+      items:
+        $ref: "#/components/schemas/Review"
 
   parameters:
     username:
@@ -109,14 +109,14 @@ paths:
         - Users
       operationId: utils.users.get_all_users
       responses:
-        '200':
+        "200":
           description: A list of users.
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/User'
+                  $ref: "#/components/schemas/User"
     post:
       summary: Create a new user.
       tags:
@@ -128,11 +128,11 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: "#/components/schemas/User"
       responses:
-        '201':
+        "201":
           description: User created successfully.
-        '400':
+        "400":
           description: Invalid input or user already exists.
 
   /users/{username}:
@@ -142,15 +142,15 @@ paths:
         - Users
       operationId: utils.users.get_user
       parameters:
-        - $ref: '#/components/parameters/username'
+        - $ref: "#/components/parameters/username"
       responses:
-        '200':
+        "200":
           description: User found.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
-        '404':
+                $ref: "#/components/schemas/User"
+        "404":
           description: User not found.
 
     patch:
@@ -159,7 +159,7 @@ paths:
         - Users
       operationId: utils.users.partial_update_user
       parameters:
-        - $ref: '#/components/parameters/username'
+        - $ref: "#/components/parameters/username"
       requestBody:
         description: User object with fields to update.
         required: true
@@ -182,11 +182,11 @@ paths:
                 patronymic:
                   type: string
       responses:
-        '200':
+        "200":
           description: User updated successfully.
-        '400':
+        "400":
           description: Invalid input.
-        '404':
+        "404":
           description: User not found.
 
     put:
@@ -195,20 +195,20 @@ paths:
         - Users
       operationId: utils.users.full_update_user
       parameters:
-        - $ref: '#/components/parameters/username'
+        - $ref: "#/components/parameters/username"
       requestBody:
         description: User object with updated information.
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: "#/components/schemas/User"
       responses:
-        '200':
+        "200":
           description: User updated successfully.
-        '400':
+        "400":
           description: Invalid input.
-        '404':
+        "404":
           description: User not found.
 
     delete:
@@ -217,11 +217,11 @@ paths:
         - Users
       operationId: utils.users.delete_user
       parameters:
-        - $ref: '#/components/parameters/username'
+        - $ref: "#/components/parameters/username"
       responses:
-        '204':
+        "204":
           description: User deleted successfully.
-        '404':
+        "404":
           description: User not found.
 
   /login:
@@ -245,7 +245,7 @@ paths:
                 remember_me:
                   type: boolean
       responses:
-        '200':
+        "200":
           description: Successful login
           content:
             application/json:
@@ -254,60 +254,60 @@ paths:
                 properties:
                   access_token:
                     type: string
-        '401':
+        "401":
           description: Invalid credentials
-  
+
   /preferences/{username}:
     get:
       summary: get a list of user's preferences
       tags:
-      - Preferences
+        - Preferences
       operationId: utils.preferences.get_preference
       parameters:
-      - $ref: '#/components/parameters/username'
+        - $ref: "#/components/parameters/username"
       responses:
-        '200':
+        "200":
           description: successfully get a list of user's preferences.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Preferences'
-        '404':
+                $ref: "#/components/schemas/Preferences"
+        "404":
           description: user not found
-    
+
     post:
       summary: Create a new preference.
       tags:
         - Preferences
       operationId: utils.preferences.post_preference
       parameters:
-      - $ref: '#/components/parameters/username'
+        - $ref: "#/components/parameters/username"
       requestBody:
         description: Preference object to create.
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Preferences'
+              $ref: "#/components/schemas/Preferences"
       responses:
-        '201':
+        "201":
           description: Preference created successfully.
-        '408':
+        "408":
           description: Invalid input or user not found.
-    
+
     delete:
       summary: Delete all preferences by username.
       tags:
         - Preferences
       operationId: utils.preferences.delete_all_preferences
       parameters:
-        - $ref: '#/components/parameters/username'
+        - $ref: "#/components/parameters/username"
       responses:
-        '204':
+        "204":
           description: All preferences deleted successfully.
-        '404':
+        "404":
           description: User not found.
-  
+
   /preferences/{id}:
     delete:
       summary: Delete a preference by id.
@@ -315,64 +315,64 @@ paths:
         - Preferences
       operationId: utils.preferences.delete_preference
       parameters:
-        - $ref: '#/components/parameters/id'
+        - $ref: "#/components/parameters/id"
       responses:
-        '204':
+        "204":
           description: Preference deleted successfully.
-        '404':
+        "404":
           description: User not found.
-  
+
   /reviews/{username}:
     get:
       summary: get a list of user's reviews
       tags:
-      - Reviews
+        - Reviews
       operationId: utils.reviews.get_review
       parameters:
-      - $ref: '#/components/parameters/username'
+        - $ref: "#/components/parameters/username"
       responses:
-        '200':
+        "200":
           description: successfully get a list of user's reviews.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Reviews'
-        '404':
+                $ref: "#/components/schemas/Reviews"
+        "404":
           description: user not found
-    
+
     post:
       summary: Create a new review.
       tags:
         - Reviews
       operationId: utils.reviews.post_review
       parameters:
-      - $ref: '#/components/parameters/username'
+        - $ref: "#/components/parameters/username"
       requestBody:
         description: Review object to create.
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Reviews'
+              $ref: "#/components/schemas/Reviews"
       responses:
-        '201':
+        "201":
           description: Review created successfully.
-        '408':
+        "408":
           description: Invalid input or user not found.
-    
+
     delete:
       summary: Delete all reviews by username.
       tags:
         - Reviews
       operationId: utils.reviews.delete_all_reviews
       parameters:
-        - $ref: '#/components/parameters/username'
+        - $ref: "#/components/parameters/username"
       responses:
-        '204':
+        "204":
           description: All reviews deleted successfully.
-        '404':
+        "404":
           description: User not found.
-    
+
   /reviews/{id}:
     delete:
       summary: Delete a review by id.
@@ -380,31 +380,31 @@ paths:
         - Reviews
       operationId: utils.reviews.delete_review
       parameters:
-        - $ref: '#/components/parameters/id'
+        - $ref: "#/components/parameters/id"
       responses:
-        '204':
+        "204":
           description: Review deleted successfully.
-        '404':
+        "404":
           description: User not found.
-    
+
     patch:
       summary: Partially update a review by id.
       tags:
         - Reviews
       operationId: utils.reviews.partial_update_review
       parameters:
-        - $ref: '#/components/parameters/id'
+        - $ref: "#/components/parameters/id"
       requestBody:
         description: Review object with fields to update.
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Reviews'
+              $ref: "#/components/schemas/Reviews"
       responses:
-        '200':
+        "200":
           description: Review updated successfully.
-        '400':
+        "400":
           description: Invalid input.
-        '404':
+        "404":
           description: User not found.
