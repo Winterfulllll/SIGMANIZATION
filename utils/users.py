@@ -5,7 +5,6 @@ from flask_jwt_extended import create_access_token
 from configuration import db, encryptor
 from entities import User
 from schemas import users_schema, user_schema
-from forms import UserForm
 from utils.validators import validate_username
 from email_validator import validate_email
 
@@ -29,46 +28,41 @@ def register_user(body):
         JSON-представление созданного пользователя и код состояния 201 при успехе,
         или словарь с ошибками и соответствующий код состояния при ошибке.
     """
-    form = UserForm(data=body)
-    if form.validate():
-        username = form.username.data
-        email = form.email.data
-        password = form.password.data
+    try:
+        if not all(key in body for key in ("username", "email", "password")):
+            return abort(400, "Missing required fields")
 
-        try:
-            if not validate_username(username):
-                return abort(400, f"Invalid username format")
+        if not body["username"] or not body["email"] or not body["password"]:
+            return abort(400, "Empty required fields")
+        if not validate_username(body["username"]):
+            return abort(400, f"Invalid username format")
 
-            if not validate_email(email):
-                return abort(400, f"Invalid email format")
+        if not validate_email(body["email"]):
+            return abort(400, f"Invalid email format")
 
-            existing_user = User.query.filter(
-                (User.username == username) | (User.email == email)
-            ).one_or_none()
+        existing_user = User.query.filter(
+            (User.username == body["username"]) | (User.email == body["email"])
+        ).one_or_none()
 
-            if existing_user is not None:
-                if existing_user.username == username:
-                    return abort(409, f"User with username '{username}' already exists")
-                else:
-                    return abort(409, f"User with email '{email}' already exists")
+        if existing_user is not None:
+            if existing_user.username == body["username"]:
+                return abort(409, f"User with username '{body["username"]}' already exists")
+            else:
+                return abort(409, f"User with email '{body["email"]}' already exists")
 
-            hashed_password = encryptor.encrypt_data(password)
+        hashed_password = encryptor.encrypt_data(body["password"])
 
-            new_user = User(username=username, email=email,
-                            password=hashed_password)
-            db.session.add(new_user)
-            db.session.commit()
+        new_user = User(username=body["username"], email=body["email"],
+                        password=hashed_password, surname=body.get('surname'),
+                        name=body.get('name'), patronymic=body.get('patronymic'))
+        db.session.add(new_user)
+        db.session.commit()
 
-            return user_schema.dump(new_user), 201
+        return user_schema.dump(new_user), 201
 
-        except DBAPIError as e:
-            db.session.rollback()
-            return {"error": str(e)}, 500
-    else:
-        errors = {}
-        for field, field_errors in form.errors.items():
-            errors[field] = [str(error) for error in field_errors]
-        return {"errors": errors}, 400
+    except DBAPIError as e:
+        db.session.rollback()
+        return {"error": str(e)}, 500
 
 
 def delete_user(username):
