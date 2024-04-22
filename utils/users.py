@@ -32,29 +32,31 @@ def register_user(body):
         if not all(key in body for key in ("username", "email", "password")):
             return abort(400, "Missing required fields")
 
-        if not body["username"] or not body["email"] or not body["password"]:
+        if not body.get('username', None) or not body.get('email', None) or not body.get('password', None):
             return abort(400, "Empty required fields")
-        if not validate_username(body["username"]):
+        if not validate_username(body.get('username', None)):
             return abort(400, f"Invalid username format")
 
-        if not validate_email(body["email"]):
+        if not validate_email(body.get('email', None)):
             return abort(400, f"Invalid email format")
 
         existing_user = User.query.filter(
-            (User.username == body["username"]) | (User.email == body["email"])
+            (User.username == body.get('username', None)) | (
+                User.email == body.get('email', None))
         ).one_or_none()
 
         if existing_user is not None:
-            if existing_user.username == body["username"]:
-                return abort(409, f"User with username '{body["username"]}' already exists")
+            if existing_user.username == body.get('username', None):
+                return abort(409, f"User with username '{body.get('username', None)}' already exists")
             else:
-                return abort(409, f"User with email '{body["email"]}' already exists")
+                return abort(409, f"User with email '{body.get('email', None)}' already exists")
 
-        hashed_password = encryptor.encrypt_data(body["password"])
+        hashed_password = encryptor.encrypt_data(body.get('password', None))
 
-        new_user = User(username=body["username"], email=body["email"],
-                        password=hashed_password, surname=body.get('surname'),
-                        name=body.get('name'), patronymic=body.get('patronymic'))
+        new_user = User(username=body.get('username', None), email=body.get('email', None),
+                        password=hashed_password, surname=body.get(
+                            'surname', None),
+                        name=body.get('name', None), patronymic=body.get('patronymic', None))
         db.session.add(new_user)
         db.session.commit()
 
