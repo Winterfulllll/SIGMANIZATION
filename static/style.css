@@ -104,6 +104,22 @@ body {
     text-decoration: none;
     cursor: pointer;
 }
+
+.close-button2 {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-button2:hover,
+.close-button2:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
 .login-container {
     background-color: white;
     padding: 20px;
@@ -277,8 +293,6 @@ background-color: #0056b3;
     background-color: #4e4e4e;
     color: white;
     border: none;
-    -webkit-appearance: none; /* Убираем стандартный вид в Chrome и Safari */
-    -moz-appearance: none;    /* Убираем стандартный вид в Firefox */
 }
 
 /* Стилизация стрелки выпадающего списка */
@@ -290,3 +304,34 @@ background-color: #0056b3;
 }
 
 
+
+
+
+
+
+
+
+#movies-container {
+    max-width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto; /* Добавляет горизонтальную прокрутку если содержимое шире контейнера */
+    gap: 15px; /* Расстояние между карточками фильмов */
+    padding: 15px; /* Добавляет отступ внутри контейнера */
+}
+
+.movie-card {
+    flex: 0 0 auto; /* Элементы не будут растягиваться или сжиматься */
+    width: 200px; /* Установите фиксированную ширину для карточек */
+}
+
+.movie-image {
+    width: 100%; /* Изображение будет растягиваться на всю ширину карточки */
+    border-radius: 10px; /* Скругленные углы для изображений */
+}
+
+.movie-title {
+    margin-top: 8px;
+    text-align: center; /* Заголовок центрируется под изображением */
+    color: white;
+}
