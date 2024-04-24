@@ -26,6 +26,7 @@
       
             <div class="col-md-3 text-end">
               <button type="button" class="btn btn-outline-primary me-2" id="modalBtn">Sign-up</button>
+              <button type="button" class="btn btn-outline-primary me-2" id="modalBtn2">Log-in</button>
             </div>
           </header> 
     </div>
@@ -42,11 +43,20 @@
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownButton" data-toggle="dropdown" aria-expanded="false">
                         Genres
                     </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownGenresButton">
-                        <li><a class="dropdown-item" href="#">Horror</a></li>
-                        <li><a class="dropdown-item" href="#">Dramma</a></li>
-                        <li><a class="dropdown-item" href="#">HihiHaha</a></li>
-                    </ul>
+                    <div class="dropdown-menu" aria-labelledby="dropdownGenresButton">
+                        <div class="checkbox-group">
+                            <label for="action">
+                              <input type="checkbox" id="action" name="genre" value="action">
+                              Боевики
+                            </label>
+                            <label for="war">
+                              <input type="checkbox" id="war" name="genre" value="war">
+                              Военные
+                            </label>
+                            <!-- Продолжайте для других жанров -->
+                            <button onclick="fetchMoviesByGenres()">Показать фильмы</button>
+                          </div>
+                    </div>
                 </div>
 
                 <div class="dropdown">
@@ -89,24 +99,107 @@
             <div class="modal-content">
                 <span class="close-button">&times;</span>
                 <div class="login-container">
-                    <h2 id="sign">Please sign in</h2>
-                    <form action="/login" method="post">
-                        <input type="name" placeholder="Your name" required>
-                        <input type="password" placeholder="Password" required>
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" name="remember"> Remember me
-                            </label>
-                        </div>
-                        <button type="submit" class="login-button">Sign in</button>
-                    </form>
+                    <h2>Пожалуйста, зарегистрируйтесь</h2>
+                    <input type="text" id="username" placeholder="Логин" required>
+                    <input type="email" id="email" placeholder="Email" required>
+                    <input type="password" id="password" placeholder="Пароль" required>
+                    <input type="text" id="surname" placeholder="Фамилия">
+                    <input type="text" id="name" placeholder="Имя">
+                    <input type="text" id="patronymic" placeholder="Отчество">
+                    <button onclick="registerUser()">Регистрация</button>
                 </div>
             </div>
         </div>
 
+        <div id="myModal2" class="modal-background">
+            <!-- Содержимое модального окна -->
+            <div class="modal-content">
+                <span class="close-button2">&times;</span>
+                <div id="login-form">
+                    <h2>Пожалуйста, войдите в систему</h2>
+                    <input type="text" id="login-username" placeholder="Ваш логин" required>
+                    <input type="password" id="login-password" placeholder="Пароль" required>
+                    <label>
+                        <input type="checkbox" id="remember-me"> Запомнить меня
+                    </label>
+                    <button onclick="loginUser()">Войти</button>
+                </div>
+            </div>
+        </div>
+        
     </div>
 
+    <div class="container">
+        <div id="movies-container" class="row"></div>
+    </div>
+
+
     <script>
+
+        function registerUser() {
+            const userData = {
+                username: document.getElementById('username').value,
+                email: document.getElementById('email').value,
+                password: document.getElementById('password').value,
+                surname: document.getElementById('surname').value,
+                name: document.getElementById('name').value,
+                patronymic: document.getElementById('patronymic').value
+            };
+
+            fetch('/api/users', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(userData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data && data.username) {
+                    alert('Пользователь успешно зарегистрирован!');
+                } else {
+                    alert('Произошла ошибка при регистрации.');
+                }
+            })
+            .catch(error => {
+                console.error('Ошибка при регистрации:', error);
+            });
+        }
+    
+
+        function loginUser() {
+            const loginData = {
+                username: document.getElementById('login-username').value,
+                password: document.getElementById('login-password').value,
+                remember_me: document.getElementById('remember-me').checked
+            };
+
+            fetch('/api/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(loginData)
+            })
+            .then(response => {
+                if(response.ok) {
+                    return response.json();
+                }
+                throw new Error('Ошибка авторизации');
+            })
+            .then(data => {
+                if (data && data.access_token) {
+                    // Токен доступа можно сохранить в localStorage или sessionStorage
+                    alert('Вы успешно вошли в систему!');
+                } else {
+                    alert('Неверное имя пользователя или пароль.');
+                }
+            })
+            .catch(error => {
+                alert(error.message);
+            });
+        }
+
         // Получаем модальное окно
         var modal = document.getElementById("myModal");
 
@@ -133,11 +226,96 @@
             }
         }
 
+        // Получаем модальное окно
+        var modal2 = document.getElementById("myModal2");
+
+        // Получаем кнопку, которая открывает модальное окно
+        var btn2 = document.getElementById("modalBtn2");
+
+        // Получаем элемент <span>, который закрывает модальное окно
+        var span2 = document.getElementsByClassName("close-button2")[0];
+
+        // При клике на кнопку открываем модальное окно 
+        btn2.onclick = function() {
+            modal2.style.display = "block";
+        }
+
+        // При клике на <span> (крестик), закрываем модальное окно
+        span2.onclick = function() {
+            modal2.style.display = "none";
+        }
+
+        // При клике вне модального окна, закрываем его
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
         // Обновлённый обработчик для кнопки "Login"
         var loginBtn = document.querySelector('.btn-outline-primary.me-2');
         loginBtn.addEventListener('click', function() {
             modal.style.display = "block";
         });
+
+        function fetchMovies() {
+            fetch('https://kinopoiskapiunofficial.tech/api/v2.2/films?genres', {
+                method: 'GET',
+                headers: {
+                    'X-API-KEY': '85e68f24-7161-4441-ae5f-3f2696575e3c',
+                    'Content-Type': 'application/json',
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                const movies = data.items;
+                const moviesContainer = document.getElementById('movies-container');
+                moviesContainer.innerHTML = '';
+
+                movies.forEach(movie => {
+                    const movieElement = createMovieElement(movie);
+                    if (movieElement) {
+                        moviesContainer.appendChild(movieElement);
+                    }
+                });
+            })
+            .catch(error => {
+                console.error('Ошибка при получении данных:', error);
+            });
+        }
+
+        function createMovieElement(movie) {
+
+            if (!movie || !movie.posterUrlPreview || !movie.nameRu) {
+                return null; // Или вернуть элемент-заглушку
+            }
+            
+            // Создаем контейнер для карточки фильма
+            const movieElement = document.createElement('div');
+            movieElement.className = 'movie-card';
+
+            // Создаем элемент изображения для постера фильма
+            const movieImage = document.createElement('img');
+            movieImage.src = movie.posterUrlPreview; // Убедитесь, что используете правильное свойство URL
+            movieImage.alt = movie.nameRu;
+            movieImage.className = 'movie-image';
+
+            // Создаем название фильма
+            const movieTitle = document.createElement('h3');
+            movieTitle.textContent = movie.nameRu;
+            movieTitle.className = 'movie-title';
+
+            // Объединяем элементы внутри карточки фильма
+            movieElement.appendChild(movieImage);
+            movieElement.appendChild(movieTitle);
+
+            // Возвращаем готовый элемент
+            return movieElement;
+        }
+
+        document.addEventListener('DOMContentLoaded', fetchMovies);
+
+
     </script>
 
 
