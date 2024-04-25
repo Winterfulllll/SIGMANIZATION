@@ -7,11 +7,26 @@ from schemas import review_schema, reviews_schema
 
 
 def get_review(username):
+    """
+    Возвращает все отзывы пользователя по имени.
+    """
     reviews = Review.query.filter_by(username=username)
     return reviews_schema.dump(reviews)
 
 
 def post_review(username, body):
+    """
+    Создает новый отзыв пользователя.
+
+    Args:
+        username: Имя пользователя.
+        body: Словарь с данными об отзыве пользователя 
+        (item_id, item_category, viewed, rating, review).
+
+    Returns:
+        JSON-представление созданного отзыва и код состояния 201 при успехе,
+        или словарь с ошибками и соответствующий код состояния при ошибке.
+    """
     try:
         if not body.get('item_id', None) or not body.get('item_category', None) or not body.get('viewed', None):
             return abort(400, "Empty required fields")
@@ -38,6 +53,16 @@ def post_review(username, body):
 
 
 def delete_all_reviews(username):
+    """
+    Удаляет все отзывы пользователя по имени.
+
+    Args:
+        username: Имя пользователя.
+
+    Returns:
+        Сообщение об успешном удалении и код состояния 204,
+        или словарь с ошибкой и соответствующий код состояния.
+    """
     try:
         user = Review.query.filter_by(username=username).first()
         if not user:
@@ -55,6 +80,17 @@ def delete_all_reviews(username):
 
 
 def delete_review(username, id):
+    """
+    Удаляет отзыв пользователя по id отзыва.
+
+    Args:
+        username: Имя пользователя.
+        id: ID отзыва для удаления.
+
+    Returns:
+        Сообщение об успешном удалении и код состояния 204,
+        или словарь с ошибкой и соответствующий код состояния.
+    """
     try:
         user = Review.query.filter_by(username=username).first()
         if not user:
@@ -74,6 +110,18 @@ def delete_review(username, id):
 
 
 def partial_update_review(username, id, body):
+    """
+    Частично обновляет параметры отзыва пользователя.
+
+    Args:
+        username: Имя пользователя.
+        id: ID отзыва для обновления.
+        body: Словарь с данными для обновления.
+
+    Returns:
+        JSON-представление обновленного отзыва и код состояния 200 при успехе,
+        или словарь с ошибкой и соответствующий код состояния при ошибке.
+    """
     try:
         user = Review.query.filter_by(username=username).first()
         if not user:

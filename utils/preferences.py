@@ -7,11 +7,25 @@ from schemas import preference_schema, preferences_schema
 
 
 def get_preference(username):
+    """
+    Возвращает все предпочтения пользователя по имени.
+    """
     preferences = Preference.query.filter_by(username=username)
     return preferences_schema.dump(preferences)
 
 
 def post_preference(username, body):
+    """
+    Создает новое предпочтение пользователя.
+
+    Args:
+        username: Имя пользователя
+        body: Словарь с данными о предпочтении пользователя (type, category).
+
+    Returns:
+        JSON-представление созданного предпочтения и код состояния 201 при успехе,
+        или словарь с ошибками и соответствующий код состояния при ошибке.
+    """
     try:
         existing_user = User.query.filter_by(
             username=username).one_or_none()
@@ -30,6 +44,16 @@ def post_preference(username, body):
 
 
 def delete_all_preferences(username):
+    """
+    Удаляет все предпочтения пользователя по имени.
+
+    Args:
+        username: Имя пользователя.
+
+    Returns:
+        Сообщение об успешном удалении и код состояния 204,
+        или словарь с ошибкой и соответствующий код состояния.
+    """
     try:
         user = Preference.query.filter_by(username=username).first()
         if not user:
@@ -47,6 +71,17 @@ def delete_all_preferences(username):
 
 
 def delete_preference(username, id):
+    """
+    Удаляет предпочтение пользователя по id предпочтения.
+
+    Args:
+        username: Имя пользователя.
+        id: ID предпочтения для удаления.
+
+    Returns:
+        Сообщение об успешном удалении и код состояния 204,
+        или словарь с ошибкой и соответствующий код состояния.
+    """
     try:
         user = Preference.query.filter_by(username=username).first()
         if not user:
