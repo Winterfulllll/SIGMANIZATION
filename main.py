@@ -1,6 +1,6 @@
-from flask import render_template
+from flask import render_template, abort
 from configuration import connexion_app
-from flask_jwt_extended import jwt_required, get_jwt_identity
+from flask_jwt_extended import get_jwt_identity, verify_jwt_in_request
 
 
 app = connexion_app
@@ -9,19 +9,32 @@ app.add_api("swagger.yml")
 
 @app.route("/")
 def home():
-    return render_template("index.html")
+    try:
+        verify_jwt_in_request()
+        return render_template(
+            "index.html",
+            current_user_username=get_jwt_identity(),
+            movies_api_key=app.app.config["MOVIES_API"]
+        )
+
+    except:
+        return render_template(
+            "index.html",
+            movies_api_key=app.app.config["MOVIES_API"]
+        )
 
 
 @app.route("/profile")
-@jwt_required()
 def profile():
-    current_user = get_jwt_identity()
-    return render_template("profile.html")
+    try:
+        verify_jwt_in_request()
+        return render_template(
+            "profile.html",
+            current_user_username=get_jwt_identity()
+        )
 
-
-@app.route("/settings")
-def settings():
-    return render_template("settings.html")
+    except:
+        return "Войдите в аккаунт!"
 
 
 if __name__ == "__main__":
