@@ -1,6 +1,6 @@
 from flask import render_template
 from configuration import connexion_app
-from flask_jwt_extended import jwt_required, get_jwt_identity
+from flask_jwt_extended import get_jwt_identity, jwt_required
 
 
 app = connexion_app
@@ -15,8 +15,7 @@ def home():
 @app.route("/profile")
 @jwt_required()
 def profile():
-    current_user = get_jwt_identity()
-    return render_template("profile.html")
+    return render_template("profile.html", current_user_username=get_jwt_identity())
 
 
 @app.route("/settings")

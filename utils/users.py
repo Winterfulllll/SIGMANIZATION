@@ -1,6 +1,7 @@
 from flask import abort, jsonify, make_response
 from sqlalchemy.exc import DBAPIError
 from flask_jwt_extended import create_access_token
+from datetime import timedelta
 
 from configuration import db, encryptor
 from entities import User
@@ -34,10 +35,13 @@ def register_user(body):
 
         if not body.get('username', None) or not body.get('email', None) or not body.get('password', None):
             return abort(400, "Empty required fields")
+
         if not validate_username(body.get('username', None)):
             return abort(400, f"Invalid username format")
 
-        if not validate_email(body.get('email', None)):
+        try:
+            validate_email(body.get('email', None))
+        except:
             return abort(400, f"Invalid email format")
 
         existing_user = User.query.filter(
@@ -239,12 +243,11 @@ def login(body):
         if not encryptor.check_equivalence(password, user.password):
             return abort(401, "Invalid password")
 
-        access_token = create_access_token(
-            identity=username, expires_delta=False if remember_me else None)
+        expires_delta = timedelta(days=30) if remember_me else None
+        access_token = create_access_token(identity=username, expires_delta=expires_delta)
 
         response = make_response(jsonify(access_token=access_token), 200)
-        response.set_cookie('jwt_token', access_token,
-                            httponly=True, secure=True)
+        response.set_cookie('access_token_cookie', access_token, httponly=True, secure=True, samesite='Strict')
         return response
 
     except DBAPIError as e:
