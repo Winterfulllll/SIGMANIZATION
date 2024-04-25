@@ -146,20 +146,27 @@ def full_update_user(username, body):
 
         new_email = body.get('email')
         if new_email and new_email != user.email:
-            if not validate_email(new_email):
-                return abort(400, "Invalid email format")
+            try:
+                validate_email(new_email)
+            except:
+                return abort(400, f"Invalid email format")
+
             existing_user = User.query.filter_by(email=new_email).one_or_none()
             if existing_user is not None:
                 return abort(409, f"Email '{new_email}' already exists")
+
             user.email = new_email
 
         if 'password' in body:
             hashed_password = encryptor.encrypt_data(body['password'])
             user.password = hashed_password
+
         if 'surname' in body:
             user.surname = body['surname']
+
         if 'name' in body:
             user.name = body['name']
+
         if 'patronymic' in body:
             user.patronymic = body['patronymic']
 
@@ -185,18 +192,23 @@ def partial_update_user(username, body):
     """
     try:
         user = User.query.filter_by(username=username).one_or_none()
+
         if user is None:
             return abort(404, f"User with username '{username}' not found")
 
         if 'email' in body:
             new_email = body['email']
             if new_email != user.email:
-                if not validate_email(new_email):
-                    return abort(400, "Invalid email format")
+                try:
+                    validate_email(body.get('email', None))
+                except:
+                    return abort(400, f"Invalid email format")
+
                 existing_user = User.query.filter_by(
                     email=new_email).one_or_none()
                 if existing_user is not None:
                     return abort(409, f"Email '{new_email}' already exists")
+
                 user.email = new_email
 
         if 'password' in body:

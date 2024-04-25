@@ -298,10 +298,11 @@
         });
 
         let currentPage = 1;
+        let onPage = 7;
         const movies_api_key = "{{ movies_api_key }}";
 
         function fetchMovies() {
-            fetch(`https://api.kinopoisk.dev/v1.4/movie?page=${currentPage}&limit=7&selectFields=id&selectFields=name&selectFields=poster&notNullFields=id&notNullFields=name&notNullFields=poster.url`, {
+            fetch(`https://api.kinopoisk.dev/v1.4/movie?page=${currentPage}&limit=${onPage}&selectFields=id&selectFields=name&selectFields=poster&notNullFields=id&notNullFields=name&notNullFields=poster.url`, {
                 method: 'GET',
                 headers: {
                     'X-API-KEY': movies_api_key,
@@ -311,6 +312,7 @@
             .then(response => response.json())
             .then(data => {
                 const movies = data.docs;
+                const totalMovies = data.total;
                 const moviesContainer = document.getElementById('movies-container');
                 moviesContainer.innerHTML = '';
 
@@ -335,6 +337,7 @@
 
                 const nextButton = document.createElement('button');
                 nextButton.textContent = 'Следующая >>';
+                nextButton.disabled = currentPage * onPage >= totalMovies;
                 nextButton.addEventListener('click', () => {
                     currentPage++;
                     fetchMovies();

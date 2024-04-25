@@ -1,76 +1,78 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Редактирование профиля</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body id="settings">
-    <div class="profile-edit-container">
-        <div class="breadcrumbs">
-            <a href="/profile">Профиль</a> · <span>Редактирование профиля</span>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Редактирование профиля</title>
+        <link rel="stylesheet"
+            href="{{ url_for('static', filename='style.css') }}">
+    </head>
+    <body id="settings">
+        <div class="profile-edit-container">
+            <div class="breadcrumbs">
+                <a href="/profile">Профиль</a> · <span>Редактирование
+                    профиля</span>
+            </div>
+            <h1 id="edit-profile">Редактирование профиля</h1>
+            <p class="instruction">Выберите данные для изменения</p>
+            <div class="form-container">
+                <div class="input-group">
+                    <label for="name">Имя</label>
+                    <input type="text" id="name" name="name">
+                    <button>Изменить</button>
+                </div>
+                <div class="input-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email">
+                    <button>Изменить</button>
+                </div>
+                <div class="input-group">
+                    <label for="phone">Телефон</label>
+                    <input type="tel" id="phone" name="phone">
+                    <button>Изменить</button>
+                </div>
+            </div>
         </div>
-        <h1 id="edit-profile">Редактирование профиля</h1>
-        <p class="instruction">Выберите данные для изменения</p>
-        <div class="form-container">
-            <div class="input-group">
-                <label for="name">Имя</label>
-                <input type="text" id="name" name="name">
-                <button>Изменить</button>
-            </div>
-            <div class="input-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email">
-                <button>Изменить</button>
-            </div>
-            <div class="input-group">
-                <label for="phone">Телефон</label>
-                <input type="tel" id="phone" name="phone">
-                <button>Изменить</button>
-            </div>
-        </div>
-    </div>
 
-    <div class="preferences">
-        <h2>Выбор предпочтений</h2>
-        <div class="dropdown-group">
-            <label for="genre">Жанр</label>
-            <select id="genre" name="genre">
-                <option value="horror">Ужасы</option>
-                <option value="drama">Драма</option>
-                <option value="comedy">Комедия</option>
-                <!-- Добавьте другие жанры по необходимости -->
-            </select>
+        <div class="preferences">
+            <h2>Выбор предпочтений</h2>
+            <div class="dropdown-group">
+                <label for="genre">Жанр</label>
+                <select id="genre" name="genre">
+                    <option value="horror">Ужасы</option>
+                    <option value="drama">Драма</option>
+                    <option value="comedy">Комедия</option>
+                    <!-- Добавьте другие жанры по необходимости -->
+                </select>
+            </div>
+            <div class="dropdown-group">
+                <label for="country">Страна</label>
+                <select id="country" name="country">
+                    <option value="russia">Россия</option>
+                    <option value="usa">США</option>
+                    <option value="uk">Великобритания</option>
+                    <!-- Добавьте другие страны по необходимости -->
+                </select>
+            </div>
+            <div class="dropdown-group">
+                <label for="year">Год</label>
+                <select id="year" name="year">
+                    <option value="2020">2020</option>
+                    <option value="2021">2021</option>
+                    <option value="2022">2022</option>
+                    <!-- Добавьте другие года по необходимости -->
+                </select>
+            </div>
+            <div class="dropdown-group">
+                <label for="rating">Рейтинг</label>
+                <select id="rating" name="rating">
+                    <option value="5">5 звезд</option>
+                    <option value="4">4 звезды</option>
+                    <option value="3">3 звезды</option>
+                    <!-- Добавьте другие рейтинги по необходимости -->
+                </select>
+            </div>
         </div>
-        <div class="dropdown-group">
-            <label for="country">Страна</label>
-            <select id="country" name="country">
-                <option value="russia">Россия</option>
-                <option value="usa">США</option>
-                <option value="uk">Великобритания</option>
-                <!-- Добавьте другие страны по необходимости -->
-            </select>
-        </div>
-        <div class="dropdown-group">
-            <label for="year">Год</label>
-            <select id="year" name="year">
-                <option value="2020">2020</option>
-                <option value="2021">2021</option>
-                <option value="2022">2022</option>
-                <!-- Добавьте другие года по необходимости -->
-            </select>
-        </div>
-        <div class="dropdown-group">
-            <label for="rating">Рейтинг</label>
-            <select id="rating" name="rating">
-                <option value="5">5 звезд</option>
-                <option value="4">4 звезды</option>
-                <option value="3">3 звезды</option>
-                <!-- Добавьте другие рейтинги по необходимости -->
-            </select>
-        </div>
-    </div>
-    
-</body>
+
+    </body>
 </html>
