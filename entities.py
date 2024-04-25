@@ -14,10 +14,9 @@ class User(db.Model):
 
 class Preference(db.Model):
     __tablename__ = "preferences"
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.String(25), db.ForeignKey('users.username'),
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    username = db.Column(db.String(25), db.ForeignKey('users.username'),
                         nullable=False)
-    preference = db.Column(db.Text, nullable=False)
     # Тип в рамках Kinopoisk API: "genre", "year" и т.т.
     type = db.Column(db.String(50), nullable=False)
     # Категория: "film", "book" и т.п.
@@ -30,11 +29,11 @@ class Preference(db.Model):
 
 class Review(db.Model):
     __tablename__ = "reviews"
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.String(25), db.ForeignKey('users.username'),
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    username = db.Column(db.String(25), db.ForeignKey('users.username'),
                         nullable=False)
     item_id = db.Column(db.Integer, nullable=False)
-    item_type = db.Column(db.String(50), nullable=False)
+    item_category = db.Column(db.String(50), nullable=False)
     viewed = db.Column(db.Boolean, default=False)
     review = db.Column(db.Text)
     rating = db.Column(db.Integer)

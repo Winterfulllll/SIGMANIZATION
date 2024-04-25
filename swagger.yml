@@ -33,14 +33,14 @@ components:
     Preference:
       type: object
       required:
-        - id
-        - preference
+        - username
+        - type
+        - category
+        - timestamp
       properties:
         id:
           type: integer
-        user_id:
-          type: string
-        preference:
+        username:
           type: string
         type:
           type: string
@@ -48,28 +48,22 @@ components:
           type: string
         timestamp:
           type: string
-        user:
-          type: string
-
-    Preferences:
-      type: array
-      items:
-        $ref: "#/components/schemas/Preference"
 
     Review:
       type: object
       required:
-        - id
-        - review
-        - rating
+        - username
+        - item_id
+        - item_category
+        - viewed
       properties:
         id:
           type: integer
-        user_id:
+        username:
           type: string
         item_id:
           type: integer
-        item_type:
+        item_category:
           type: string
         viewed:
           type: boolean
@@ -79,13 +73,6 @@ components:
           type: integer
         timestamp:
           type: string
-        user:
-          type: string
-
-    Reviews:
-      type: array
-      items:
-        $ref: "#/components/schemas/Review"
 
   parameters:
     username:
@@ -271,7 +258,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Preferences"
+                type: array
+                items:
+                  $ref: "#/components/schemas/Preference"
         "404":
           description: user not found
 
@@ -288,7 +277,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Preferences"
+              $ref: "#/components/schemas/Preference"
       responses:
         "201":
           description: Preference created successfully.
@@ -308,14 +297,19 @@ paths:
         "404":
           description: User not found.
 
-  /preferences/{id}:
+  /preferences/{username}/{id}:
     delete:
       summary: Delete a preference by id.
       tags:
         - Preferences
       operationId: utils.preferences.delete_preference
       parameters:
-        - $ref: "#/components/parameters/id"
+        - $ref: "#/components/parameters/username"
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
       responses:
         "204":
           description: Preference deleted successfully.
@@ -336,7 +330,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Reviews"
+                type: array
+                items:
+                  $ref: "#/components/schemas/Review"
         "404":
           description: user not found
 
@@ -353,7 +349,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Reviews"
+              $ref: "#/components/schemas/Review"
       responses:
         "201":
           description: Review created successfully.
@@ -373,19 +369,24 @@ paths:
         "404":
           description: User not found.
 
-  /reviews/{id}:
+  /reviews/{username}/{id}:
     delete:
       summary: Delete a review by id.
       tags:
         - Reviews
       operationId: utils.reviews.delete_review
       parameters:
-        - $ref: "#/components/parameters/id"
+        - $ref: "#/components/parameters/username"
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
       responses:
         "204":
           description: Review deleted successfully.
-        "404":
-          description: User not found.
+        "410":
+          description: Review is not found.
 
     patch:
       summary: Partially update a review by id.
@@ -393,14 +394,19 @@ paths:
         - Reviews
       operationId: utils.reviews.partial_update_review
       parameters:
-        - $ref: "#/components/parameters/id"
+        - $ref: "#/components/parameters/username"
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
       requestBody:
         description: Review object with fields to update.
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Reviews"
+              $ref: "#/components/schemas/Review"
       responses:
         "200":
           description: Review updated successfully.
