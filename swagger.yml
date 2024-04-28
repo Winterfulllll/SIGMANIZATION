@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: User API
   version: 1.1.0
-  description: API for managing users.
+  description: API for managing users, preferences, and reviews.
 
 servers:
   - url: /api
@@ -42,12 +42,15 @@ components:
       required:
         - type
         - category
+        - type_value
       properties:
         id:
           type: integer
         username:
           type: string
         type:
+          type: string
+        type_value:
           type: string
         category:
           type: string
