@@ -31,13 +31,13 @@ def register_user(body):
     """
     try:
         if not all(key in body for key in ("username", "email", "password")):
-            return abort(400, "Missing required fields")
+            return jsonify(abort(400, "Missing required fields"))
 
         if not body.get('username', None) or not body.get('email', None) or not body.get('password', None):
-            return abort(400, "Empty required fields")
+            return jsonify(abort(400, "Empty required fields"))
 
         if not validate_username(body.get('username', None)):
-            return abort(400, f"Invalid username format")
+            return jsonify(abort(400, f"Invalid username format"))
 
         try:
             validate_email(body.get('email', None))
@@ -256,10 +256,12 @@ def login(body):
             return abort(401, "Invalid password")
 
         expires_delta = timedelta(days=30) if remember_me else None
-        access_token = create_access_token(identity=username, expires_delta=expires_delta)
+        access_token = create_access_token(
+            identity=username, expires_delta=expires_delta)
 
         response = make_response(jsonify(access_token=access_token), 200)
-        response.set_cookie('access_token_cookie', access_token, httponly=True, secure=True, samesite='Strict')
+        response.set_cookie('access_token_cookie', access_token,
+                            httponly=True, secure=True, samesite='Strict')
         return response
 
     except DBAPIError as e:

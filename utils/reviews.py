@@ -20,7 +20,7 @@ def post_review(username, body):
 
     Args:
         username: Имя пользователя.
-        body: Словарь с данными об отзыве пользователя 
+        body: Словарь с данными об отзыве пользователя
         (item_id, item_category, viewed, rating, review).
 
     Returns:
@@ -30,13 +30,14 @@ def post_review(username, body):
     try:
         if not body.get('item_id', None) or not body.get('item_category', None) or not body.get('viewed', None):
             return abort(400, "Empty required fields")
-        
+
         existing_user = User.query.filter_by(
             username=username).one_or_none()
         if existing_user is None:
             return abort(408, f"Invalid input or user with username '{username}' is not found.")
-        
-        existing_review = Review.query.filter_by(item_id=body.get('item_id')).one_or_none()
+
+        existing_review = Review.query.filter_by(
+            item_id=body.get('item_id')).one_or_none()
         if existing_review is not None:
             return abort(409, f"Review for item '{body.get('item_id')}' already exists")
 
@@ -95,7 +96,7 @@ def delete_review(username, id):
         user = Review.query.filter_by(username=username).first()
         if not user:
             return abort(404, f"User with username '{username}' not found")
-        
+
         review = Review.query.get(id)
         if not review:
             return abort(410, f"Review with id '{id}' not found")
@@ -126,7 +127,7 @@ def partial_update_review(username, id, body):
         user = Review.query.filter_by(username=username).first()
         if not user:
             return abort(404, f"User with username '{username}' not found")
-        
+
         review = Review.query.filter_by(id=id).one_or_none()
         if review is None:
             return abort(404, f"Review with id '{id}' not found")

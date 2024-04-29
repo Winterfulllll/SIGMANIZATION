@@ -1,11 +1,392 @@
 openapi: 3.0.0
 info:
-  title: User API
-  version: 1.1.0
-  description: API for managing users, preferences, and reviews.
+  title: RECO API
+  version: 1.2.0
+  description: |
+    ## RECO API: Recommendation System API
+
+    This REST API provides functionality for managing users, preferences,
+    reviews, and other information related to a recommendation system.
+
+    **Key Features:**
+
+    * **User Management:** Create, read, update, and delete users.
+    * **Preference Management:**  Create, read, and delete user preferences for various categories (movies, books)
+        based on different types (genre, year, country, rating).
+    * **Review Management:** Create, read, and delete user reviews for various items.
+    * **Authentication:** Authenticate users using JWT (JSON Web Tokens).
+    * **Authorization:**  API access is protected with API keys.
+
+    **Target Audience:**
+
+    * Developers building applications that utilize the recommendation system.
+
+    **Additional Information:**
+
+    * For API key access, please contact the administrator.
 
 servers:
   - url: /api
+
+paths:
+  /users:
+    get:
+      summary: Get a list of all users.
+      tags:
+        - Users
+      operationId: utils.users.get_all_users
+      responses:
+        "200":
+          description: A list of users.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+      security:
+        - API-KEY: []
+
+    post:
+      summary: Create a new user.
+      tags:
+        - Users
+      operationId: utils.users.register_user
+      requestBody:
+        description: User object to create.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+      responses:
+        "201":
+          description: User created successfully.
+        "400":
+          description: Invalid input or user already exists.
+      security:
+        - API-KEY: []
+
+  /users/{username}:
+    get:
+      summary: Get a user by username.
+      tags:
+        - Users
+      operationId: utils.users.get_user
+      parameters:
+        - $ref: "#/components/parameters/username"
+      responses:
+        "200":
+          description: User found.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "404":
+          description: User not found.
+      security:
+        - API-KEY: []
+
+    patch:
+      summary: Partially update a user by username.
+      tags:
+        - Users
+      operationId: utils.users.partial_update_user
+      parameters:
+        - $ref: "#/components/parameters/username"
+      requestBody:
+        description: User object with fields to update.
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+                  format: password
+                surname:
+                  type: string
+                name:
+                  type: string
+                patronymic:
+                  type: string
+      responses:
+        "200":
+          description: User updated successfully.
+        "400":
+          description: Invalid input.
+        "404":
+          description: User not found.
+      security:
+        - API-KEY: []
+
+    put:
+      summary: Update a user by username.
+      tags:
+        - Users
+      operationId: utils.users.full_update_user
+      parameters:
+        - $ref: "#/components/parameters/username"
+      requestBody:
+        description: User object with updated information.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+      responses:
+        "200":
+          description: User updated successfully.
+        "400":
+          description: Invalid input.
+        "404":
+          description: User not found.
+      security:
+        - API-KEY: []
+
+    delete:
+      summary: Delete a user by username.
+      tags:
+        - Users
+      operationId: utils.users.delete_user
+      parameters:
+        - $ref: "#/components/parameters/username"
+      responses:
+        "204":
+          description: User deleted successfully.
+        "404":
+          description: User not found.
+      security:
+        - API-KEY: []
+
+  /login:
+    post:
+      summary: Login user and get JWT token.
+      tags:
+        - Auth
+      operationId: utils.users.login
+      requestBody:
+        description: User credentials
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+                remember_me:
+                  type: boolean
+      responses:
+        "200":
+          description: Successful login.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  access_token:
+                    type: string
+        "401":
+          description: Invalid credentials.
+      security:
+        - API-KEY: []
+
+  /preferences/{username}:
+    get:
+      summary: get a list of user's preferences
+      tags:
+        - Preferences
+      operationId: utils.preferences.get_preference
+      parameters:
+        - $ref: "#/components/parameters/username"
+      responses:
+        "200":
+          description: Successfully get a list of user's preferences.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Preference"
+        "404":
+          description: User not found.
+      security:
+        - API-KEY: []
+
+    post:
+      summary: Create a new preference.
+      tags:
+        - Preferences
+      operationId: utils.preferences.post_preference
+      parameters:
+        - $ref: "#/components/parameters/username"
+      requestBody:
+        description: Preference object to create.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Preference"
+      responses:
+        "201":
+          description: Preference created successfully.
+        "408":
+          description: Invalid input or user not found.
+      security:
+        - API-KEY: []
+
+    delete:
+      summary: Delete all preferences by username.
+      tags:
+        - Preferences
+      operationId: utils.preferences.delete_all_preferences
+      parameters:
+        - $ref: "#/components/parameters/username"
+      responses:
+        "204":
+          description: All preferences deleted successfully.
+        "404":
+          description: User not found.
+      security:
+        - API-KEY: []
+
+  /preferences/{username}/{id}:
+    delete:
+      summary: Delete a preference by id.
+      tags:
+        - Preferences
+      operationId: utils.preferences.delete_preference
+      parameters:
+        - $ref: "#/components/parameters/username"
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Preference deleted successfully.
+        "404":
+          description: User not found.
+      security:
+        - API-KEY: []
+
+  /reviews/{username}:
+    get:
+      summary: get a list of user's reviews
+      tags:
+        - Reviews
+      operationId: utils.reviews.get_review
+      parameters:
+        - $ref: "#/components/parameters/username"
+      responses:
+        "200":
+          description: successfully get a list of user's reviews.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Review"
+        "404":
+          description: User not found.
+      security:
+        - API-KEY: []
+
+    post:
+      summary: Create a new review.
+      tags:
+        - Reviews
+      operationId: utils.reviews.post_review
+      parameters:
+        - $ref: "#/components/parameters/username"
+      requestBody:
+        description: Review object to create.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Review"
+      responses:
+        "201":
+          description: Review created successfully.
+        "408":
+          description: Invalid input or user not found.
+      security:
+        - API-KEY: []
+
+    delete:
+      summary: Delete all reviews by username.
+      tags:
+        - Reviews
+      operationId: utils.reviews.delete_all_reviews
+      parameters:
+        - $ref: "#/components/parameters/username"
+      responses:
+        "204":
+          description: All reviews deleted successfully.
+        "404":
+          description: User not found.
+      security:
+        - API-KEY: []
+
+  /reviews/{username}/{id}:
+    delete:
+      summary: Delete a review by id.
+      tags:
+        - Reviews
+      operationId: utils.reviews.delete_review
+      parameters:
+        - $ref: "#/components/parameters/username"
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Review deleted successfully.
+        "410":
+          description: Review is not found.
+      security:
+        - API-KEY: []
+
+    patch:
+      summary: Partially update a review by id.
+      tags:
+        - Reviews
+      operationId: utils.reviews.partial_update_review
+      parameters:
+        - $ref: "#/components/parameters/username"
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: Review object with fields to update.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Review"
+      responses:
+        "200":
+          description: Review updated successfully.
+        "400":
+          description: Invalid input.
+        "404":
+          description: User not found.
+      security:
+        - API-KEY: []
 
 components:
   schemas:
@@ -95,329 +476,9 @@ components:
       schema:
         type: integer
 
-paths:
-  /users:
-    get:
-      summary: Get a list of all users.
-      tags:
-        - Users
-      operationId: utils.users.get_all_users
-      responses:
-        "200":
-          description: A list of users.
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/User"
-    post:
-      summary: Create a new user.
-      tags:
-        - Users
-      operationId: utils.users.register_user
-      requestBody:
-        description: User object to create.
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/User"
-      responses:
-        "201":
-          description: User created successfully.
-        "400":
-          description: Invalid input or user already exists.
-
-  /users/{username}:
-    get:
-      summary: Get a user by username.
-      tags:
-        - Users
-      operationId: utils.users.get_user
-      parameters:
-        - $ref: "#/components/parameters/username"
-      responses:
-        "200":
-          description: User found.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/User"
-        "404":
-          description: User not found.
-
-    patch:
-      summary: Partially update a user by username.
-      tags:
-        - Users
-      operationId: utils.users.partial_update_user
-      parameters:
-        - $ref: "#/components/parameters/username"
-      requestBody:
-        description: User object with fields to update.
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                username:
-                  type: string
-                email:
-                  type: string
-                password:
-                  type: string
-                  format: password
-                surname:
-                  type: string
-                name:
-                  type: string
-                patronymic:
-                  type: string
-      responses:
-        "200":
-          description: User updated successfully.
-        "400":
-          description: Invalid input.
-        "404":
-          description: User not found.
-
-    put:
-      summary: Update a user by username.
-      tags:
-        - Users
-      operationId: utils.users.full_update_user
-      parameters:
-        - $ref: "#/components/parameters/username"
-      requestBody:
-        description: User object with updated information.
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/User"
-      responses:
-        "200":
-          description: User updated successfully.
-        "400":
-          description: Invalid input.
-        "404":
-          description: User not found.
-
-    delete:
-      summary: Delete a user by username.
-      tags:
-        - Users
-      operationId: utils.users.delete_user
-      parameters:
-        - $ref: "#/components/parameters/username"
-      responses:
-        "204":
-          description: User deleted successfully.
-        "404":
-          description: User not found.
-
-  /login:
-    post:
-      summary: Login user and get JWT token.
-      tags:
-        - Auth
-      operationId: utils.users.login
-      requestBody:
-        description: User credentials
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                username:
-                  type: string
-                password:
-                  type: string
-                remember_me:
-                  type: boolean
-      responses:
-        "200":
-          description: Successful login
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  access_token:
-                    type: string
-        "401":
-          description: Invalid credentials
-
-  /preferences/{username}:
-    get:
-      summary: get a list of user's preferences
-      tags:
-        - Preferences
-      operationId: utils.preferences.get_preference
-      parameters:
-        - $ref: "#/components/parameters/username"
-      responses:
-        "200":
-          description: successfully get a list of user's preferences.
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Preference"
-        "404":
-          description: user not found
-
-    post:
-      summary: Create a new preference.
-      tags:
-        - Preferences
-      operationId: utils.preferences.post_preference
-      parameters:
-        - $ref: "#/components/parameters/username"
-      requestBody:
-        description: Preference object to create.
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Preference"
-      responses:
-        "201":
-          description: Preference created successfully.
-        "408":
-          description: Invalid input or user not found.
-
-    delete:
-      summary: Delete all preferences by username.
-      tags:
-        - Preferences
-      operationId: utils.preferences.delete_all_preferences
-      parameters:
-        - $ref: "#/components/parameters/username"
-      responses:
-        "204":
-          description: All preferences deleted successfully.
-        "404":
-          description: User not found.
-
-  /preferences/{username}/{id}:
-    delete:
-      summary: Delete a preference by id.
-      tags:
-        - Preferences
-      operationId: utils.preferences.delete_preference
-      parameters:
-        - $ref: "#/components/parameters/username"
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-      responses:
-        "204":
-          description: Preference deleted successfully.
-        "404":
-          description: User not found.
-
-  /reviews/{username}:
-    get:
-      summary: get a list of user's reviews
-      tags:
-        - Reviews
-      operationId: utils.reviews.get_review
-      parameters:
-        - $ref: "#/components/parameters/username"
-      responses:
-        "200":
-          description: successfully get a list of user's reviews.
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Review"
-        "404":
-          description: user not found
-
-    post:
-      summary: Create a new review.
-      tags:
-        - Reviews
-      operationId: utils.reviews.post_review
-      parameters:
-        - $ref: "#/components/parameters/username"
-      requestBody:
-        description: Review object to create.
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Review"
-      responses:
-        "201":
-          description: Review created successfully.
-        "408":
-          description: Invalid input or user not found.
-
-    delete:
-      summary: Delete all reviews by username.
-      tags:
-        - Reviews
-      operationId: utils.reviews.delete_all_reviews
-      parameters:
-        - $ref: "#/components/parameters/username"
-      responses:
-        "204":
-          description: All reviews deleted successfully.
-        "404":
-          description: User not found.
-
-  /reviews/{username}/{id}:
-    delete:
-      summary: Delete a review by id.
-      tags:
-        - Reviews
-      operationId: utils.reviews.delete_review
-      parameters:
-        - $ref: "#/components/parameters/username"
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-      responses:
-        "204":
-          description: Review deleted successfully.
-        "410":
-          description: Review is not found.
-
-    patch:
-      summary: Partially update a review by id.
-      tags:
-        - Reviews
-      operationId: utils.reviews.partial_update_review
-      parameters:
-        - $ref: "#/components/parameters/username"
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-      requestBody:
-        description: Review object with fields to update.
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Review"
-      responses:
-        "200":
-          description: Review updated successfully.
-        "400":
-          description: Invalid input.
-        "404":
-          description: User not found.
+  securitySchemes:
+    API-KEY:
+      type: apiKey
+      name: API-KEY
+      in: header
+      x-apikeyInfoFunc: configuration.api_key_auth

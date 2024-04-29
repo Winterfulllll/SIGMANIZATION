@@ -1,10 +1,6 @@
-from flask import render_template, abort
-from configuration import connexion_app
+from flask import render_template
+from configuration import connexion_app as app, app_config as config
 from flask_jwt_extended import get_jwt_identity, verify_jwt_in_request
-
-
-app = connexion_app
-app.add_api("swagger.yml")
 
 
 @app.route("/")
@@ -14,13 +10,15 @@ def home():
         return render_template(
             "index.html",
             current_user_username=get_jwt_identity(),
-            movies_api_key=app.app.config["MOVIES_API"]
+            movies_api_key=config["MOVIES_API"],
+            service_api_key=config["SECRET_KEY"]
         )
 
     except:
         return render_template(
             "index.html",
-            movies_api_key=app.app.config["MOVIES_API"]
+            movies_api_key=config["MOVIES_API"],
+            service_api_key=config["SECRET_KEY"]
         )
 
 

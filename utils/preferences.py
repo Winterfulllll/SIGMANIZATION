@@ -32,7 +32,8 @@ def post_preference(username, body):
         if existing_user is None:
             return abort(408, f"Invalid input or user with username '{username}' is not found.")
 
-        new_preference = Preference(username=username, type=body.get('type', None), category=body.get('category', None))
+        new_preference = Preference(username=username, type=body.get(
+            'type', None), category=body.get('category', None))
         db.session.add(new_preference)
         db.session.commit()
 
@@ -86,7 +87,7 @@ def delete_preference(username, id):
         user = Preference.query.filter_by(username=username).first()
         if not user:
             return abort(404, f"User with username '{username}' not found")
-        
+
         preference = Preference.query.get(id)
         if not preference:
             return abort(410, f"preference with id '{id}' not found")

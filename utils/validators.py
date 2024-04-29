@@ -8,7 +8,7 @@ def validate_username(username: str) -> bool:
     - Только буквы, цифры и подчеркивания
     - Не начинается и не заканчивается подчеркиванием
     """
-    if not 3 <= len(username) <= 20:
+    if not 3 <= len(username) <= 25:
         return False
     if not re.match(r'^[a-zA-Z0-9_]+$', username):
         return False

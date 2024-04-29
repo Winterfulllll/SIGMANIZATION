@@ -175,6 +175,8 @@
         </div>
 
         <script>
+        const movies_api_key = "{{ movies_api_key }}";
+        const service_api_key = "{{ service_api_key }}";
 
         function registerUser() {
             const userData = {
@@ -190,6 +192,7 @@
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'API-KEY': service_api_key,
                 },
                 body: JSON.stringify(userData)
             })
@@ -218,6 +221,7 @@
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'API-KEY': service_api_key,
                 },
                 body: JSON.stringify(loginData)
             })
@@ -299,7 +303,6 @@
 
         let currentPage = 1;
         let onPage = 7;
-        const movies_api_key = "{{ movies_api_key }}";
 
         function fetchMovies() {
             fetch(`https://api.kinopoisk.dev/v1.4/movie?page=${currentPage}&limit=${onPage}&selectFields=id&selectFields=name&selectFields=poster&notNullFields=id&notNullFields=name&notNullFields=poster.url`, {
