@@ -80,12 +80,11 @@ def delete_all_reviews(username):
         return {"error": str(e)}, 500
 
 
-def delete_review(username, id):
+def delete_review(id):
     """
     Удаляет отзыв пользователя по id отзыва.
 
     Args:
-        username: Имя пользователя.
         id: ID отзыва для удаления.
 
     Returns:
@@ -93,10 +92,6 @@ def delete_review(username, id):
         или словарь с ошибкой и соответствующий код состояния.
     """
     try:
-        user = Review.query.filter_by(username=username).first()
-        if not user:
-            return abort(404, f"User with username '{username}' not found")
-
         review = Review.query.get(id)
         if not review:
             return abort(410, f"Review with id '{id}' not found")
@@ -110,12 +105,11 @@ def delete_review(username, id):
         return {"error": str(e)}, 500
 
 
-def partial_update_review(username, id, body):
+def partial_update_review(id, body):
     """
     Частично обновляет параметры отзыва пользователя.
 
     Args:
-        username: Имя пользователя.
         id: ID отзыва для обновления.
         body: Словарь с данными для обновления.
 
@@ -124,10 +118,6 @@ def partial_update_review(username, id, body):
         или словарь с ошибкой и соответствующий код состояния при ошибке.
     """
     try:
-        user = Review.query.filter_by(username=username).first()
-        if not user:
-            return abort(404, f"User with username '{username}' not found")
-
         review = Review.query.filter_by(id=id).one_or_none()
         if review is None:
             return abort(404, f"Review with id '{id}' not found")

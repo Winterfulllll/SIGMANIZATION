@@ -31,14 +31,14 @@ def generate_recommended_films(username: str, count: int):
     response = requests.get(
         url=f"http://127.0.0.1:8000/api/preferences/{username}").json()
     for preference in response:
-        text += f"{preference["type"]}:{preference["type_value"]},\n"
+        text += f'{preference["type"]}:{preference["type_value"]},\n'
     response = requests.get(
         url=f"http://127.0.0.1:8000/api/reviews/{username}").json()
     for review in response:
         film_response = requests.get(
-            url=f"https://api.kinopoisk.dev/v1.4/movie/{review["item_id"]}&selectFields=name").json()
+            url=f'https://api.kinopoisk.dev/v1.4/movie/{review["item_id"]}&selectFields=name').json()
         film_name = film_response["docs"]["name"]
-        text += f"{film_name}:{review["rating"]},\n"
+        text += f'{film_name}:{review["rating"]},\n'
 
     human_message = HumanMessage(content=text)
     response = giga([prompt, human_message])
