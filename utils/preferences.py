@@ -8,7 +8,7 @@ from schemas import preference_schema, preferences_schema
 
 def get_preference(username):
     """
-    Возвращает все предпочтения пользователя по имени.
+    Returns all user preferences by username.
     """
     preferences = Preference.query.filter_by(username=username)
     return preferences_schema.dump(preferences)
@@ -16,24 +16,27 @@ def get_preference(username):
 
 def post_preference(username, body):
     """
-    Создает новое предпочтение пользователя.
+    Creates a new user preference.
 
     Args:
-        username: Имя пользователя
-        body: Словарь с данными о предпочтении пользователя (type, category).
+        - username: The current user's name
+        - body: A dictionary with data about the user's preference.
 
     Returns:
-        JSON-представление созданного предпочтения и код состояния 201 при успехе,
-        или словарь с ошибками и соответствующий код состояния при ошибке.
+        JSON representation of the created preference and status code 201 on success
+        or the corresponding error in case of failure.
     """
     try:
-        existing_user = User.query.filter_by(
-            username=username).one_or_none()
-        if existing_user is None:
+        username = username
+        preference_type = body.get('type', None)
+        category = body.get('category', None)
+        type_value = body.get('type_value', None)
+
+        if User.query.filter_by(username=username).one_or_none() is None:
             return abort(408, f"Invalid input or user with username '{username}' is not found.")
 
-        new_preference = Preference(username=username, type=body.get(
-            'type', None), category=body.get('category', None), type_value=body.get('type_value', None))
+        new_preference = Preference(username=username, type=preference_type,
+                                    type_value=type_value, category=category)
         db.session.add(new_preference)
         db.session.commit()
 
@@ -46,14 +49,14 @@ def post_preference(username, body):
 
 def delete_all_preferences(username):
     """
-    Удаляет все предпочтения пользователя по имени.
+    Deletes all user preferences by name.
 
     Args:
-        username: Имя пользователя.
+        - username: The current user's name.
 
     Returns:
-        Сообщение об успешном удалении и код состояния 204,
-        или словарь с ошибкой и соответствующий код состояния.
+        A successful deletion message and status code 204
+        or the corresponding error in case of failure.
     """
     try:
         user = Preference.query.filter_by(username=username).first()
@@ -73,19 +76,19 @@ def delete_all_preferences(username):
 
 def delete_preference(id):
     """
-    Удаляет предпочтение пользователя по id предпочтения.
+    Deletes the user's preference by preference id.
 
     Args:
-        id: ID предпочтения для удаления.
+        - id: ID of the preference to delete.
 
     Returns:
-        Сообщение об успешном удалении и код состояния 204,
-        или словарь с ошибкой и соответствующий код состояния.
+        A successful deletion message and status code 204
+        or the corresponding error in case of failure.
     """
     try:
         preference = Preference.query.get(id)
         if not preference:
-            return abort(410, f"preference with id '{id}' not found")
+            return abort(410, f"Preference with id '{id}' not found")
 
         db.session.delete(preference)
         db.session.commit()

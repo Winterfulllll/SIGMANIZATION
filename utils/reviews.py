@@ -8,7 +8,7 @@ from schemas import review_schema, reviews_schema
 
 def get_review(username):
     """
-    Возвращает все отзывы пользователя по имени.
+    Returns all user reviews by username.
     """
     reviews = Review.query.filter_by(username=username)
     return reviews_schema.dump(reviews)
@@ -16,16 +16,15 @@ def get_review(username):
 
 def post_review(username, body):
     """
-    Создает новый отзыв пользователя.
+    Creates a new user review.
 
     Args:
-        username: Имя пользователя.
-        body: Словарь с данными об отзыве пользователя
-        (item_id, item_category, viewed, rating, review).
+        - username: The user's name.
+        - body: A dictionary with user review data (item_id, item_category, viewed, rating, review).
 
     Returns:
-        JSON-представление созданного отзыва и код состояния 201 при успехе,
-        или словарь с ошибками и соответствующий код состояния при ошибке.
+        JSON representation of the created review and status code 201 on success
+        or the corresponding error in case of failure.
     """
     try:
         if not body.get('item_id', None) or not body.get('item_category', None) or not body.get('viewed', None):
@@ -55,14 +54,14 @@ def post_review(username, body):
 
 def delete_all_reviews(username):
     """
-    Удаляет все отзывы пользователя по имени.
+    Deletes all user reviews by name.
 
     Args:
-        username: Имя пользователя.
+        - username: The current user's name.
 
     Returns:
-        Сообщение об успешном удалении и код состояния 204,
-        или словарь с ошибкой и соответствующий код состояния.
+        Successful deletion message and status code 204
+        or the corresponding error in case of failure.
     """
     try:
         user = Review.query.filter_by(username=username).first()
@@ -82,14 +81,14 @@ def delete_all_reviews(username):
 
 def delete_review(id):
     """
-    Удаляет отзыв пользователя по id отзыва.
+    Deletes the user's review by the review id.
 
     Args:
-        id: ID отзыва для удаления.
+        - id: The ID of the review to delete.
 
     Returns:
-        Сообщение об успешном удалении и код состояния 204,
-        или словарь с ошибкой и соответствующий код состояния.
+        Successful deletion message and status code 204
+        or the corresponding error in case of failure.
     """
     try:
         review = Review.query.get(id)
@@ -107,15 +106,15 @@ def delete_review(id):
 
 def partial_update_review(id, body):
     """
-    Частично обновляет параметры отзыва пользователя.
+    Partially updates the user's review parameters.
 
     Args:
-        id: ID отзыва для обновления.
-        body: Словарь с данными для обновления.
+        - id: The ID of the review to update.
+        - body: Dictionary with data to update.
 
     Returns:
-        JSON-представление обновленного отзыва и код состояния 200 при успехе,
-        или словарь с ошибкой и соответствующий код состояния при ошибке.
+        JSON representation of the updated review and status code 200 on success
+        or the corresponding error in case of failure.
     """
     try:
         review = Review.query.filter_by(id=id).one_or_none()

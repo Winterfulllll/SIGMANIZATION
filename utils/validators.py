@@ -3,10 +3,10 @@ import re
 
 def validate_username(username: str) -> bool:
     """
-    Валидирует username:
-    - Длина от 3 до 25 символов
-    - Только буквы, цифры и подчеркивания
-    - Не начинается и не заканчивается подчеркиванием
+    Validates the username by:
+        - Length from 3 to 25 characters
+        - Only letters, numbers and underscores
+        - Does not begin or end with an underscore
     """
     if not 3 <= len(username) <= 25:
         return False

@@ -12,7 +12,7 @@ from email_validator import validate_email
 
 def get_all_users():
     """
-    Возвращает список всех пользователей
+    Returns a list of all users.
     """
     users = User.query.all()
     return users_schema.dump(users)
@@ -20,21 +20,25 @@ def get_all_users():
 
 def register_user(body):
     """
-    Создает нового пользователя.
+    Creates a new user.
 
     Args:
-        body: Словарь с данными пользователя (username, email, password).
+        - body: Dictionary with user data (username, email, password, surname, name, patronymic).
 
     Returns:
-        JSON-представление созданного пользователя и код состояния 201 при успехе,
-        или словарь с ошибками и соответствующий код состояния при ошибке.
+        JSON representation of the created user and status code 201 on success
+        or the corresponding error in case of failure.
     """
     try:
-        if not all(key in body for key in ("username", "email", "password")):
-            return jsonify(abort(400, "Missing required fields"))
+        username = body.get('username', None)
+        email = body.get('email', None)
+        password = body.get('password', None)
+        surname = body.get('surname', None)
+        name = body.get('name', None)
+        patronymic = body.get('patronymic', None)
 
-        if not body.get('username', None) or not body.get('email', None) or not body.get('password', None):
-            return jsonify(abort(400, "Empty required fields"))
+        if not all([username, email, password]):
+            return jsonify(abort(400, "Missing required fields"))
 
         if not validate_username(body.get('username', None)):
             return jsonify(abort(400, f"Invalid username format"))
@@ -57,10 +61,9 @@ def register_user(body):
 
         hashed_password = encryptor.encrypt_data(body.get('password', None))
 
-        new_user = User(username=body.get('username', None), email=body.get('email', None),
-                        password=hashed_password, surname=body.get(
-                            'surname', None),
-                        name=body.get('name', None), patronymic=body.get('patronymic', None))
+        new_user = User(username=username, email=email,
+                        password=hashed_password, surname=surname,
+                        name=name, patronymic=patronymic)
         db.session.add(new_user)
         db.session.commit()
 
@@ -73,14 +76,14 @@ def register_user(body):
 
 def delete_user(username):
     """
-    Удаляет пользователя по имени пользователя.
+    Deletes a user by username.
 
     Args:
-        username: Имя пользователя для удаления.
+        - username: The username of the user to delete.
 
     Returns:
-        Сообщение об успешном удалении и код состояния 204 (No Content),
-        или словарь с ошибкой и соответствующий код состояния.
+        JSON representation of the created user and status code 204 on success
+        or the corresponding error in case of failure.
     """
     try:
         user = User.query.filter_by(username=username).one_or_none()
@@ -98,14 +101,14 @@ def delete_user(username):
 
 def get_user(username):
     """
-    Получает информацию о пользователе по имени пользователя.
+    Retrieves user information by username.
 
     Args:
-        username: Имя пользователя.
+        - username: The username of the user to delete.
 
     Returns:
-        JSON-представление пользователя и код состояния 200 (OK),
-        или словарь с ошибкой и соответствующий код состояния.
+        JSON representation of the created user and status code 200 on success
+        or the corresponding error in case of failure.
     """
     try:
         user = User.query.filter_by(username=username).one_or_none()
@@ -121,54 +124,65 @@ def get_user(username):
 
 def full_update_user(username, body):
     """
-    Обновляет параметры пользователя, включая возможность изменения username.
+    Updates the user's settings, including the ability to change the username.
 
     Args:
-        username: Текущее имя пользователя.
-        body: Словарь с новыми данными пользователя.
+        - username: The current user's username.
+        - body: A dictionary with new user data.
 
     Returns:
-        JSON-представление обновленного пользователя и код состояния 200 (OK) при успехе,
-        или словарь с ошибкой и соответствующий код состояния при ошибке.
+        JSON representation of the created user and status code 200 on success
+        or the corresponding error in case of failure.
     """
     try:
+        new_username = body.get('username', None)
+        new_email = body.get('email', None)
+        new_password = body.get('password', None)
+        new_surname = body.get('surname', None)
+        new_name = body.get('name', None)
+        new_patronymic = body.get('patronymic', None)
+
         user = User.query.filter_by(username=username).one_or_none()
         if user is None:
             return abort(404, f"User with username '{username}' not found")
 
-        new_username = body.get('username')
-        if new_username and new_username != username:
-            existing_user = User.query.filter_by(
-                username=new_username).one_or_none()
-            if existing_user is not None:
+        if not all([new_username, new_email, new_password]):
+            return jsonify(abort(400, "Missing required fields"))
+
+        if new_username != username:
+            if User.query.filter_by(username=new_username).one_or_none() is not None:
                 return abort(409, f"Username '{new_username}' already exists")
+            if not validate_username(new_username):
+                return abort(400, f"Invalid username format")
             user.username = new_username
 
-        new_email = body.get('email')
         if new_email and new_email != user.email:
             try:
                 validate_email(new_email)
             except:
                 return abort(400, f"Invalid email format")
 
-            existing_user = User.query.filter_by(email=new_email).one_or_none()
-            if existing_user is not None:
+            if User.query.filter_by(email=new_email).one_or_none() is not None:
                 return abort(409, f"Email '{new_email}' already exists")
-
             user.email = new_email
 
-        if 'password' in body:
-            hashed_password = encryptor.encrypt_data(body['password'])
-            user.password = hashed_password
+        hashed_password = encryptor.encrypt_data(new_password)
+        user.password = hashed_password
 
-        if 'surname' in body:
-            user.surname = body['surname']
+        if new_surname:
+            if (len(new_surname) > 50):
+                return abort(400, f"Your surname is too long. The maximum length is 50")
+            user.surname = new_surname
 
-        if 'name' in body:
-            user.name = body['name']
+        if new_name:
+            if (len(new_name) > 50):
+                return abort(400, f"Your name is too long. The maximum length is 50")
+            user.name = new_name
 
-        if 'patronymic' in body:
-            user.patronymic = body['patronymic']
+        if new_patronymic:
+            if (len(new_patronymic) > 50):
+                return abort(400, f"Your patronymic is too long. The maximum length is 50")
+            user.patronymic = new_patronymic
 
         db.session.commit()
         return user_schema.dump(user), 200
@@ -180,49 +194,63 @@ def full_update_user(username, body):
 
 def partial_update_user(username, body):
     """
-    Частично обновляет параметры пользователя.
+    Partially updates the user's settings.
 
     Args:
-        username: Имя пользователя.
-        body: Словарь с данными для обновления.
+        - username: The current user's username.
+        - body: A dictionary with new user data.
 
     Returns:
-        JSON-представление обновленного пользователя и код состояния 200 (OK) при успехе,
-        или словарь с ошибкой и соответствующий код состояния при ошибке.
+        JSON representation of the created user and status code 200 on success
+        or the corresponding error in case of failure.
     """
     try:
-        user = User.query.filter_by(username=username).one_or_none()
+        new_username = body.get('username', None)
+        new_email = body.get('email', None)
+        new_password = body.get('password', None)
+        new_surname = body.get('surname', None)
+        new_name = body.get('name', None)
+        new_patronymic = body.get('patronymic', None)
 
+        user = User.query.filter_by(username=username).one_or_none()
         if user is None:
             return abort(404, f"User with username '{username}' not found")
 
-        if 'email' in body:
-            new_email = body['email']
-            if new_email != user.email:
-                try:
-                    validate_email(body.get('email', None))
-                except:
-                    return abort(400, f"Invalid email format")
+        if new_username and new_username != username:
+            if User.query.filter_by(username=new_username).one_or_none() is not None:
+                return abort(409, f"Username '{new_username}' already exists")
+            if not validate_username(new_username):
+                return abort(400, f"Invalid username format")
+            user.username = new_username
 
-                existing_user = User.query.filter_by(
-                    email=new_email).one_or_none()
-                if existing_user is not None:
-                    return abort(409, f"Email '{new_email}' already exists")
+        if new_email and new_email != user.email:
+            try:
+                validate_email(new_email)
+            except:
+                return abort(400, f"Invalid email format")
 
-                user.email = new_email
+            if User.query.filter_by(email=new_email).one_or_none() is not None:
+                return abort(409, f"Email '{new_email}' already exists")
+            user.email = new_email
 
-        if 'password' in body:
-            hashed_password = encryptor.encrypt_data(body['password'])
+        if new_password:
+            hashed_password = encryptor.encrypt_data(new_password)
             user.password = hashed_password
 
-        if 'surname' in body:
-            user.surname = body['surname']
+        if new_surname:
+            if (len(new_surname) > 50):
+                return abort(400, f"Your surname is too long. The maximum length is 50")
+            user.surname = new_surname
 
-        if 'name' in body:
-            user.name = body['name']
+        if new_name:
+            if (len(new_name) > 50):
+                return abort(400, f"Your name is too long. The maximum length is 50")
+            user.name = new_name
 
-        if 'patronymic' in body:
-            user.patronymic = body['patronymic']
+        if new_patronymic:
+            if (len(new_patronymic) > 50):
+                return abort(400, f"Your patronymic is too long. The maximum length is 50")
+            user.patronymic = new_patronymic
 
         db.session.commit()
         return user_schema.dump(user), 200
@@ -234,19 +262,22 @@ def partial_update_user(username, body):
 
 def login(body):
     """
-    Аутентифицирует пользователя и возвращает JWT-токен.
+    Authenticates the user and returns the JWT token.
 
     Args:
-        body: Словарь с данными пользователя (username, password, remember_me).
+        - body: Dictionary with user data (username, password, remember_me).
 
     Returns:
-        JSON-объект с JWT-токеном и кодом состояния 200 при успехе,
-        или словарь с ошибкой и соответствующий код состояния при ошибке.
+        JSON representation of the created user and status code 200 on success
+        or the corresponding error in case of failure.
     """
     try:
         username = body.get('username', None)
         password = body.get('password', None)
         remember_me = body.get('remember_me', False)
+
+        if not all([username, password, remember_me]):
+            return jsonify(abort(400, "Missing required fields"))
 
         user = User.query.filter_by(username=username).one_or_none()
         if user is None:

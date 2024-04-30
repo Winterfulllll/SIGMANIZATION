@@ -198,7 +198,7 @@ paths:
           description: Invalid credentials.
       security:
         - API-KEY: []
-  
+
   /preferences:
     delete:
       summary: Delete a preference by id.
@@ -277,7 +277,7 @@ paths:
           description: User not found.
       security:
         - API-KEY: []
-  
+
   /reviews:
     delete:
       summary: Delete a review by id.
@@ -297,7 +297,7 @@ paths:
           description: Review is not found.
       security:
         - API-KEY: []
-    
+
     patch:
       summary: Partially update a review by id.
       tags:
@@ -384,7 +384,7 @@ paths:
           description: User not found.
       security:
         - API-KEY: []
-  
+
   /film_plot_generator:
     get:
       summary: get a generated film's plot
@@ -412,7 +412,7 @@ paths:
           description: film not found.
       security:
         - API-KEY: []
-    
+
   /generate_recomended_films:
     get:
       summary: get a generated list of recomended films
@@ -447,13 +447,6 @@ paths:
 
 components:
   schemas:
-    PreferenceType:
-      type: string
-      enum: [GENRE, YEAR, COUNTRY, RATING]
-    ItemCategory:
-      type: string
-      enum: [MOVIES, BOOKS]
-
     User:
       type: object
       required:
