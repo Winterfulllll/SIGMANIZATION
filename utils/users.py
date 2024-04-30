@@ -40,26 +40,24 @@ def register_user(body):
         if not all([username, email, password]):
             return jsonify(abort(400, "Missing required fields"))
 
-        if not validate_username(body.get('username', None)):
+        if not validate_username(username):
             return jsonify(abort(400, f"Invalid username format"))
 
         try:
-            validate_email(body.get('email', None))
+            validate_email(email)
         except:
             return abort(400, f"Invalid email format")
 
         existing_user = User.query.filter(
-            (User.username == body.get('username', None)) | (
-                User.email == body.get('email', None))
-        ).one_or_none()
+            (User.username == username) | (User.email == email)).one_or_none()
 
         if existing_user is not None:
-            if existing_user.username == body.get('username', None):
-                return abort(409, f"User with username '{body.get('username', None)}' already exists")
+            if existing_user.username == username:
+                return abort(409, f"User with username '{username}' already exists")
             else:
-                return abort(409, f"User with email '{body.get('email', None)}' already exists")
+                return abort(409, f"User with email '{email}' already exists")
 
-        hashed_password = encryptor.encrypt_data(body.get('password', None))
+        hashed_password = encryptor.encrypt_data(password)
 
         new_user = User(username=username, email=email,
                         password=hashed_password, surname=surname,

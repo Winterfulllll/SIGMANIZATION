@@ -508,7 +508,7 @@ components:
         username:
           type: string
         item_id:
-          type: integer
+          type: string
         item_category:
           type: string
           enum:

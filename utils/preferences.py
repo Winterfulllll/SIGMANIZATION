@@ -27,13 +27,16 @@ def post_preference(username, body):
         or the corresponding error in case of failure.
     """
     try:
-        username = username
         preference_type = body.get('type', None)
         category = body.get('category', None)
         type_value = body.get('type_value', None)
 
         if User.query.filter_by(username=username).one_or_none() is None:
             return abort(408, f"Invalid input or user with username '{username}' is not found.")
+
+        if Preference.query.filter(
+                (Preference.username == username) & (Preference.type_value == type_value)).one_or_none() is not None:
+            return abort(409, f"Preference of user '{username}' with type_value '{type_value}' already exists")
 
         new_preference = Preference(username=username, type=preference_type,
                                     type_value=type_value, category=category)
