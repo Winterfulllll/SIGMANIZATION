@@ -1,4 +1,5 @@
 from langchain.schema import HumanMessage, SystemMessage
+from flask import abort
 from configuration import giga, app_config as config
 from utils.preferences import get_preference
 from utils.reviews import get_review
@@ -42,11 +43,12 @@ def generate_recommended_films(username: str, count: int):
         str: A JSON string containing a list of recommended film IMDB IDs.
     """
     try:
+        if count < 1 or count > 20:
+            return abort(400, "Invalid count value (must be between 1 and 20)")
+
         prompt = SystemMessage(
-            content="Ты - полезный помощник с искусственным интеллектом, обладающий обширными знаниями о фильмах. " +
-            "Я предоставлю тебе какие фильмы нравятся пользователю и какие оценки он ставил различным фильмам. " +
-            f"Сгенерируй список из ровно {count} не повторяющихся IMDB ID значений фильмов, " +
-            'рекомендованных данному пользователю. Список должен быть в формате JSON, например: ["tt0120338", "tt0088763"].'
+            content=f"Сгенерируй список из ровно {count} не повторяющихся IMDB ID значений фильмов, " +
+            'рекомендованных данному пользователю. Ответ должен быть в формате JSON-списка.'
         )
         text = f"Предпочтения пользователя:\n"
 
@@ -58,12 +60,13 @@ def generate_recommended_films(username: str, count: int):
             rating = review.get("rating", None)
             if rating:
                 film_response = requests.get(
-                    url=f'''https://api.kinopoisk.dev/v1.4/movie?externalId.imdb={review["item_id"]}&selectFields=name''',
+                    url=f'ttps://api.kinopoisk.dev/v1.4/movie?externalId.imdb={review["item_id"]}&selectFields=name',
                     headers={'X-API-KEY': config["MOVIES_API"]}
                 ).json()
 
                 if film_response["total"] != 0:
-                    text += f'''- "{film_response['docs'][0]['name']}": {rating},\n'''
+                    text += f'''- "{film_response['docs']
+                                    [0]['name']}": {rating},\n'''
 
         human_message = HumanMessage(content=text)
         response = giga([prompt, human_message])
@@ -76,7 +79,7 @@ def generate_recommended_films(username: str, count: int):
             recommended_films = json.loads(response.content)
             attempts += 1
             if attempts == 2:
-                return "GigaChat is stupid! =(", 500
+                return "GigaChat can not respond to this request", 500
 
         return recommended_films
 

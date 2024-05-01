@@ -430,6 +430,9 @@ paths:
           required: true
           schema:
             type: integer
+            minimum: 1
+            maximum: 20
+            description: Number of recommended films to generate (max 20)
       responses:
         "200":
           description: successfully get a generated list of recomended films.
@@ -523,6 +526,9 @@ components:
           type: string
         rating:
           type: integer
+          minimum: 1
+          maximum: 10
+          description: Rating that the user puts (max 10)
         timestamp:
           type: string
 
