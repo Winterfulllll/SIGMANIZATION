@@ -66,8 +66,8 @@ def generate_recommended_films(username: str, count: int):
         response = giga([prompt, human_message])
         recommended_films = list(filter(lambda x: x != "", response.content.split("\n")))
         for film in recommended_films:
-            film_data = film.split(". ")[1].strip('"').strip("'")
-            res_names.append(film_data)
+            film_name = film.split(". ")[1].strip('"').strip("'")
+            res_names.append(film_name)
 
         attempts = 0
         while len(res_names) < count:
@@ -75,9 +75,9 @@ def generate_recommended_films(username: str, count: int):
             response = giga([prompt, human_message])
             recommended_films = list(filter(lambda x: x != "", response.content.split("\n")))
             for film in recommended_films:
-                film_data = film.split(". ")[1].strip('"').strip("'")
-                if (film_data not in res_names):
-                    res_names.append(film_data)
+                film_name = film.split(". ")[1].strip('"').strip("'")
+                if (film_name not in res_names):
+                    res_names.append(film_name)
             attempts += 1
             if attempts == 3:
                 return "GigaChat is stupid! =(", 500
