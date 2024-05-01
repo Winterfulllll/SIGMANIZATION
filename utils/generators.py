@@ -104,10 +104,3 @@ def generate_recommended_films(username: str, count: int):
 
     except Exception as e:
         return {"error": str(e)}, 500
-
-def get_film_id(film_name, year=""):
-    url = f"https://api.kinopoisk.dev/v1.4/movie/search?page=1&limit=10&selectFields=id&year={year}"
-    encoded_query_text = quote(film_name, encoding='utf-8')
-    url += f"&query={encoded_query_text}"
-    response = requests.get(url, headers={"accept": "application/json", "X-API-KEY": os.getenv("MOVIES_API")}).json()
-    return response["docs"][0]["id"]
