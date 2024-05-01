@@ -2,10 +2,8 @@ from langchain.schema import HumanMessage, SystemMessage
 from configuration import giga, app_config as config
 from utils.preferences import get_preference
 from utils.reviews import get_review
-from urllib.parse import quote
 import requests
 import json
-import os
 
 
 def generate_film_plot(film: str) -> str:
@@ -54,44 +52,30 @@ def generate_recommended_films(username: str, count: int):
 
         text += "\nОценки пользователя:\n"
         for review in get_review(username):
-            rating = review.get("rating", None)
+            rating = review["rating"]
             if rating:
                 film_response = requests.get(
                     url=f'''https://api.kinopoisk.dev/v1.4/movie?externalId.imdb={review["item_id"]}&selectFields=name''',
                     headers={"accept": "application/json", 'X-API-KEY': config["MOVIES_API"]}
                 ).json()
-
                 if film_response["total"] != 0:
                     text += f'''- "{film_response['docs'][0]['name']}": {rating},\n'''
 
         res_names = []
         human_message = HumanMessage(content=text)
         response = giga([prompt, human_message])
-        recommended_films = response.content
-        print(recommended_films)
-        # Удаляем все ненужные пустые строки (если гигачат решит лишние отступы добавить)
-        recommended_films = list(filter(lambda x: x != "", recommended_films.split("\n")))
-        # Достаем из всего что он скинул - id
+        recommended_films = list(filter(lambda x: x != "", response.content.split("\n")))
         for film in recommended_films:
-            if film[0].isdigit():
-                film_data = film.split(". ")[1].strip('"').strip("'")
-            else:
-                film_data = film.strip('"').strip("'")
+            film_data = film.split(". ")[1].strip('"').strip("'")
             res_names.append(film_data)
 
-        # Проверочка
         attempts = 0
         while len(res_names) < count:
             human_message = HumanMessage(content=f"Сгенируй еще {count} штук фильмов!\n" + text)
             response = giga([prompt, human_message])
-            recommended_films = response.content
-            recommended_films = list(filter(lambda x: x != "", recommended_films.split("\n")))
-            print(recommended_films)
+            recommended_films = list(filter(lambda x: x != "", response.content.split("\n")))
             for film in recommended_films:
-                if film[0].isdigit():
-                    film_data = film.split(". ")[1].strip('"').strip("'")
-                else:
-                    film_data = film.strip('"').strip("'")
+                film_data = film.split(". ")[1].strip('"').strip("'")
                 if (film_data not in res_names):
                     res_names.append(film_data)
             attempts += 1
