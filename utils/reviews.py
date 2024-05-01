@@ -30,7 +30,7 @@ def post_review(username, body):
         item_id = body.get('item_id', None)
         item_category = body.get('item_category', None)
         viewed = body.get('viewed', None)
-        review = body.get('review', None)
+        review_text = body.get('review', None)
         rating = body.get('rating', None)
 
         if not all([item_id, item_category, viewed]):
@@ -39,12 +39,15 @@ def post_review(username, body):
         if User.query.filter_by(username=username).one_or_none() is None:
             return abort(408, f"Invalid input or user with username '{username}' is not found.")
 
+        if rating < 0 or rating > 10:
+            return abort(400, "Invalid rating value (must be between 0 and 10)")
+
         if Review.query.filter((Review.username == username) & (Review.item_id == item_id) & (
-            Review.item_category == item_category)).one_or_none() is not None:
+                Review.item_category == item_category)).one_or_none() is not None:
             return abort(409, f"Review for item '{body.get('item_id')}' already exists")
 
         new_review = Review(username=username, item_id=item_id, item_category=item_category,
-                            viewed=viewed, review=review, rating=rating)
+                            viewed=viewed, review=review_text, rating=rating)
         db.session.add(new_review)
         db.session.commit()
 

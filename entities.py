@@ -1,19 +1,6 @@
 from configuration import db, app
 from datetime import datetime, timezone
-from marshmallow_enum import EnumField
 from enum import Enum
-
-
-class PreferenceType(Enum):
-    GENRE = "genres.name"
-    YEAR = "year"
-    COUNTRY = "countries.name"
-    RATING_IMDB = "rating.imdb"
-
-
-class Category(Enum):
-    MOVIES = "movies"
-    BOOKS = "books"
 
 
 class User(db.Model):
@@ -31,9 +18,9 @@ class Preference(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     username = db.Column(db.String(25), db.ForeignKey('users.username'),
                          nullable=False)
-    type = EnumField(PreferenceType, required=True)
+    type = db.Column(db.String(50), nullable=False)
     type_value = db.Column(db.Text)
-    category = EnumField(Category, required=True)
+    category = db.Column(db.String(50), nullable=False)
     timestamp = db.Column(db.DateTime, default=datetime.now(timezone.utc))
 
     user = db.relationship('User',
@@ -46,10 +33,10 @@ class Review(db.Model):
     username = db.Column(db.String(25), db.ForeignKey('users.username'),
                          nullable=False)
     item_id = db.Column(db.String(50), nullable=False)
-    item_category = EnumField(Category, required=True)
+    item_category = db.Column(db.String(50), nullable=False)
     viewed = db.Column(db.Boolean, default=False)
     review = db.Column(db.Text)
-    rating = db.Column(db.Integer)
+    rating = db.Column(db.SmallInteger)
     timestamp = db.Column(db.DateTime, default=datetime.now(timezone.utc))
 
     user = db.relationship('User',

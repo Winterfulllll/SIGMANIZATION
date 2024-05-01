@@ -482,17 +482,19 @@ components:
         type:
           type: string
           enum:
-            - genre
-            - year
-            - country
-            - rating_imdb
+            - GENRE
+            - YEAR
+            - COUNTRY
+            - RATING_IMDB
+          description: Type of preference (GENRE, YEAR, COUNTRY, RATING_IMDB)
         type_value:
           type: string
         category:
           type: string
           enum:
-            - movies
-            - books
+            - MOVIE
+            - BOOK
+          description: Category of item (MOVIE, BOOK)
         timestamp:
           type: string
 
@@ -512,8 +514,9 @@ components:
         item_category:
           type: string
           enum:
-            - movies
-            - books
+            - MOVIE
+            - BOOK
+          description: Category of item (MOVIE, BOOK)
         viewed:
           type: boolean
         review:

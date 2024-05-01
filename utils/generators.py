@@ -1,9 +1,9 @@
 from langchain.schema import HumanMessage, SystemMessage
 from configuration import giga, app_config as config
-from flask import jsonify
 from utils.preferences import get_preference
 from utils.reviews import get_review
 import requests
+import json
 
 
 def generate_film_plot(film: str) -> str:
@@ -23,11 +23,11 @@ def generate_film_plot(film: str) -> str:
                     "Ответ должен быть в HTML формате")
         human_message = HumanMessage(content=f"Какой сюжет у фильма: {film}")
         response = giga([prompt, human_message])
-        plot = response.content
+        plot = {"plot": response.content}
         return plot
 
     except Exception as e:
-        return jsonify({"error": f"Произошла непредвиденная ошибка: {str(e)}"}), 500
+        return {"error": str(e)}, 500
 
 
 def generate_recommended_films(username: str, count: int):
@@ -42,35 +42,43 @@ def generate_recommended_films(username: str, count: int):
         str: A JSON string containing a list of recommended film IMDB IDs.
     """
     try:
-        films_header = {
-            'X-API-KEY': config["MOVIES_API"]
-        }
-
         prompt = SystemMessage(
             content="Ты - полезный помощник с искусственным интеллектом, обладающий обширными знаниями о фильмах. " +
             "Я предоставлю тебе какие фильмы нравятся пользователю и какие оценки он ставил различным фильмам. " +
-            f"Ты на их основе сгенерируй список не повторяющихся IMDB ID рекомендованных данному пользователю фильмов, в количестве строго равном {count}. " +
-            "Ответ должен быть в формате JSON списка")
-        text = "Предпочтения пользователя:\n\n"
+            f"Сгенерируй список из ровно {count} не повторяющихся IMDB ID значений фильмов, " +
+            'рекомендованных данному пользователю. Список должен быть в формате JSON, например: ["tt0120338", "tt0088763"].'
+        )
+        text = f"Предпочтения пользователя:\n"
 
         for preference in get_preference(username):
-            text += f'- {preference["type"]}:{preference["type_value"]}\n'
+            text += f'- {preference["type"]}: {preference["type_value"]}\n'
 
-        text += "Оценки пользователя:\n\n"
+        text += "\nОценки пользователя:\n"
         for review in get_review(username):
-            film_response = requests.get(
-                url=f'''https://api.kinopoisk.dev/v1.4/movie?externalId.imdb={review["item_id"]}&selectFields=name''',
-                headers=films_header
-            ).json()
+            rating = review.get("rating", None)
+            if rating:
+                film_response = requests.get(
+                    url=f'''https://api.kinopoisk.dev/v1.4/movie?externalId.imdb={review["item_id"]}&selectFields=name''',
+                    headers={'X-API-KEY': config["MOVIES_API"]}
+                ).json()
 
-            film_name = film_response["docs"]["name"]
-            text += f'- {film_name}:{review["rating"]},\n'
+                if film_response["total"] != 0:
+                    text += f'''- "{film_response['docs'][0]['name']}": {rating},\n'''
 
         human_message = HumanMessage(content=text)
         response = giga([prompt, human_message])
-        return jsonify(response.content)
+        recommended_films = json.loads(response.content)
 
-    except requests.exceptions.RequestException as e:
-        return jsonify({"error": f"Ошибка при выполнении запроса: {str(e)}"}), 500
+        attempts = 0
+        while len(recommended_films) != count:
+            human_message = HumanMessage(content=f"Сгенируй ровно {count} фильмов!\n" + text)
+            response = giga([prompt, human_message])
+            recommended_films = json.loads(response.content)
+            attempts += 1
+            if attempts == 2:
+                return "GigaChat is stupid! =(", 500
+
+        return recommended_films
+
     except Exception as e:
-        return jsonify({"error": f"Произошла непредвиденная ошибка: {str(e)}"}), 500
+        return {"error": str(e)}, 500
