@@ -5,7 +5,7 @@ function fetchViewedFilms() {
       "Content-Type": "application/json",
       "API-KEY": service_api_key,
     },
-  })
+  });
 }
 
 function createMovieElement(movie) {

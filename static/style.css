@@ -79,14 +79,14 @@ body {
 
 /* Стиль для модального окна */
 .modal-content {
-    font-family: Arial, sans-serif;
-    background-color: white;
-    margin: 0 auto;
-    margin-top: 50px; /* 15% сверху и центрировано по горизонтали */
-    padding: 20px;
-    width: 1200px;
-    height: 670px;
-    border-radius: 5px;
+  font-family: Arial, sans-serif;
+  background-color: white;
+  margin: 0 auto;
+  margin-top: 50px; /* 15% сверху и центрировано по горизонтали */
+  padding: 20px;
+  width: 1200px;
+  height: 670px;
+  border-radius: 5px;
 }
 
 /* Стиль для кнопки закрытия модального окна */
@@ -368,52 +368,44 @@ input[type="password"] {
   font-size: 20px;
 }
 
-
-
-.preferences{
-    width: 1200px;
+.preferences {
+  width: 1200px;
 }
 
-.preferencesButtons{
-    display: flex;
-    width: 100%;
+.preferencesButtons {
+  display: flex;
+  width: 100%;
 }
 
-#dropdownButtonPreferenceGenre{
-    width: 250px;
+#dropdownButtonPreferenceGenre {
+  width: 250px;
 }
 
-#dropdownButtonPreferenceCountry{
-    width: 250px;
-
+#dropdownButtonPreferenceCountry {
+  width: 250px;
 }
 
-#dropdownButtonPreferenceYear{
-    width: 250px;
-
+#dropdownButtonPreferenceYear {
+  width: 250px;
 }
 
-
-
-.preferences{
-    width: 1200px;
+.preferences {
+  width: 1200px;
 }
 
-.preferencesButtons{
-    display: flex;
-    width: 100%;
+.preferencesButtons {
+  display: flex;
+  width: 100%;
 }
 
-#dropdownButtonPreferenceGenre{
-    width: 250px;
+#dropdownButtonPreferenceGenre {
+  width: 250px;
 }
 
-#dropdownButtonPreferenceCountry{
-    width: 250px;
-
+#dropdownButtonPreferenceCountry {
+  width: 250px;
 }
 
-#dropdownButtonPreferenceYear{
-    width: 250px;
-
+#dropdownButtonPreferenceYear {
+  width: 250px;
 }
