@@ -306,23 +306,68 @@ background-color: #0056b3;
 
 
 
-
-
-
-
-
-#movies-container {
-    max-width: 100%;
-    display: flex;
-    flex-wrap: nowrap;
-    overflow-x: auto; /* Добавляет горизонтальную прокрутку если содержимое шире контейнера */
-    gap: 15px; /* Расстояние между карточками фильмов */
-    padding: 15px; /* Добавляет отступ внутри контейнера */
+#defolt{
+    display: flex; /* Превращает контейнер в строку */
+    align-items: center; /* Центрирует все элементы по вертикали */
+    justify-content: space-between; /* Размещает кнопки на противоположных концах контейнера */
+    width: 100%; /* Делает контейнер шириной на всю страницу */
+    height: 100%;
 }
 
+#pagination {
+    display: flex; /* Делает блок кнопок строкой */
+    gap: 10px; /* Промежуток между кнопками */
+    width: 100%;
+
+}
+
+#movies-container {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 5px; /* Расстояние между карточками фильмов */
+
+    align-items: center; /* Центрирует содержимое по горизонтали */
+    height: 100%; /* Устанавливает высоту на 100% контейнера */
+    box-sizing: border-box; /* Учитывает границы и отступы в размерах */
+    
+}
+
+#prev{
+    background-color: rgba(255, 255, 255, 0);
+    color: white;
+    max-width: 110px;
+    max-height: 100px;
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    border: none;
+    cursor: pointer;
+    border-radius: 7px;
+    margin-right: 10px;
+}
+
+#next{
+    background-color: rgba(255, 255, 255, 0);
+    color: white;
+    max-width: 110px;
+    max-height: 100px;
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    border: none;
+    cursor: pointer;
+    border-radius: 7px;
+    margin-left: 30px;
+}
+
+
+
+
 .movie-card {
+    margin-top: 30px;
     flex: 0 0 auto; /* Элементы не будут растягиваться или сжиматься */
-    width: 200px; /* Установите фиксированную ширину для карточек */
+    width: 20%; /* Установите фиксированную ширину для карточек */
+    max-height: 100%;
 }
 
 .movie-image {
@@ -331,7 +376,10 @@ background-color: #0056b3;
 }
 
 .movie-title {
-    margin-top: 8px;
-    text-align: center; /* Заголовок центрируется под изображением */
-    color: white;
+    margin-top: 15px;
+    white-space: nowrap; /* Предотвращает перенос текста на новую строку */
+    overflow: hidden; /* Обрезает содержимое, выходящее за пределы */
+    text-overflow: ellipsis; /* Добавляет троеточие в конце обрезанного текста */
+    color: rgb(191, 191, 191);
+    font-size: 20px;
 }

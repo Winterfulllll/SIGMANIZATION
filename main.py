@@ -34,6 +34,17 @@ def profile():
     except:
         return "Войдите в аккаунт!"
 
+@app.route("/settings")
+def settings():
+    try:
+        verify_jwt_in_request()
+        return render_template(
+            "settings.html",
+            current_user_username=get_jwt_identity()
+        )
+
+    except:
+        return "Войдите в аккаунт!"
 
 if __name__ == "__main__":
     app.run("main:app", host="0.0.0.0", port=8000)
