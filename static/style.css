@@ -84,9 +84,11 @@ body {
 .modal-content {
     font-family: Arial, sans-serif;
     background-color: white;
-    margin: 15% auto; /* 15% сверху и центрировано по горизонтали */
+    margin: 0 auto;
+    margin-top: 50px; /* 15% сверху и центрировано по горизонтали */
     padding: 20px;
-    width: 20%;
+    width: 1200px; 
+    height: 670px;
     border-radius: 5px;
 }
 
@@ -379,4 +381,29 @@ background-color: #0056b3;
     text-overflow: ellipsis; /* Добавляет троеточие в конце обрезанного текста */
     color: rgb(191, 191, 191);
     font-size: 20px;
+}
+
+
+
+.preferences{
+    width: 1200px;
+}
+
+.preferencesButtons{
+    display: flex;
+    width: 100%;
+}
+
+#dropdownButtonPreferenceGenre{
+    width: 250px;
+}
+
+#dropdownButtonPreferenceCountry{
+    width: 250px;
+
+}
+
+#dropdownButtonPreferenceYear{
+    width: 250px;
+
 }
