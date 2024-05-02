@@ -17,6 +17,7 @@
             src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <link rel="stylesheet"
             href="{{ url_for('static', filename='style.css') }}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     </head>
     <body>
         <div class="container">
@@ -170,8 +171,10 @@
 
         </div>
 
-        <div class="container">
+        <div class="container" id="defolt">
+            <button id="prev"> <i class="fa-solid fa-angle-left fa-2xl"></i> </button>
             <div id="movies-container" class="row"></div>
+            <button id="next"> <i class="fa-solid fa-angle-right fa-2xl"></i></button>
         </div>
 
         <script>
@@ -302,7 +305,7 @@
         });
 
         let currentPage = 1;
-        let onPage = 7;
+        let onPage = 5;
 
         function fetchMovies() {
             fetch(`https://api.kinopoisk.dev/v1.4/movie?page=${currentPage}&limit=${onPage}&selectFields=id&selectFields=name&selectFields=poster&notNullFields=id&notNullFields=name&notNullFields=poster.url`, {
@@ -316,9 +319,11 @@
             .then(data => {
                 const movies = data.docs;
                 const totalMovies = data.total;
-                const moviesContainer = document.getElementById('movies-container');
-                moviesContainer.innerHTML = '';
 
+                const moviesContainer = document.getElementById('movies-container');
+                moviesContainer.innerHTML = ''; // Очищаем контейнер
+
+                // Добавляем фильмы в контейнер
                 movies.forEach(movie => {
                     const movieElement = createMovieElement(movie);
                     if (movieElement) {
@@ -326,34 +331,35 @@
                     }
                 });
 
-                // Создаем элементы для пагинации
-                const paginationContainer = document.createElement('div');
-                paginationContainer.className = 'pagination';
+                // Получаем кнопки "Предыдущая" и "Следующая"
+                const prevButton = document.getElementById('prev');
+                const nextButton = document.getElementById('next');
 
-                const prevButton = document.createElement('button');
-                prevButton.textContent = '<< Предыдущая';
-                prevButton.disabled = currentPage === 1;
-                prevButton.addEventListener('click', () => {
-                    currentPage--;
-                    fetchMovies();
-                });
-
-                const nextButton = document.createElement('button');
-                nextButton.textContent = 'Следующая >>';
+                // Обновляем состояние кнопок
+                prevButton.style.display = (currentPage === 1) ? 'none' : 'block';
                 nextButton.disabled = currentPage * onPage >= totalMovies;
-                nextButton.addEventListener('click', () => {
-                    currentPage++;
-                    fetchMovies();
-                });
 
-                paginationContainer.appendChild(prevButton);
-                paginationContainer.appendChild(nextButton);
+                prevButton.removeEventListener('click', handlePrevClick); // Удаляем предыдущий обработчик
+                nextButton.removeEventListener('click', handleNextClick); // Удаляем предыдущий обработчик
 
-                moviesContainer.appendChild(paginationContainer);
+                prevButton.addEventListener('click', handlePrevClick); // Добавляем новый обработчик
+                nextButton.addEventListener('click', handleNextClick); // Добавляем новый обработчик
             })
             .catch(error => {
                 console.error('Ошибка при получении данных:', error);
             });
+        }
+
+        // Обработчик для кнопки "Предыдущая"
+        function handlePrevClick() {
+            currentPage--;
+            fetchMovies();
+        }
+
+        // Обработчик для кнопки "Следующая"
+        function handleNextClick() {
+            currentPage++;
+            fetchMovies();
         }
 
         function createMovieElement(movie) {
@@ -370,7 +376,7 @@
             movieImage.src = movie.poster.previewUrl;
             movieImage.alt = movie.name;
             movieImage.className = 'movie-image';
-
+  
             // Создаем название фильма
             const movieTitle = document.createElement('h3');
             movieTitle.textContent = movie.name;
