@@ -51,7 +51,7 @@
             class="btn btn-outline-primary me-2"
             id="modalBtn"
           >
-            Sign-up
+            Register
           </button>
           <button
             type="button"
@@ -1065,18 +1065,13 @@
     </div>
 
     <div class="container" id="defolt">
-      <button id="prev"><i class="fa-solid fa-angle-left fa-2xl"></i></button>
       <div id="movies-container" class="row"></div>
-      <button id="next"><i class="fa-solid fa-angle-right fa-2xl"></i></button>
     </div>
 
-    <div class="container">
-      <div id="movies-container-2" class="row"></div>
-    </div>
     <script>
       const movies_api_key = "{{ movies_api_key }}";
       const service_api_key = "{{ service_api_key }}";
     </script>
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script src="{{ url_for('static', filename='mainpage.js') }}"></script>
   </body>
 </html>

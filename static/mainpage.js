@@ -62,6 +62,8 @@ function loginUser() {
     });
 }
 
+// =============================================================================================================================
+
 // Получаем модальное окно
 var modal = document.getElementById("myModal");
 
@@ -87,6 +89,8 @@ window.onclick = function (event) {
     modal.style.display = "none";
   }
 };
+
+// =============================================================================================================================
 
 // Получаем модальное окно
 var modal2 = document.getElementById("myModal2");
@@ -119,6 +123,8 @@ var loginBtn = document.querySelector(".btn-outline-primary.me-2");
 loginBtn.addEventListener("click", function () {
   modal.style.display = "block";
 });
+
+// =============================================================================================================================
 
 let currentPage = 1;
 
