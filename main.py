@@ -34,6 +34,7 @@ def profile():
     except:
         return "Войдите в аккаунт!"
 
+
 @app.route("/settings")
 def settings():
     try:
@@ -45,6 +46,7 @@ def settings():
 
     except:
         return "Войдите в аккаунт!"
+
 
 if __name__ == "__main__":
     app.run("main:app", host="0.0.0.0", port=8000)

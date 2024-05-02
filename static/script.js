@@ -121,8 +121,10 @@ loginBtn.addEventListener("click", function () {
 });
 
 let currentPage = 1;
+
 let onPage = 5;
 
+/*
 function fetchMovies() {
   fetch(
     `https://api.kinopoisk.dev/v1.4/movie?page=${currentPage}&limit=${onPage}&selectFields=id&selectFields=name&selectFields=poster&notNullFields=id&notNullFields=name&notNullFields=poster.url`,
@@ -158,18 +160,23 @@ function fetchMovies() {
       prevButton.style.display = currentPage === 1 ? "none" : "block";
       nextButton.disabled = currentPage * onPage >= totalMovies;
 
-      prevButton.removeEventListener("click", handlePrevClick); // Удаляем предыдущий обработчик
-      nextButton.removeEventListener("click", handleNextClick); // Удаляем предыдущий обработчик
+      prevButton.removeEventListener("click", handlePrevClick);
+      nextButton.removeEventListener("click", handleNextClick);
 
-      prevButton.addEventListener("click", handlePrevClick); // Добавляем новый обработчик
-      nextButton.addEventListener("click", handleNextClick); // Добавляем новый обработчик
+      prevButton.addEventListener("click", handlePrevClick);
+      nextButton.addEventListener("click", handleNextClick);
     })
     .catch((error) => {
       console.error("Ошибка при получении данных:", error);
     });
 }
-
-function fetchMoviesByFilters(genres, countries, years, ratings) {
+*/
+function fetchMoviesByFilters(
+  genres = [],
+  countries = [],
+  years = [],
+  ratings = []
+) {
   let url = `https://api.kinopoisk.dev/v1.4/movie?page=${currentPage}&limit=${onPage}&selectFields=id&selectFields=name&selectFields=poster&notNullFields=id&notNullFields=name&notNullFields=poster.url`;
 
   if (genres.length > 0) {
@@ -199,9 +206,11 @@ function fetchMoviesByFilters(genres, countries, years, ratings) {
     .then((data) => {
       const movies = data.docs;
       const totalMovies = data.total;
-      const moviesContainer = document.getElementById("movies-container-2");
-      moviesContainer.innerHTML = "";
 
+      const moviesContainer = document.getElementById("movies-container");
+      moviesContainer.innerHTML = ""; // Очищаем контейнер
+
+      // Добавляем фильмы в контейнер
       movies.forEach((movie) => {
         const movieElement = createMovieElement(movie);
         if (movieElement) {
@@ -209,30 +218,19 @@ function fetchMoviesByFilters(genres, countries, years, ratings) {
         }
       });
 
-      // Создаем элементы для пагинации
-      const paginationContainer = document.createElement("div");
-      paginationContainer.className = "pagination";
+      // Получаем кнопки "Предыдущая" и "Следующая"
+      const prevButton = document.getElementById("prev");
+      const nextButton = document.getElementById("next");
 
-      const prevButton = document.createElement("button");
-      prevButton.textContent = "<< Предыдущая";
-      prevButton.disabled = currentPage === 1;
-      prevButton.addEventListener("click", () => {
-        currentPage--;
-        fetchMovies();
-      });
-
-      const nextButton = document.createElement("button");
-      nextButton.textContent = "Следующая >>";
+      // Обновляем состояние кнопок
+      prevButton.style.display = currentPage === 1 ? "none" : "block";
       nextButton.disabled = currentPage * onPage >= totalMovies;
-      nextButton.addEventListener("click", () => {
-        currentPage++;
-        fetchMovies();
-      });
 
-      paginationContainer.appendChild(prevButton);
-      paginationContainer.appendChild(nextButton);
+      prevButton.removeEventListener("click", handlePrevClick);
+      nextButton.removeEventListener("click", handleNextClick);
 
-      moviesContainer.appendChild(paginationContainer);
+      prevButton.addEventListener("click", handlePrevClick);
+      nextButton.addEventListener("click", handleNextClick);
     })
     .catch((error) => {
       console.error("Ошибка при получении данных:", error);
@@ -243,47 +241,54 @@ function fetchMoviesByFilters(genres, countries, years, ratings) {
 const allCheckboxes = document.querySelectorAll('input[type="checkbox"]');
 allCheckboxes.forEach((checkbox) => {
   checkbox.addEventListener("change", () => {
-    const selectedGenres = [];
-    const selectedCountries = [];
-    const selectedYears = [];
-    const selectedRatings = [];
-    allCheckboxes.forEach((checkbox) => {
-      if (checkbox.checked) {
-        switch (checkbox.name) {
-          case "genre":
-            selectedGenres.push(checkbox.dataset.value);
-            break;
-          case "country":
-            selectedCountries.push(checkbox.dataset.value);
-            break;
-          case "year":
-            selectedYears.push(checkbox.dataset.value);
-            break;
-          case "rating":
-            selectedRatings.push(checkbox.dataset.value);
-            break;
-        }
-      }
-    });
-    fetchMoviesByFilters(
-      selectedGenres,
-      selectedCountries,
-      selectedYears,
-      selectedRatings
-    );
+    fetchMoviesAndUpdate();
   });
 });
+
+fetchMoviesByFilters();
 
 // Обработчик для кнопки "Предыдущая"
 function handlePrevClick() {
   currentPage--;
-  fetchMovies();
+  fetchMoviesAndUpdate();
 }
 
 // Обработчик для кнопки "Следующая"
 function handleNextClick() {
   currentPage++;
-  fetchMovies();
+  fetchMoviesAndUpdate();
+}
+
+function fetchMoviesAndUpdate() {
+  const selectedGenres = [];
+  const selectedCountries = [];
+  const selectedYears = [];
+  const selectedRatings = [];
+  allCheckboxes.forEach((checkbox) => {
+    if (checkbox.checked) {
+      switch (checkbox.name) {
+        case "genre":
+          selectedGenres.push(checkbox.dataset.value);
+          break;
+        case "country":
+          selectedCountries.push(checkbox.dataset.value);
+          break;
+        case "year":
+          selectedYears.push(checkbox.dataset.value);
+          break;
+        case "rating":
+          selectedRatings.push(checkbox.dataset.value);
+          break;
+      }
+    }
+  });
+
+  fetchMoviesByFilters(
+    selectedGenres,
+    selectedCountries,
+    selectedYears,
+    selectedRatings
+  );
 }
 
 function createMovieElement(movie) {
@@ -314,4 +319,4 @@ function createMovieElement(movie) {
   return movieElement;
 }
 
-document.addEventListener("DOMContentLoaded", fetchMovies);
+// document.addEventListener('DOMContentLoaded', fetchMovies);
