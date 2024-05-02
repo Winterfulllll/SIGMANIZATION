@@ -212,6 +212,7 @@ const preferenceCheckboxes = document.querySelectorAll(
 );
 
 let currentPage = 1;
+let currentPage2 = 1;
 
 let onPage = 5;
 
@@ -316,7 +317,8 @@ function fetchMoviesByFilters(
 
       // Обновляем состояние кнопок
       prevButton.style.display = currentPage === 1 ? "none" : "block";
-      nextButton.style.display = currentPage * onPage >= totalMovies ? "none" : "block";
+      nextButton.style.display =
+        currentPage * onPage >= totalMovies ? "none" : "block";
 
       prevButton.removeEventListener("click", handlePrevClick);
       nextButton.removeEventListener("click", handleNextClick);
@@ -381,6 +383,80 @@ function fetchMoviesAndUpdate() {
     selectedRatings
   );
 }
+
+function fetchRecommendedMovies() {
+  fetch(
+    `/api/generate_recomended_films?username=${current_user_username}&count=${20}`,
+    {
+      method: "GET",
+      headers: {
+        "API-KEY": service_api_key,
+        "Content-Type": "application/json",
+      },
+    }
+  )
+    .then((response) => response.json())
+    .then((data) => {
+      if (data) {
+        const imdbIds = data;
+        fetch(
+          `https://api.kinopoisk.dev/v1.4/movie?page=${currentPage2}&limit=${onPage}&externalId.imdb=${imdbIds.join(
+            "&externalId.imdb="
+          )}&selectFields=id&selectFields=name&selectFields=poster&notNullFields=id&notNullFields=name&notNullFields=poster.url`,
+          {
+            method: "GET",
+            headers: {
+              "X-API-KEY": movies_api_key,
+              "Content-Type": "application/json",
+            },
+          }
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
+            const movies = data.docs;
+            const totalMovies = data.total;
+
+            const moviesContainer =
+              document.getElementById("movies-container-2");
+            moviesContainer.innerHTML = ""; // Очищаем контейнер
+
+            // Добавляем фильмы в контейнер
+            movies.forEach((movie) => {
+              const movieElement = createMovieElement(movie);
+              if (movieElement) {
+                moviesContainer.appendChild(movieElement);
+              }
+            });
+
+            // Получаем кнопки "Предыдущая" и "Следующая"
+            const prevButton = document.getElementById("prev-2");
+            const nextButton = document.getElementById("next-2");
+
+            // Обновляем состояние кнопок
+            prevButton.style.display = currentPage === 1 ? "none" : "block";
+            nextButton.style.display =
+              currentPage * onPage >= totalMovies ? "none" : "block";
+
+            prevButton.removeEventListener("click", handlePrevClick);
+            nextButton.removeEventListener("click", handleNextClick);
+
+            prevButton.addEventListener("click", handlePrevClick);
+            nextButton.addEventListener("click", handleNextClick);
+          })
+          .catch((error) => {
+            console.error("Ошибка при получении данных:", error);
+          });
+      } else {
+        console.error("API не вернул список рекомендаций.");
+      }
+    })
+    .catch((error) => {
+      console.error("Ошибка при получении рекомендаций:", error);
+    });
+}
+
+document.addEventListener("DOMContentLoaded", fetchRecommendedMovies);
 
 function createMovieElement(movie) {
   if (!movie || !movie.poster.previewUrl || !movie.name) {
