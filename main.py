@@ -28,6 +28,21 @@ def profile():
         verify_jwt_in_request()
         return render_template(
             "profile.html",
+            current_user_username=get_jwt_identity(),
+            service_api_key=config["SECRET_KEY"],
+            movies_api_key=config["MOVIES_API"]
+        )
+
+    except:
+        return "Войдите в аккаунт!"
+
+
+@app.route("/settings")
+def settings():
+    try:
+        verify_jwt_in_request()
+        return render_template(
+            "settings.html",
             current_user_username=get_jwt_identity()
         )
 

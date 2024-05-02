@@ -1,4 +1,5 @@
 from langchain.schema import HumanMessage, SystemMessage
+from flask import abort
 from configuration import giga, app_config as config
 from utils.preferences import get_preference
 from utils.reviews import get_review
@@ -42,6 +43,9 @@ def generate_recommended_films(username: str, count: int):
         str: A JSON string containing a list of recommended film IMDB IDs.
     """
     try:
+        if count < 1 or count > 20:
+            return abort(400, "Invalid count value (must be between 1 and 20)")
+
         prompt = SystemMessage(
         content=f"Ты рекомендатор фильмов. Выведи {count} штук рекомендованных фильмов на основе предпочтений пользователя в формате: 1. Название. Без заголовка."
     )
@@ -59,7 +63,8 @@ def generate_recommended_films(username: str, count: int):
                     headers={"accept": "application/json", 'X-API-KEY': config["MOVIES_API"]}
                 ).json()
                 if film_response["total"] != 0:
-                    text += f'''- "{film_response['docs'][0]['name']}": {rating},\n'''
+                    text += f'''- "{film_response['docs']
+                                    [0]['name']}": {rating},\n'''
 
         res_names = []
         human_message = HumanMessage(content=text)
@@ -79,10 +84,8 @@ def generate_recommended_films(username: str, count: int):
                 if (film_name not in res_names):
                     res_names.append(film_name)
             attempts += 1
-            if attempts == 3:
-                return "GigaChat is stupid! =(", 500
-        res_names = res_names[:count]
-        json.dumps(res_names)
+            if attempts == 2:
+                return "GigaChat can not respond to this request", 500
 
         return res_names
 

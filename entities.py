@@ -1,6 +1,5 @@
 from configuration import db, app
 from datetime import datetime, timezone
-from enum import Enum
 
 
 class User(db.Model):

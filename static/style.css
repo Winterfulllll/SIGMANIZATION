@@ -1,337 +1,411 @@
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color:#100e19;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #100e19;
 }
 
 /* HEADER */
 
-
-.header_logo{
-    height: 38px;
-    width: 87px;
+.header_logo {
+  height: 38px;
+  width: 87px;
 }
 
-.content{
-    height: 100px;
-    width: 100%;
-    background-color:#1f1b2e;
-    border-radius: 10px;
+.content {
+  height: 100px;
+  width: 100%;
+  background-color: #1f1b2e;
+  border-radius: 10px;
 }
 
-#top_body{
-    margin-top: 5%;
+#top_body {
+  margin-top: 5%;
 }
 
-#filtrs{
-    margin-top: 1%;
+#filtrs {
+  margin-top: 1%;
 }
 
-#dropdownButton{
-    background-color: #1b1924 !important;
-    width: 100%;
-    height: 40px;
+#dropdownButton {
+  background-color: #1b1924 !important;
+  width: 100%;
+  height: 40px;
 
-    margin-top: 30px !important;
-    margin-bottom: 14px !important;
-    margin-left: 2%;
+  margin-top: 30px !important;
+  margin-bottom: 14px !important;
+  margin-left: 2%;
 }
 
-.buttons{
-    height: 100px;
-    width: 100%;
-
+.buttons {
+  height: 100px;
+  width: 100%;
 }
 
 .dropdown {
-    height: 100px;
-    width: 24.5%;
-    display: inline-block !important;
+  height: 100px;
+  width: 24.5%;
+  display: inline-block !important;
 }
 
-.default_text{
-    color: white;
+.default_text {
+  color: white;
 }
 
-#button_profile{
-    background-color: #1f1b2e;
-    color: white;
-    margin-left: 5px;
+#button_profile {
+  background-color: #1f1b2e;
+  color: white;
+  margin-left: 5px;
 }
 
-#button_main{
-    background-color: #1f1b2e;
-    color: white;
-    
+#button_main {
+  background-color: #1f1b2e;
+  color: white;
 }
 
 /* Стиль для фона модального окна (полупрозрачный фон) */
 .modal-background {
-    display: none;
-    position: fixed; 
-    z-index: 1; 
-    left: 0;
-    top: 0;
-    width: 100%; 
-    height: 100%; /* Полная высота */
-    overflow: auto; /* Включить прокрутку, если нужно */
-    background-color: rgb(0,0,0); /* Цвет фона */
-    background-color: rgba(0,0,0,0.9); /* Черный с небольшой прозрачностью */
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%; /* Полная высота */
+  overflow: auto; /* Включить прокрутку, если нужно */
+  background-color: rgb(0, 0, 0); /* Цвет фона */
+  background-color: rgba(0, 0, 0, 0.9); /* Черный с небольшой прозрачностью */
 }
 
 /* Стиль для модального окна */
 .modal-content {
-    font-family: Arial, sans-serif;
-    background-color: white;
-    margin: 15% auto; /* 15% сверху и центрировано по горизонтали */
-    padding: 20px;
-    width: 20%; 
-    border-radius: 5px;
+  font-family: Arial, sans-serif;
+  background-color: white;
+  margin: 0 auto;
+  margin-top: 50px; /* 15% сверху и центрировано по горизонтали */
+  padding: 20px;
+  width: 1200px;
+  height: 670px;
+  border-radius: 5px;
 }
 
 /* Стиль для кнопки закрытия модального окна */
 .close-button {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
 }
 
 .close-button:hover,
 .close-button:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 .close-button2 {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
 }
 
 .close-button2:hover,
 .close-button2:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
 }
 
-
 .login-container {
-    background-color: white;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 #sign {
-color: #333;
-text-align: center;
+  color: #333;
+  text-align: center;
 }
 
 form {
-display: flex;
-flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 input[type="name"],
 input[type="password"] {
-padding: 10px;
-margin-bottom: 10px;
-border: 1px solid #ddd;
-border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
 }
 
 .checkbox {
-margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 .checkbox label {
-cursor: pointer;
+  cursor: pointer;
 }
 
 .checkbox input {
-margin-right: 5px;
+  margin-right: 5px;
 }
 
 .login-button {
-background-color: #007bff;
-color: white;
-padding: 10px;
-border: none;
-border-radius: 5px;
-cursor: pointer;
+  background-color: #007bff;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 .login-button:hover {
-background-color: #0056b3;
+  background-color: #0056b3;
 }
 
 .profile-header {
-    color: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-
 .edit-profile-button a {
-    background-color: #555; /* Серый фон для кнопки */
-    color: white;
-    border: none;
-    padding: 10px 20px; /* Примерное значение, регулируйте по вашему усмотрению */
-    cursor: pointer; /* Курсор в виде руки при наведении на кнопку */
-    transition: background-color 0.3s; /* Плавное изменение фона при наведении */
-    margin-top: 16px;
-    border-radius: 10px;
+  background-color: #555; /* Серый фон для кнопки */
+  color: white;
+  border: none;
+  padding: 10px 20px; /* Примерное значение, регулируйте по вашему усмотрению */
+  cursor: pointer; /* Курсор в виде руки при наведении на кнопку */
+  transition: background-color 0.3s; /* Плавное изменение фона при наведении */
+  margin-top: 16px;
+  border-radius: 10px;
 }
 
 .edit-profile-button a:hover {
-    background-color: #666; /* Чуть более светлый серый при наведении */
+  background-color: #666; /* Чуть более светлый серый при наведении */
 }
 
-
 #settings {
-    font-family: 'Arial', sans-serif;
-    background-color: #100e19;
-    color: white;
-    margin: 0;
-    padding: 20px;
+  font-family: "Arial", sans-serif;
+  background-color: #100e19;
+  color: white;
+  margin: 0;
+  padding: 20px;
 }
 
 .profile-edit-container {
-    max-width: 600px;
-    margin: 0 auto;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 .breadcrumbs a,
 .breadcrumbs span {
-    color: #8d8d8d;
-    text-decoration: none;
+  color: #8d8d8d;
+  text-decoration: none;
 }
 
 .breadcrumbs a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 #edit-profile {
-    font-size: 2em;
-    color: #fff;
+  font-size: 2em;
+  color: #fff;
 }
 
 .instruction {
-    color: #bbb;
+  color: #bbb;
 }
 
 .form-container {
-    background-color: #333;
-    padding: 20px;
-    border-radius: 8px;
+  background-color: #333;
+  padding: 20px;
+  border-radius: 8px;
 }
-.form-container button{
-    margin-top: 10px;
+.form-container button {
+  margin-top: 10px;
 }
 
 .input-group {
-    margin-bottom: 15px;
+  margin-bottom: 15px;
 }
 
 .input-group label {
-    display: block;
-    margin-bottom: 5px;
+  display: block;
+  margin-bottom: 5px;
 }
 
 .input-group input[type="text"],
 .input-group input[type="email"],
 .input-group input[type="tel"] {
-    width: 50%;
-    padding: 10px;
-    margin-right: 10px;
-    border: none;
-    border-radius: 4px;
-    background-color: #aaa;
+  width: 50%;
+  padding: 10px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: #aaa;
 }
 
 .input-group button {
-    width: 100px;
-    padding: 10px;
-    border: none;
-    border-radius: 4px;
-    background-color: #4e4e4e;
-    color: white;
-    cursor: pointer;
+  width: 100px;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: #4e4e4e;
+  color: white;
+  cursor: pointer;
 }
 
 .input-group button:hover {
-    background-color: #5a5a5a;
+  background-color: #5a5a5a;
 }
 
-
-
 .preferences {
-    margin-top: 30px;
-    width: 600px;
-    margin: 0 auto;
+  margin-top: 30px;
+  width: 600px;
+  margin: 0 auto;
 }
 
 .dropdown-group {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 .dropdown-group label {
-    display: block;
-    margin-bottom: 5px;
+  display: block;
+  margin-bottom: 5px;
 }
 
 .dropdown-group select {
-    width: 100%;
-    padding: 10px;
-    border-radius: 4px;
-    background-color: #4e4e4e;
-    color: white;
-    border: none;
+  width: 100%;
+  padding: 10px;
+  border-radius: 4px;
+  background-color: #4e4e4e;
+  color: white;
+  border: none;
 }
 
 /* Стилизация стрелки выпадающего списка */
 .dropdown-group select {
-    background-image: url('data:image/svg+xml;utf8,<svg fill="white" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
-    background-repeat: no-repeat;
-    background-position-x: calc(100% - 10px);
-    background-position-y: 50%;
+  background-image: url('data:image/svg+xml;utf8,<svg fill="white" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+  background-repeat: no-repeat;
+  background-position-x: calc(100% - 10px);
+  background-position-y: 50%;
 }
 
+#defolt {
+  display: flex; /* Превращает контейнер в строку */
+  align-items: center; /* Центрирует все элементы по вертикали */
+  justify-content: space-between; /* Размещает кнопки на противоположных концах контейнера */
+  width: 100%; /* Делает контейнер шириной на всю страницу */
+  height: 100%;
+}
 
-
-
-
-
-
-
+#pagination {
+  display: flex; /* Делает блок кнопок строкой */
+  gap: 10px; /* Промежуток между кнопками */
+  width: 100%;
+}
 
 #movies-container {
-    max-width: 100%;
-    display: flex;
-    flex-wrap: nowrap;
-    overflow-x: auto; /* Добавляет горизонтальную прокрутку если содержимое шире контейнера */
-    gap: 15px; /* Расстояние между карточками фильмов */
-    padding: 15px; /* Добавляет отступ внутри контейнера */
+  margin-top: 30px;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 5px; /* Расстояние между карточками фильмов */
+  height: 100%; /* Устанавливает высоту на 100% контейнера */
+  width: 100%;
+  justify-content: space-between; /* Распределяет элементы равномерно */
+}
+
+#prev {
+  background-color: rgba(255, 255, 255, 0);
+  color: white;
+  max-width: 110px;
+  max-height: 100px;
+  text-align: center;
+  justify-content: center;
+  display: flex;
+  border: none;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+#next {
+  background-color: rgba(255, 255, 255, 0);
+  color: white;
+  max-width: 20px;
+  max-height: 100px;
+  text-align: center;
+  justify-content: center;
+  display: flex;
+  border: none;
+  cursor: pointer;
+  margin-left: 20px;
 }
 
 .movie-card {
-    flex: 0 0 auto; /* Элементы не будут растягиваться или сжиматься */
-    width: 200px; /* Установите фиксированную ширину для карточек */
+  flex: 1; /* Элементы не будут растягиваться или сжиматься */
+  max-width: 245px; /* Установите фиксированную ширину для карточек */
+  max-height: 90%;
+  overflow: hidden;
 }
 
 .movie-image {
-    width: 100%; /* Изображение будет растягиваться на всю ширину карточки */
-    border-radius: 10px; /* Скругленные углы для изображений */
+  width: 100%; /* Изображение будет растягиваться на всю ширину карточки */
+  border-radius: 10px; /* Скругленные углы для изображений */
 }
 
 .movie-title {
-    margin-top: 8px;
-    text-align: center; /* Заголовок центрируется под изображением */
-    color: white;
+  margin-top: 15px;
+  white-space: nowrap; /* Предотвращает перенос текста на новую строку */
+  overflow: hidden; /* Обрезает содержимое, выходящее за пределы */
+  text-overflow: ellipsis; /* Добавляет троеточие в конце обрезанного текста */
+  color: rgb(191, 191, 191);
+  font-size: 20px;
+}
+
+.preferences {
+  width: 1200px;
+}
+
+.preferencesButtons {
+  display: flex;
+  width: 100%;
+}
+
+#dropdownButtonPreferenceGenre {
+  width: 250px;
+}
+
+#dropdownButtonPreferenceCountry {
+  width: 250px;
+}
+
+#dropdownButtonPreferenceYear {
+  width: 250px;
+}
+
+.preferences {
+  width: 1200px;
+}
+
+.preferencesButtons {
+  display: flex;
+  width: 100%;
+}
+
+#dropdownButtonPreferenceGenre {
+  width: 250px;
+}
+
+#dropdownButtonPreferenceCountry {
+  width: 250px;
+}
+
+#dropdownButtonPreferenceYear {
+  width: 250px;
 }
