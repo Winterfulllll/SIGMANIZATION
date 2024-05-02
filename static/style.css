@@ -322,14 +322,13 @@ background-color: #0056b3;
 }
 
 #movies-container {
+    margin-top: 30px;
     display: flex;
     flex-wrap: nowrap;
     gap: 5px; /* Расстояние между карточками фильмов */
-
-    align-items: center; /* Центрирует содержимое по горизонтали */
     height: 100%; /* Устанавливает высоту на 100% контейнера */
-    box-sizing: border-box; /* Учитывает границы и отступы в размерах */
-    
+    width: 100%;  
+    justify-content: space-between; /* Распределяет элементы равномерно */
 }
 
 #prev{
@@ -342,32 +341,29 @@ background-color: #0056b3;
     display: flex;
     border: none;
     cursor: pointer;
-    border-radius: 7px;
     margin-right: 10px;
 }
 
 #next{
     background-color: rgba(255, 255, 255, 0);
     color: white;
-    max-width: 110px;
+    max-width: 20px;
     max-height: 100px;
     text-align: center;
     justify-content: center;
     display: flex;
     border: none;
     cursor: pointer;
-    border-radius: 7px;
-    margin-left: 30px;
+    margin-left: 20px;
 }
 
 
 
 
 .movie-card {
-    margin-top: 30px;
-    flex: 0 0 auto; /* Элементы не будут растягиваться или сжиматься */
-    width: 20%; /* Установите фиксированную ширину для карточек */
-    max-height: 100%;
+    flex: 1; /* Элементы не будут растягиваться или сжиматься */
+    max-width: 245px; /* Установите фиксированную ширину для карточек */
+    max-height: 90%;
 }
 
 .movie-image {
