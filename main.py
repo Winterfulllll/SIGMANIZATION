@@ -35,6 +35,7 @@ def profile():
     except:
         return "Войдите в аккаунт!"
 
+
 @app.route("/settings")
 def settings():
     try:
