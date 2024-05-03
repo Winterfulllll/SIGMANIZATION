@@ -294,6 +294,7 @@ function createMovieElement(movie) {
   // Создаем контейнер для карточки фильма
   const movieElement = document.createElement("div");
   movieElement.className = "movie-card";
+  movieElement.setAttribute("data-id", movie.id);
 
   // Создаем элемент изображения для постера фильма
   const movieImage = document.createElement("img");
@@ -309,6 +310,10 @@ function createMovieElement(movie) {
   // Объединяем элементы внутри карточки фильма
   movieElement.appendChild(movieImage);
   movieElement.appendChild(movieTitle);
+
+  movieElement.addEventListener("click", () => {
+    window.location.href = `/movie/${movie.id}`; // Переходим на страницу фильма
+  });
 
   // Возвращаем готовый элемент
   return movieElement;
