@@ -19,6 +19,7 @@ class Encryptor:
             Checks if the decrypted encrypted data matches the original data,
             returning True if they are equivalent, False otherwise.
     """
+
     def __init__(self, secret_key):
         self.cipher = Fernet(secret_key)
 

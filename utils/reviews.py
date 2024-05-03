@@ -38,9 +38,9 @@ def post_review(username, body):
 
         if User.query.filter_by(username=username).one_or_none() is None:
             return abort(408, f"Invalid input or user with username '{username}' is not found.")
-
-        if rating < 0 or rating > 10:
-            return abort(400, "Invalid rating value (must be between 0 and 10)")
+        if rating:
+            if rating < 0 or rating > 10:
+                return abort(400, "Invalid rating value (must be between 0 and 10)")
 
         if Review.query.filter((Review.username == username) & (Review.item_id == item_id) & (
                 Review.item_category == item_category)).one_or_none() is not None:
@@ -81,7 +81,7 @@ def delete_all_reviews(username):
 
     except DBAPIError as e:
         db.session.rollback()
-        return {"error": str(e)}, 500
+        return {type(e): str(e)}, 500
 
 
 def delete_review(id):

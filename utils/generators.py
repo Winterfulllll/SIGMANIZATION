@@ -7,7 +7,7 @@ import requests
 import json
 
 
-def generate_film_plot(film: str) -> str:
+def generate_film_plot(film_name: str) -> str:
     """
     Generates a film plot using GigaChat.
 
@@ -20,9 +20,10 @@ def generate_film_plot(film: str) -> str:
     try:
         prompt = SystemMessage(
             content="Ты - полезный помощник с искусственным интеллектом, обладающий обширными знаниями о фильмах. " +
-                    "Я сообщу тебе название фильма или его IMDB ID, а ты кратко изложишь сюжет. " +
+                    "Я сообщу тебе название фильма, а ты кратко изложишь сюжет. " +
                     "Ответ должен быть в HTML формате")
-        human_message = HumanMessage(content=f"Какой сюжет у фильма: {film}")
+        human_message = HumanMessage(
+            content=f"Какой сюжет у фильма: {film_name}")
         response = giga([prompt, human_message])
         plot = {"plot": response.content}
         return plot
@@ -33,55 +34,56 @@ def generate_film_plot(film: str) -> str:
 
 def generate_recommended_films(username: str, count: int):
     """
-    Generates a list of recommended film IMDB IDs for a given user using their preferences and past reviews.
+    Generates a list of recommended film titles for a given user based on their preferences and past movie ratings.
+    It leverages the capabilities of GigaChat, a large language model, to analyze user preferences and ratings and provide personalized recommendations.
 
     Args:
         username (str): The username of the user for whom to generate recommendations.
-        count (int): The number of film recommendations to generate.
+        count (int): The desired number of film title recommendations (must be between 1 and 20).
 
     Returns:
-        str: A JSON string containing a list of recommended film IMDB IDs.
+        list: A JSON array containing the recommended film titles, or an error message if the process fails.
     """
     try:
         if count < 1 or count > 20:
             return abort(400, "Invalid count value (must be between 1 and 20)")
 
         prompt = SystemMessage(
-            content=f"Сгенерируй список из ровно {count} не повторяющихся IMDB ID значений фильмов, " +
-            'рекомендованных данному пользователю. Ответ должен быть в формате JSON-списка.'
+            content=f"Ты - полезный помощник с искусственным интеллектом, обладающий обширными знаниями о фильмах." +
+            f'На основе моих предпочтений и оценок ты сгенерируй JSON-массив названий длины строго равной {count}' +
+            "Также хорошо проанализируй и проверь свой ответ перед отправкой." +
+            "(Сами эти фильмы уже просмотрены, их пихать не нужно, повторов быть также не должно)\n"
         )
-        text = f"Предпочтения пользователя:\n"
+        text = f"Мои предпочтения:\n"
+        text += "".join(f'- {p.get("type")}: {p.get("type_value")
+                                              }\n' for p in get_preference(username)) + '\n'
 
-        for preference in get_preference(username):
-            text += f'- {preference["type"]}: {preference["type_value"]}\n'
-
-        text += "\nОценки пользователя:\n"
-        for review in get_review(username):
-            rating = review.get("rating", None)
-            if rating:
-                film_response = requests.get(
-                    url=f'ttps://api.kinopoisk.dev/v1.4/movie?externalId.imdb={review["item_id"]}&selectFields=name',
-                    headers={'X-API-KEY': config["MOVIES_API"]}
-                ).json()
-
-                if film_response["total"] != 0:
-                    text += f'''- "{film_response['docs']
-                                    [0]['name']}": {rating},\n'''
+        text += "Мои оценки фильмам:\n"
+        ratings_dict = {review["item_id"]: review["rating"] for review in get_review(
+            username) if review.get("rating", None)}
+        ids = [str(i) for i in ratings_dict]
+        film_response = requests.get(
+            url=f'https://api.kinopoisk.dev/v1.4/movie?id={
+                "&id=".join(ids)}&selectFields=name&selectFields=id',
+            headers={'X-API-KEY': config["MOVIES_API"]}
+        ).json()
+        text += "".join(f'- "{film_response["docs"][i]["name"]}": {
+                        ratings_dict[film_response["docs"][i]["id"]]}\n' for i in range(len(film_response["docs"])))
 
         human_message = HumanMessage(content=text)
         response = giga([prompt, human_message])
         recommended_films = json.loads(response.content)
-
         attempts = 0
+
         while len(recommended_films) != count:
-            human_message = HumanMessage(content=f"Сгенируй ровно {count} фильмов!\n" + text)
+            human_message = HumanMessage(content=f'Сгенируй JSON-массив названий фильмов ровно из {
+                                         count} фильмов без повторений и подобранных именно мне!')
             response = giga([prompt, human_message])
             recommended_films = json.loads(response.content)
             attempts += 1
-            if attempts == 2:
+            if attempts == 10:
                 return "GigaChat can not respond to this request", 500
 
         return recommended_films
-
     except Exception as e:
         return {"error": str(e)}, 500
