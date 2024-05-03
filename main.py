@@ -1,7 +1,8 @@
 from flask import render_template
 from configuration import connexion_app as app, app_config as config
 from flask_jwt_extended import get_jwt_identity, verify_jwt_in_request
-
+import requests
+import os
 
 @app.route("/")
 def home():
@@ -49,6 +50,22 @@ def settings():
     except:
         return "Войдите в аккаунт!"
 
+@app.route('/movie/<int:movie_id>')
+def movie_detail(movie_id):
+    # Запрашиваем данные о фильме из API
+    try:
+        film_response = requests.get(
+            url=f'https://api.kinopoisk.dev/v1.4/movie?externalId.imdb={movie_id}&selectFields=name,description,poster.url',
+            headers={'X-API-KEY': os.getenv("MOVIES_API")}
+        )
+
+
+
+        movie = film_response.json()
+
+        return render_template('movie_detail.html', movie=movie)
+    except Exception as e:
+        return {"error": str(e)}, 500
 
 if __name__ == "__main__":
     app.run("main:app", host="0.0.0.0", port=8000)
