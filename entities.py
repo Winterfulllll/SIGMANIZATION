@@ -31,7 +31,7 @@ class Review(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     username = db.Column(db.String(25), db.ForeignKey('users.username'),
                          nullable=False)
-    item_id = db.Column(db.String(50), nullable=False)
+    item_id = db.Column(db.Integer, nullable=False)
     item_category = db.Column(db.String(50), nullable=False)
     viewed = db.Column(db.Boolean, default=False)
     review = db.Column(db.Text)

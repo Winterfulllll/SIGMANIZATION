@@ -488,8 +488,8 @@ components:
             - GENRE
             - YEAR
             - COUNTRY
-            - RATING_IMDB
-          description: Type of preference (GENRE, YEAR, COUNTRY, RATING_IMDB)
+            - RATING
+          description: Type of preference (GENRE, YEAR, COUNTRY, RATING)
         type_value:
           type: string
         category:
@@ -513,7 +513,7 @@ components:
         username:
           type: string
         item_id:
-          type: string
+          type: integer
         item_category:
           type: string
           enum:

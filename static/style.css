@@ -297,15 +297,9 @@ input[type="password"] {
   background-position-y: 50%;
 }
 
-#movies-container-with-pagination {
-  display: flex; /* Превращает контейнер в строку */
-  align-items: center; /* Центрирует все элементы по вертикали */
-  justify-content: space-between; /* Размещает кнопки на противоположных концах контейнера */
-  width: 100%; /* Делает контейнер шириной на всю страницу */
-  height: 100%;
-}
-
-#movies-container-with-pagination-2 {
+#movies-container-with-pagination,
+#movies-container-with-pagination-2,
+#movies-container-with-pagination-3 {
   display: flex; /* Превращает контейнер в строку */
   align-items: center; /* Центрирует все элементы по вертикали */
   justify-content: space-between; /* Размещает кнопки на противоположных концах контейнера */
@@ -319,7 +313,9 @@ input[type="password"] {
   width: 100%;
 }
 
-#movies-container {
+#movies-container,
+#movies-container-2,
+#movies-container-3 {
   margin-top: 30px;
   display: flex;
   flex-wrap: nowrap;
@@ -329,17 +325,9 @@ input[type="password"] {
   justify-content: space-between; /* Распределяет элементы равномерно */
 }
 
-#movies-container-2 {
-  margin-top: 30px;
-  display: flex;
-  flex-wrap: nowrap;
-  gap: 5px; /* Расстояние между карточками фильмов */
-  height: 100%; /* Устанавливает высоту на 100% контейнера */
-  width: 100%;
-  justify-content: space-between; /* Распределяет элементы равномерно */
-}
-
-#prev {
+#prev,
+#prev-2,
+#prev-3 {
   background-color: rgba(255, 255, 255, 0);
   color: white;
   max-width: 110px;
@@ -352,33 +340,9 @@ input[type="password"] {
   margin-right: 10px;
 }
 
-#next {
-  background-color: rgba(255, 255, 255, 0);
-  color: white;
-  max-width: 20px;
-  max-height: 100px;
-  text-align: center;
-  justify-content: center;
-  display: flex;
-  border: none;
-  cursor: pointer;
-  margin-left: 20px;
-}
-
-#prev-2 {
-  background-color: rgba(255, 255, 255, 0);
-  color: white;
-  max-width: 110px;
-  max-height: 100px;
-  text-align: center;
-  justify-content: center;
-  display: flex;
-  border: none;
-  cursor: pointer;
-  margin-right: 10px;
-}
-
-#next-2 {
+#next,
+#next-2,
+#next-3 {
   background-color: rgba(255, 255, 255, 0);
   color: white;
   max-width: 20px;

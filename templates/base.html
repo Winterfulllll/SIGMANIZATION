@@ -1825,19 +1825,45 @@
     </div>
 
     <div class="container" id="movies-container-with-pagination">
-      <button id="prev"><i class="fa-solid fa-angle-left fa-2xl"></i></button>
+      <button id="prev" style="display: none">
+        <i class="fa-solid fa-angle-left fa-2xl"></i>
+      </button>
       <div id="movies-container" class="row"></div>
-      <button id="next"><i class="fa-solid fa-angle-right fa-2xl"></i></button>
+      <button id="next" style="display: none">
+        <i class="fa-solid fa-angle-right fa-2xl"></i>
+      </button>
+    </div>
+
+    <div class="container" id="recommended">
+      <h2 class="default_text" id="top_body">Рекомендованное вам</h2>
     </div>
 
     <div class="container" id="movies-container-with-pagination-2">
-      <button id="prev-2"><i class="fa-solid fa-angle-left fa-2xl"></i></button>
+      <button id="prev-2" style="display: none">
+        <i class="fa-solid fa-angle-left fa-2xl"></i>
+      </button>
       <div id="movies-container-2" class="row"></div>
-      <button id="next-2"><i class="fa-solid fa-angle-right fa-2xl"></i></button>
+      <button id="next-2" style="display: none">
+        <i class="fa-solid fa-angle-right fa-2xl"></i>
+      </button>
+    </div>
+
+    <div class="container" id="top-250-films">
+      <h2 class="default_text" id="top_body">Топ 250 фильмов</h2>
+    </div>
+
+    <div class="container" id="movies-container-with-pagination-3">
+      <button id="prev-3" style="display: none">
+        <i class="fa-solid fa-angle-left fa-2xl"></i>
+      </button>
+      <div id="movies-container-3" class="row"></div>
+      <button id="next-3" style="display: none">
+        <i class="fa-solid fa-angle-right fa-2xl"></i>
+      </button>
     </div>
 
     <script>
-      const current_user_username = "{{ current_user_username }}"
+      const current_user_username = "{{ current_user_username }}";
       const movies_api_key = "{{ movies_api_key }}";
       const service_api_key = "{{ service_api_key }}";
     </script>

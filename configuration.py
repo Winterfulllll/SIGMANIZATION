@@ -39,4 +39,5 @@ db = SQLAlchemy(app)
 ma = Marshmallow(app)
 jwt = JWTManager(app)
 encryptor = Encryptor(os.getenv("FERNET_KEY"))
-giga = GigaChat(credentials=os.getenv("GIGACHAT_AUTH"), verify_ssl_certs=False)
+giga = GigaChat(credentials=os.getenv("GIGACHAT_AUTH"),
+                verify_ssl_certs=False, model="GigaChat-Pro")
