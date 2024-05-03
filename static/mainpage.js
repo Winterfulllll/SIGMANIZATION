@@ -209,6 +209,7 @@ function createMovieElement(movie) {
   // Создаем контейнер для карточки фильма
   const movieElement = document.createElement("div");
   movieElement.className = "movie-card";
+  movieElement.setAttribute("data-id", movie.id);
 
   // Создаем элемент изображения для постера фильма
   const movieImage = document.createElement("img");
@@ -224,6 +225,10 @@ function createMovieElement(movie) {
   // Объединяем элементы внутри карточки фильма
   movieElement.appendChild(movieImage);
   movieElement.appendChild(movieTitle);
+
+  movieElement.addEventListener("click", () => {
+    window.location.href = `/movie/${movie.id}`; // Переходим на страницу фильма
+  });
 
   // Возвращаем готовый элемент
   return movieElement;
@@ -510,7 +515,8 @@ function fetchMoviesTop250() {
 
       // Обновляем состояние кнопок
       prevButton.style.display = currentPage3 === 1 ? "none" : "block";
-      nextButton.style.display = currentPage3 * onPage >= totalMovies ? "none" : "block";
+      nextButton.style.display =
+        currentPage3 * onPage >= totalMovies ? "none" : "block";
 
       prevButton.removeEventListener("click", handlePrevClick3);
       nextButton.removeEventListener("click", handleNextClick3);
