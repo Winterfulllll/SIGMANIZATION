@@ -506,3 +506,14 @@ input[type="password"] {
 li {
   text-align: center; /* Дополнительно гарантирует, что ссылка выровнена по центру в li */
 }
+
+.search_unlogin{
+  background-color: #100e19;
+  margin-top: 9px;
+  width: 90px;
+  margin-right: 35px;
+}
+
+.white-link {
+  color: white !important; /* !important гарантирует применение стиля в случае конфликтов */
+}
