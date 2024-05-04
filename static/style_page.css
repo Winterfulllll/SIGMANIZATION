@@ -1,0 +1,40 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #100e19;
+  }
+
+.content_card{
+    display: grid;
+    grid-auto-columns: 62.5% 37.5%;
+}
+
+#moviePoster{
+    max-width: 400px;
+    max-height: 800px;
+    margin-left: 200px;
+    margin-top: 100px;
+}
+
+.movie_title{
+    grid-column-start: 2;
+}
+
+.movie_photo{
+    grid-row-start: 1;
+    grid-row-end: 3;
+}
+
+.movie_info{
+    display: contents;
+}
+
+#movieTitle{
+    margin-top: 100px;
+    color: white;
+}
+
+#movieDescription{
+    color: white;
+}
