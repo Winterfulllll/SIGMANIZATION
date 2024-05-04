@@ -50,6 +50,12 @@ body {
   display: inline-block !important;
 }
 
+.dropdown2 {
+  height: 100px;
+  width: 10%;
+  display: inline-block !important;
+}
+
 .default_text {
   color: white;
 }
@@ -202,7 +208,7 @@ input[type="password"] {
   background-color: #100e19;
   color: white;
   margin: 0;
-  padding: 20px;
+  padding: 50px;
 }
 
 .profile-edit-container {
@@ -402,16 +408,16 @@ input[type="password"] {
   width: 100%;
 }
 
-#dropdownButtonPreferenceGenre {
-  width: 250px;
-}
-
-#dropdownButtonPreferenceCountry {
-  width: 250px;
-}
-
+#dropdownButtonPreferenceGenre,
+#dropdownButtonPreferenceCountry,
 #dropdownButtonPreferenceYear {
   width: 250px;
+}
+
+#dropdownButtonPreferenceGenre,
+#dropdownButtonPreferenceCountry,
+#dropdownButtonPreferenceYear {
+  width: 100px;
 }
 
 .preferences {

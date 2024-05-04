@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Редактирование профиля</title>
     <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link
       rel="stylesheet"
       href="{{ url_for('static', filename='style.css') }}"
     />
@@ -16,63 +25,830 @@
       </div>
       <h1 id="edit-profile">Редактирование профиля</h1>
       <p class="instruction">Выберите данные для изменения</p>
-      <div class="form-container">
-        <div class="input-group">
-          <label for="name">Имя</label>
-          <input type="text" id="name" name="name" />
-          <button>Изменить</button>
-        </div>
-        <div class="input-group">
-          <label for="email">Email</label>
-          <input type="email" id="email" name="email" />
-          <button>Изменить</button>
-        </div>
-        <div class="input-group">
-          <label for="phone">Телефон</label>
-          <input type="tel" id="phone" name="phone" />
-          <button>Изменить</button>
-        </div>
-      </div>
-    </div>
 
-    <div class="preferences">
-      <h2>Выбор предпочтений</h2>
-      <div class="dropdown-group">
-        <label for="genre">Жанр</label>
-        <select id="genre" name="genre">
-          <option value="horror">Ужасы</option>
-          <option value="drama">Драма</option>
-          <option value="comedy">Комедия</option>
-          <!-- Добавьте другие жанры по необходимости -->
-        </select>
-      </div>
-      <div class="dropdown-group">
-        <label for="country">Страна</label>
-        <select id="country" name="country">
-          <option value="russia">Россия</option>
-          <option value="usa">США</option>
-          <option value="uk">Великобритания</option>
-          <!-- Добавьте другие страны по необходимости -->
-        </select>
-      </div>
-      <div class="dropdown-group">
-        <label for="year">Год</label>
-        <select id="year" name="year">
-          <option value="2020">2020</option>
-          <option value="2021">2021</option>
-          <option value="2022">2022</option>
-          <!-- Добавьте другие года по необходимости -->
-        </select>
-      </div>
-      <div class="dropdown-group">
-        <label for="rating">Рейтинг</label>
-        <select id="rating" name="rating">
-          <option value="5">5 звезд</option>
-          <option value="4">4 звезды</option>
-          <option value="3">3 звезды</option>
-          <!-- Добавьте другие рейтинги по необходимости -->
-        </select>
+      <div class="form-container">
+        <div class="container" id="username-container">
+          <label for="username">Username</label>
+          <div class="input-group">
+            <input type="text" id="username" name="username" />
+          </div>
+        </div>
+
+        <div class="container" id="email-container">
+          <label for="email">Email</label>
+          <div class="input-group">
+            <input type="text" id="email" name="email" />
+          </div>
+        </div>
+
+        <div class="container" id="password-container">
+          <label for="password">Пароль</label>
+          <div class="input-group" id="password-input">
+            <input type="password" id="password" name="password" />
+          </div>
+        </div>
+
+        <div class="container" id="repeat-password-container">
+          <label for="repeat-password">Повторите пароль</label>
+          <div class="input-group">
+            <input
+              type="password"
+              id="repeat-password"
+              name="repeat-password"
+            />
+          </div>
+        </div>
+
+        <div class="container" id="repeat-password-container">
+          <label for="surname">Фамилия</label>
+          <div class="input-group">
+            <input type="text" id="surname" name="surname" />
+          </div>
+        </div>
+
+        <div class="container" id="repeat-password-container">
+          <label for="name">Имя</label>
+          <div class="input-group">
+            <input type="text" id="name" name="name" />
+          </div>
+        </div>
+
+        <div class="container" id="repeat-password-container">
+          <label for="patronymic">Отчество</label>
+          <div class="input-group">
+            <input type="text" id="patronymic" name="patronymic" />
+          </div>
+        </div>
+
+        <div class="container">
+          <div class="preferences">
+            <h2>Выбор ваших предпочтений</h2>
+            <div class="preferencesButtons">
+              <div class="dropdown2" id="preference">
+                <button
+                  class="btn btn-secondary dropdown-toggle"
+                  type="button"
+                  id="dropdownButtonPreferenceGenre2"
+                  data-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Жанры
+                </button>
+                <ul
+                  class="dropdown-menu"
+                  aria-labelledby="dropdownGenresButton"
+                >
+                  <label for="genre-preference-anime">
+                    <input
+                      type="checkbox"
+                      id="genre-preference-anime"
+                      name="preference-genre"
+                      data-value="аниме"
+                    />
+                    Аниме
+                  </label>
+
+                  <label for="genre-preference-biografiya">
+                    <input
+                      type="checkbox"
+                      id="genre-preference-biografiya"
+                      name="preference-genre"
+                      data-value="биография"
+                    />
+                    Биография
+                  </label>
+
+                  <label for="genre-preference-boevik">
+                    <input
+                      type="checkbox"
+                      id="genre-preference-boevik"
+                      name="preference-genre"
+                      data-value="боевик"
+                    />
+                    Боевик
+                  </label>
+
+                  <label for="genre-preference-vestern">
+                    <input
+                      type="checkbox"
+                      id="genre-preference-vestern"
+                      name="preference-genre"
+                      data-value="вестерн"
+                    />
+                    Вестерн
+                  </label>
+
+                  <label for="genre-preference-voennyy">
+                    <input
+                      type="checkbox"
+                      id="genre-preference-voennyy"
+                      name="preference-genre"
+                      data-value="военный"
+                    />
+                    Военный
+                  </label>
+
+                  <label for="genre-preference-detektiv">
+                    <input
+                      type="checkbox"
+                      id="genre-preference-detektiv"
+                      name="preference-genre"
+                      data-value="детектив"
+                    />
+                    Детектив
+                  </label>
+
+                  <label for="genre-preference-detskiy">
+                    <input
+                      type="checkbox"
+                      id="genre-preference-detskiy"
+                      name="preference-genre"
+                      data-value="детский"
+                    />
+                    Детский
+                  </label>
+
+                  <label for="genre-preference-dlya-vzroslyh">
+                    <input
+                      type="checkbox"
+                      id="genre-preference-dlya-vzroslyh"
+                      name="preference-genre"
+                      data-value="для взрослых"
+                    />
+                    Для взрослых
+                  </label>
+
+                  <label for="genre-preference-dokumentalnyy">
+                    <input
+                      type="checkbox"
+                      id="genre-preference-dokumentalnyy"
+                      name="preference-genre"
+                      data-value="документальный"
+                    />
+                    Документальный
+                  </label>
+
+                  <label for="genre-preference-drama">
+                    <input
+                      type="checkbox"
+                      id="genre-preference-drama"
+                      name="preference-genre"
+                      data-value="драма"
+                    />
+                    Драма
+                  </label>
+
+                  <label for="genre-preference-igra">
+                    <input
+                      type="checkbox"
+                      id="genre-preference-igra"
+                      name="preference-genre"
+                      data-value="игра"
+                    />
+                    Игра
+                  </label>
+
+                  <label for="genre-preference-istoriya">
+                    <input
+                      type="checkbox"
+                      id="genre-preference-istoriya"
+                      name="preference-genre"
+                      data-value="история"
+                    />
+                    История
+                  </label>
+
+                  <label for="genre-preference-komediya">
+                    <input
+                      type="checkbox"
+                      id="genre-preference-komediya"
+                      name="preference-genre"
+                      data-value="комедия"
+                    />
+                    Комедия
+                  </label>
+
+                  <label for="genre-preference-koncert">
+                    <input
+                      type="checkbox"
+                      id="genre-preference-koncert"
+                      name="preference-genre"
+                      data-value="концерт"
+                    />
+                    Концерт
+                  </label>
+
+                  <label for="genre-preference-korotkometrazhka">
+                    <input
+                      type="checkbox"
+                      id="genre-preference-korotkometrazhka"
+                      name="preference-genre"
+                      data-value="короткометражка"
+                    />
+                    Короткометражка
+                  </label>
+
+                  <label for="genre-preference-kriminal">
+                    <input
+                      type="checkbox"
+                      id="genre-preference-kriminal"
+                      name="preference-genre"
+                      data-value="криминал"
+                    />
+                    Криминал
+                  </label>
+
+                  <label for="genre-preference-melodrama">
+                    <input
+                      type="checkbox"
+                      id="genre-preference-melodrama"
+                      name="preference-genre"
+                      data-value="мелодрама"
+                    />
+                    Мелодрама
+                  </label>
+
+                  <label for="genre-preference-muzyka">
+                    <input
+                      type="checkbox"
+                      id="genre-preference-muzyka"
+                      name="preference-genre"
+                      data-value="музыка"
+                    />
+                    Музыка
+                  </label>
+
+                  <label for="genre-preference-multfilm">
+                    <input
+                      type="checkbox"
+                      id="genre-preference-multfilm"
+                      name="preference-genre"
+                      data-value="мультфильм"
+                    />
+                    Мультфильм
+                  </label>
+
+                  <label for="genre-preference-myuzikl">
+                    <input
+                      type="checkbox"
+                      id="genre-preference-myuzikl"
+                      name="preference-genre"
+                      data-value="мюзикл"
+                    />
+                    Мюзикл
+                  </label>
+
+                  <label for="genre-preference-novosti">
+                    <input
+                      type="checkbox"
+                      id="genre-preference-novosti"
+                      name="preference-genre"
+                      data-value="новости"
+                    />
+                    Новости
+                  </label>
+
+                  <label for="genre-preference-priklyucheniya">
+                    <input
+                      type="checkbox"
+                      id="genre-preference-priklyucheniya"
+                      name="preference-genre"
+                      data-value="приключения"
+                    />
+                    Приключения
+                  </label>
+
+                  <label for="genre-preference-realnoe-tv">
+                    <input
+                      type="checkbox"
+                      id="genre-preference-realnoe-tv"
+                      name="preference-genre"
+                      data-value="реальное ТВ"
+                    />
+                    Реальное ТВ
+                  </label>
+
+                  <label for="genre-preference-semeynyy">
+                    <input
+                      type="checkbox"
+                      id="genre-preference-semeynyy"
+                      name="preference-genre"
+                      data-value="семейный"
+                    />
+                    Семейный
+                  </label>
+
+                  <label for="genre-preference-sport">
+                    <input
+                      type="checkbox"
+                      id="genre-preference-sport"
+                      name="preference-genre"
+                      data-value="спорт"
+                    />
+                    Спорт
+                  </label>
+
+                  <label for="genre-preference-tok-shou">
+                    <input
+                      type="checkbox"
+                      id="genre-preference-tok-shou"
+                      name="preference-genre"
+                      data-value="ток-шоу"
+                    />
+                    Ток-шоу
+                  </label>
+
+                  <label for="genre-preference-triller">
+                    <input
+                      type="checkbox"
+                      id="genre-preference-triller"
+                      name="preference-genre"
+                      data-value="триллер"
+                    />
+                    Триллер
+                  </label>
+
+                  <label for="genre-preference-uzhasy">
+                    <input
+                      type="checkbox"
+                      id="genre-preference-uzhasy"
+                      name="preference-genre"
+                      data-value="ужасы"
+                    />
+                    Ужасы
+                  </label>
+
+                  <label for="genre-preference-fantastika">
+                    <input
+                      type="checkbox"
+                      id="genre-preference-fantastika"
+                      name="preference-genre"
+                      data-value="фантастика"
+                    />
+                    Фантастика
+                  </label>
+
+                  <label for="genre-preference-film-nuar">
+                    <input
+                      type="checkbox"
+                      id="genre-preference-film-nuar"
+                      name="preference-genre"
+                      data-value="фильм-нуар"
+                    />
+                    Фильм-нуар
+                  </label>
+
+                  <label for="genre-preference-fentezi">
+                    <input
+                      type="checkbox"
+                      id="genre-preference-fentezi"
+                      name="preference-genre"
+                      data-value="фэнтези"
+                    />
+                    Фэнтези
+                  </label>
+
+                  <label for="genre-preference-ceremoniya">
+                    <input
+                      type="checkbox"
+                      id="genre-preference-ceremoniya"
+                      name="preference-genre"
+                      data-value="церемония"
+                    />
+                    Церемония
+                  </label>
+                </ul>
+              </div>
+
+              <div class="dropdown2" id="preference">
+                <button
+                  class="btn btn-secondary dropdown-toggle"
+                  type="button"
+                  id="dropdownButtonPreferenceCountry2"
+                  data-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Страны
+                </button>
+                <ul
+                  class="dropdown-menu"
+                  aria-labelledby="dropdownCountriesButton"
+                >
+                  <label for="country-preference-Avstraliya">
+                    <input
+                      type="checkbox"
+                      id="country-preference-Avstraliya"
+                      name="preference-country"
+                      data-value="Австралия"
+                    />
+                    Австралия
+                  </label>
+
+                  <label for="country-preference-Argentina">
+                    <input
+                      type="checkbox"
+                      id="country-preference-Argentina"
+                      name="preference-country"
+                      data-value="Аргентина"
+                    />
+                    Аргентина
+                  </label>
+
+                  <label for="country-preference-Belarus">
+                    <input
+                      type="checkbox"
+                      id="country-preference-Belarus"
+                      name="preference-country"
+                      data-value="Беларусь"
+                    />
+                    Беларусь
+                  </label>
+
+                  <label for="country-preference-Beliz">
+                    <input
+                      type="checkbox"
+                      id="country-preference-Beliz"
+                      name="preference-country"
+                      data-value="Белиз"
+                    />
+                    Белиз
+                  </label>
+
+                  <label for="country-preference-Belgiya">
+                    <input
+                      type="checkbox"
+                      id="country-preference-Belgiya"
+                      name="preference-country"
+                      data-value="Бельгия"
+                    />
+                    Бельгия
+                  </label>
+
+                  <label for="country-preference-Braziliya">
+                    <input
+                      type="checkbox"
+                      id="country-preference-Braziliya"
+                      name="preference-country"
+                      data-value="Бразилия"
+                    />
+                    Бразилия
+                  </label>
+
+                  <label for="country-preference-Velikobritaniya">
+                    <input
+                      type="checkbox"
+                      id="country-preference-Velikobritaniya"
+                      name="preference-country"
+                      data-value="Великобритания"
+                    />
+                    Великобритания
+                  </label>
+
+                  <label for="country-preference-Vengriya">
+                    <input
+                      type="checkbox"
+                      id="country-preference-Vengriya"
+                      name="preference-country"
+                      data-value="Венгрия"
+                    />
+                    Венгрия
+                  </label>
+
+                  <label for="country-preference-Germaniya">
+                    <input
+                      type="checkbox"
+                      id="country-preference-Germaniya"
+                      name="preference-country"
+                      data-value="Германия"
+                    />
+                    Германия
+                  </label>
+
+                  <label for="country-preference-Gonkong">
+                    <input
+                      type="checkbox"
+                      id="country-preference-Gonkong"
+                      name="preference-country"
+                      data-value="Гонконг"
+                    />
+                    Гонконг
+                  </label>
+
+                  <label for="country-preference-Indiya">
+                    <input
+                      type="checkbox"
+                      id="country-preference-Indiya"
+                      name="preference-country"
+                      data-value="Индия"
+                    />
+                    Индия
+                  </label>
+
+                  <label for="country-preference-Irlandiya">
+                    <input
+                      type="checkbox"
+                      id="country-preference-Irlandiya"
+                      name="preference-country"
+                      data-value="Ирландия"
+                    />
+                    Ирландия
+                  </label>
+
+                  <label for="country-preference-Islandiya">
+                    <input
+                      type="checkbox"
+                      id="country-preference-Islandiya"
+                      name="preference-country"
+                      data-value="Исландия"
+                    />
+                    Исландия
+                  </label>
+
+                  <label for="country-preference-Ispaniya">
+                    <input
+                      type="checkbox"
+                      id="country-preference-Ispaniya"
+                      name="preference-country"
+                      data-value="Испания"
+                    />
+                    Испания
+                  </label>
+
+                  <label for="country-preference-Italiya">
+                    <input
+                      type="checkbox"
+                      id="country-preference-Italiya"
+                      name="preference-country"
+                      data-value="Италия"
+                    />
+                    Италия
+                  </label>
+
+                  <label for="country-preference-Kazahstan">
+                    <input
+                      type="checkbox"
+                      id="country-preference-Kazahstan"
+                      name="preference-country"
+                      data-value="Казахстан"
+                    />
+                    Казахстан
+                  </label>
+
+                  <label for="country-preference-Kanada">
+                    <input
+                      type="checkbox"
+                      id="country-preference-Kanada"
+                      name="preference-country"
+                      data-value="Канада"
+                    />
+                    Канада
+                  </label>
+
+                  <label for="country-preference-Kitay">
+                    <input
+                      type="checkbox"
+                      id="country-preference-Kitay"
+                      name="preference-country"
+                      data-value="Китай"
+                    />
+                    Китай
+                  </label>
+
+                  <label for="country-preference-Kolumbiya">
+                    <input
+                      type="checkbox"
+                      id="country-preference-Kolumbiya"
+                      name="preference-country"
+                      data-value="Колумбия"
+                    />
+                    Колумбия
+                  </label>
+
+                  <label for="country-preference-Meksika">
+                    <input
+                      type="checkbox"
+                      id="country-preference-Meksika"
+                      name="preference-country"
+                      data-value="Мексика"
+                    />
+                    Мексика
+                  </label>
+
+                  <label for="country-preference-Niderlandy">
+                    <input
+                      type="checkbox"
+                      id="country-preference-Niderlandy"
+                      name="preference-country"
+                      data-value="Нидерланды"
+                    />
+                    Нидерланды
+                  </label>
+
+                  <label for="country-preference-Novaya-Zelandiya">
+                    <input
+                      type="checkbox"
+                      id="country-preference-Novaya-Zelandiya"
+                      name="preference-country"
+                      data-value="Новая Зеландия"
+                    />
+                    Новая Зеландия
+                  </label>
+
+                  <label for="country-preference-Norvegiya">
+                    <input
+                      type="checkbox"
+                      id="country-preference-Norvegiya"
+                      name="preference-country"
+                      data-value="Норвегия"
+                    />
+                    Норвегия
+                  </label>
+
+                  <label for="country-preference-Polsha">
+                    <input
+                      type="checkbox"
+                      id="country-preference-Polsha"
+                      name="preference-country"
+                      data-value="Польша"
+                    />
+                    Польша
+                  </label>
+
+                  <label for="country-preference-Rossiya">
+                    <input
+                      type="checkbox"
+                      id="country-preference-Rossiya"
+                      name="preference-country"
+                      data-value="Россия"
+                    />
+                    Россия
+                  </label>
+
+                  <label for="country-preference-SSSR">
+                    <input
+                      type="checkbox"
+                      id="country-preference-SSSR"
+                      name="preference-country"
+                      data-value="СССР"
+                    />
+                    СССР
+                  </label>
+
+                  <label for="country-preference-SShA">
+                    <input
+                      type="checkbox"
+                      id="country-preference-SShA"
+                      name="preference-country"
+                      data-value="США"
+                    />
+                    США
+                  </label>
+
+                  <label for="country-preference-Tailand">
+                    <input
+                      type="checkbox"
+                      id="country-preference-Tailand"
+                      name="preference-country"
+                      data-value="Таиланд"
+                    />
+                    Таиланд
+                  </label>
+
+                  <label for="country-preference-Turciya">
+                    <input
+                      type="checkbox"
+                      id="country-preference-Turciya"
+                      name="preference-country"
+                      data-value="Турция"
+                    />
+                    Турция
+                  </label>
+
+                  <label for="country-preference-Ukraina">
+                    <input
+                      type="checkbox"
+                      id="country-preference-Ukraina"
+                      name="preference-country"
+                      data-value="Украина"
+                    />
+                    Украина
+                  </label>
+
+                  <label for="country-preference-Finlyandiya">
+                    <input
+                      type="checkbox"
+                      id="country-preference-Finlyandiya"
+                      name="preference-country"
+                      data-value="Финляндия"
+                    />
+                    Финляндия
+                  </label>
+
+                  <label for="country-preference-Franciya">
+                    <input
+                      type="checkbox"
+                      id="country-preference-Franciya"
+                      name="preference-country"
+                      data-value="Франция"
+                    />
+                    Франция
+                  </label>
+
+                  <label for="country-preference-Chehiya">
+                    <input
+                      type="checkbox"
+                      id="country-preference-Chehiya"
+                      name="preference-country"
+                      data-value="Чехия"
+                    />
+                    Чехия
+                  </label>
+
+                  <label for="country-preference-Shveycariya">
+                    <input
+                      type="checkbox"
+                      id="country-preference-Shveycariya"
+                      name="preference-country"
+                      data-value="Швейцария"
+                    />
+                    Швейцария
+                  </label>
+
+                  <label for="country-preference-Shveciya">
+                    <input
+                      type="checkbox"
+                      id="country-preference-Shveciya"
+                      name="preference-country"
+                      data-value="Швеция"
+                    />
+                    Швеция
+                  </label>
+
+                  <label for="country-preference-YuAR">
+                    <input
+                      type="checkbox"
+                      id="country-preference-YuAR"
+                      name="preference-country"
+                      data-value="ЮАР"
+                    />
+                    ЮАР
+                  </label>
+
+                  <label for="country-preference-Yaponiya">
+                    <input
+                      type="checkbox"
+                      id="country-preference-Yaponiya"
+                      name="preference-country"
+                      data-value="Япония"
+                    />
+                    Япония
+                  </label>
+                </ul>
+              </div>
+
+              <div class="dropdown2" id="preference">
+                <button
+                  class="btn btn-secondary dropdown-toggle"
+                  type="button"
+                  id="dropdownButtonPreferenceYear2"
+                  data-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Годы
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownYearsButton">
+                  <label for="newFilms-preference">
+                    <input
+                      type="checkbox"
+                      id="newFilms-preference"
+                      name="preference-year"
+                      data-value="2020-2024"
+                    />
+                    Новые фильмы
+                  </label>
+
+                  <label for="oldFilms-preference">
+                    <input
+                      type="checkbox"
+                      id="oldFilms-preference"
+                      name="preference-year"
+                      data-value="1990-2000"
+                    />
+                    Старые фильмы
+                  </label>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button id="change-profile">Изменить</button>
       </div>
     </div>
+    <script>
+      const current_user_username = "{{ current_user_username }}";
+      const service_api_key = "{{ service_api_key }}";
+    </script>
+    <script src="{{ url_for('static', filename='settings.js') }}"></script>
   </body>
 </html>

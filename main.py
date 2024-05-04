@@ -45,7 +45,8 @@ def settings():
         verify_jwt_in_request()
         return render_template(
             "settings.html",
-            current_user_username=get_jwt_identity()
+            current_user_username=get_jwt_identity(),
+            service_api_key=config["SECRET_KEY"]
         )
 
     except:
