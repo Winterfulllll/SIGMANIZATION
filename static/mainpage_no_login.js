@@ -193,12 +193,6 @@ window.onclick = function (event) {
   }
 };
 
-// Обновлённый обработчик для кнопки "Login"
-var loginBtn = document.querySelector(".btn-outline-primary.me-2");
-loginBtn.addEventListener("click", function () {
-  modal.style.display = "block";
-});
-
 // =============================================================================================================================
 
 function createMovieElement(movie) {
