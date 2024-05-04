@@ -8,8 +8,9 @@ body {
 /* HEADER */
 
 .header_logo {
-  height: 38px;
+  height: 34px;
   width: 87px;
+  margin-top: 11px;
 }
 
 .content {
@@ -54,14 +55,19 @@ body {
 }
 
 #button_profile {
-  background-color: #1f1b2e;
   color: white;
-  margin-left: 5px;
+  display: inline-block; /* Позволяет контролировать размеры и отступы элемента */
+  text-align: center; /* Выравнивание текста по центру */
+  padding: 10px 20px; /* Добавляет внутренние отступы для вертикального и горизонтального выравнивания */
+  box-sizing: border-box; /* Включает padding в общую ширину элемента */
 }
 
 #button_main {
-  background-color: #1f1b2e;
   color: white;
+  display: inline-block; /* Позволяет контролировать размеры и отступы элемента */
+  text-align: center; /* Выравнивание текста по центру */
+  padding: 10px 20px; /* Добавляет внутренние отступы для вертикального и горизонтального выравнивания */
+  box-sizing: border-box; /* Включает padding в общую ширину элемента */
 }
 
 /* Стиль для фона модального окна (полупрозрачный фон) */
@@ -430,32 +436,84 @@ input[type="password"] {
 }
 
 
-#search{
+.search{
+  background-color: #100e19;
+  margin-top: 9px;
+  width: 90px;
+  margin-right: 24px;
+}
+
+.xxxx{
+  background-color: #100e19;
+  border: none;
+  height: 31px;
+  width: 74px;
+  
+}
+.searchButton {
+  background-color: #100e19;
   display: flex;
+  align-items: center;
+  text-align: center;
+  width: 74px;
+  height: 31px;
+  
 }
 
-#searchText{
-  margin-top: 10px;
+.lupa{
   color: white;
+  height: 30px;
+  margin-top: 5px;
+  margin-right: 3px;
 }
 
-#searchButton {
+.search_text{
+  color: white;
+  margin-top: 9px;
+  margin-left: 4px;
+}
+
+.main_profile{
+  background-color: #100e19;
+  margin-top: 6px;
+  width: 90px;
+}
+
+.main_profile_button{
+  background-color: #100e19;
+  border: none;
+  align-items: top;
+  text-align: top;
+}
+
+.navbar {
   display: flex;
-  list-style-type: none; /* Убирает маркеры для всех элементов li */
-  width: 40px;
-  height: 70px;
-  margin-top: 10px;
-  margin-left: 160px;
+  align-items: start; /* Выравнивание по верхнему краю */
 }
 
-#lupa{
-
-  width: 30px;
-  height: 70px;
-  background-color: rgba(255, 255, 255, 0);
-  color: white;
+.navbar-nav {
+  display: flex;
+  flex-direction: row;
+  list-style: none; /* Убрать маркеры списка */
+  padding: 0; /* Убирает внутренние отступы списка */
+  margin: 0; /* Убирает внешние отступы списка */
 }
 
-#texting{
-  max-width: 80%;
+.nav-link {
+  margin-right: 20px; /* Добавляет отступ между ссылками */
+}
+
+li {
+  text-align: center; /* Дополнительно гарантирует, что ссылка выровнена по центру в li */
+}
+
+.search_unlogin{
+  background-color: #100e19;
+  margin-top: 9px;
+  width: 90px;
+  margin-right: 35px;
+}
+
+.white-link {
+  color: white !important; /* !important гарантирует применение стиля в случае конфликтов */
 }

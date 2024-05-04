@@ -40,9 +40,24 @@
           </a>
         </div>
 
-        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-          <li><a href="/" class="nav-link px-2 link-secondary">Main</a></li>
-          <li><a href="/profile" class="nav-link px-2">Profile</a></li>
+
+        
+        <div class="navbar">
+          <div class="search">
+            <button class="xxxx">
+              <div class="searchButton">
+                <a href="/search" class="d-inline-flex link-body-emphasis text-decoration-none">
+                  <img class="lupa" src="{{ url_for('static', filename='img/иконка поиска.png')}}" alt="searching" />
+                  <p class="search_text">Поиск</p>
+                </a>
+              </div>
+            </button>
+          </div>
+          <ul class="navbar-nav">
+            <li><a href="/" class="nav-link px-2" id="button_main">Главная</a></li>
+            <li><a href="/profile" class="nav-link px-2" id="button_profile">Профиль</a></li>
+          </ul>
+        </div>
         </ul>
       </header>
     </div>
@@ -58,8 +73,7 @@
           is constantly being updated as
         </p>
         <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-          <li id="searchButton"><a href="/search"><i class="fa-solid fa-magnifying-glass fa-2xl" id="lupa"></i></a></li>
-          <li><a href="/search" class="searchText">Поиск</a></li>
+          
         </ul>
       </div>
     </div>

@@ -25,7 +25,7 @@
   <body>
     <div class="container">
       <header
-        class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom"
+        class="d-flex flex-wrap align-items-center justify-content-md-between py-3 mb-4 border-bottom"
       >
         <div class="col-md-3 mb-2 mb-md-0">
           <a
@@ -40,24 +40,37 @@
           </a>
         </div>
 
-        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-          <li><a href="/" class="nav-link px-2 link-secondary">Main</a></li>
+        <ul class="nav col-6 col-md-auto mb-2 justify-content-center mb-md-0">
+          <li><a href="/" class="nav-link px-2 link-secondary white-link">Главная</a></li>
         </ul>
 
-        <div class="col-md-3 text-end">
+
+
+        <div class="col-md-3 d-flex align-items-center justify-content-end">
+          <div class="search_unlogin">
+            <button class="xxxx">
+              <div class="searchButton">
+                <a href="/search" class="d-inline-flex link-body-emphasis text-decoration-none">
+                  <img class="lupa" src="{{ url_for('static', filename='img/иконка поиска.png')}}" alt="searching" />
+                  <p class="search_text">Поиск</p>
+                </a>
+              </div>
+            </button>
+          </div>
+
           <button
             type="button"
-            class="btn btn-outline-primary me-2"
+            class="btn me-2 white-link"
             id="modalBtn"
           >
-            Register
+            Зарегистрироваться
           </button>
           <button
             type="button"
-            class="btn btn-outline-primary me-2"
+            class="btn me-2 white-link"
             id="modalBtn2"
           >
-            Log-in
+            Войти
           </button>
         </div>
       </header>
@@ -73,10 +86,6 @@
           that we have collected, you will have enough for a long time. The collection
           is constantly being updated as
         </p>
-        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-          <li id="searchButton"><a href="/search"><i class="fa-solid fa-magnifying-glass fa-2xl" id="lupa"></i></a></li>
-          <li><a href="/search" class="searchText">Поиск</a></li>
-        </ul>
       </div>
     </div>
 
