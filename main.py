@@ -53,10 +53,17 @@ def settings():
 
 @app.route('/movie/<int:movie_id>')
 def movie_page(movie_id):
-    return render_template(
-        'movie_page.html',
-        movie=get_movie_by_id(movie_id)
-    )
+    try:
+        verify_jwt_in_request()
+        return render_template(
+            'movie_page.html',
+            movie=get_movie_by_id(movie_id),
+            current_user_username=get_jwt_identity(),
+            service_api_key=config["SECRET_KEY"]
+        )
+
+    except:
+        return "Войдите в аккаунт!"
 
 
 @app.route("/search")

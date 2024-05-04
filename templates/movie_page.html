@@ -1,19 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Детали фильма</title>
-</head>
-<body>
+  </head>
+  <body>
     <h1 id="movieTitle"></h1>
-    <img id="moviePoster" src="" alt="Постер отсутствует" style="display: none;">
+    <img
+      id="moviePoster"
+      src=""
+      alt="Постер отсутствует"
+      style="display: none"
+    />
     <p id="movieDescription"></p>
 
+    <div class="buttons">
+      <div class="container" id="review">
+        <button
+          class="btn btn-secondary dropdown-toggle"
+          type="button"
+          id="dropdownButton"
+          data-toggle="dropdown"
+          aria-expanded="false"
+        >
+          Оставить отзыв
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownGenresButton">
+          <label for="viewed">
+            <input type="checkbox" id="viewed" />
+            Просмотрен
+          </label>
+          <li>
+            <textarea
+              id="reviewText"
+              placeholder="Напишите ваш отзыв"
+            ></textarea>
+          </li>
+          <li>
+            <label for="rating">Оценка (1-10):</label>
+            <input type="number" id="rating" min="1" max="10" value="5" />
+          </li>
+          <li>
+            <button id="submitReview">Отправить</button>
+          </li>
+        </ul>
+      </div>
+    </div>
 
     <script>
-        const movie_json = '{{ movie | tojson }}';
+      const movie_json = `{{ movie | tojson }}`;
+      const current_user_username = "{{ current_user_username }}";
+      const service_api_key = "{{ service_api_key }}";
     </script>
     <script src="{{ url_for('static', filename='movie_page.js') }}"></script>
-</body>
+  </body>
 </html>

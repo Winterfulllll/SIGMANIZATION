@@ -272,9 +272,9 @@ def login(body):
     try:
         username = body.get('username', None)
         password = body.get('password', None)
-        remember_me = body.get('remember_me', False)
+        remember_me = body.get('remember_me', None)
 
-        if not all([username, password, remember_me]):
+        if not all([username, password, remember_me is not None]):
             return jsonify(abort(400, "Missing required fields"))
 
         user = User.query.filter_by(username=username).one_or_none()
@@ -284,9 +284,10 @@ def login(body):
         if not encryptor.check_equivalence(password, user.password):
             return abort(401, "Invalid password")
 
-        expires_delta = timedelta(days=30) if remember_me else None
-        access_token = create_access_token(
-            identity=username, expires_delta=expires_delta)
+        if remember_me:
+            access_token = create_access_token(identity=username, expires_delta=timedelta(days=30))
+        else:
+            access_token = create_access_token(identity=username, fresh=True)
 
         response = make_response(jsonify(access_token=access_token), 200)
         response.set_cookie('access_token_cookie', access_token,
