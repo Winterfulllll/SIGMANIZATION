@@ -1,5 +1,59 @@
 const movie = JSON.parse(movie_json).docs[0];
 
+const reviewContainer = document.getElementById("review");
+const reviewHeading = document.getElementById("reviewHeading");
+const deleteReview = document.getElementById("deleteReview");
+
+deleteReview.style.display = "none";
+
+// Проверяем, авторизован ли пользователь
+if (current_user_username !== "None") {
+  reviewContainer.style.display = "block";
+} else {
+  reviewContainer.style.display = "none";
+}
+
+let existingReviewId = null; // Переменная для хранения ID существующего отзыва
+let method = null;
+let url = null;
+fetchUserReview();
+
+// Функция для получения отзыва пользователя
+function fetchUserReview() {
+  fetch(`/api/reviews/${current_user_username}`, {
+    method: "GET",
+    headers: {
+      "API-KEY": service_api_key,
+      "Content-Type": "application/json",
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      // Проверяем, есть ли отзыв с текущим movie_id
+      const review = data.find((item) => item.item_id === movie.id);
+      if (review) {
+        existingReviewId = review.id;
+        viewedCheckbox.checked = review.viewed;
+        reviewText.value = review.review || "";
+        ratingInput.value = review.rating || 5;
+      }
+
+      method = existingReviewId ? "PATCH" : "POST";
+      url = existingReviewId
+        ? `/api/reviews?id=${existingReviewId}`
+        : `/api/reviews/${current_user_username}`;
+      reviewHeading.textContent = existingReviewId
+        ? "Редактировать отзыв"
+        : "Оставить отзыв";
+      deleteReview.style.display = existingReviewId ? "block" : "none";
+    })
+    .catch((error) => {
+      console.error("Ошибка при получении отзыва:", error);
+    });
+}
+
+// =============================================================================================================================
+
 document.addEventListener("DOMContentLoaded", function () {
   if (movie) {
     document.getElementById("movieTitle").textContent =
@@ -29,9 +83,9 @@ submitReviewButton.addEventListener("click", () => {
   const review = reviewText.value.trim();
   const rating = ratingInput.value.trim();
 
-  // Отправляем данные отзыва на сервер (пример)
-  fetch(`/api/reviews/${current_user_username}`, {
-    method: "POST",
+  // Отправляем данные отзыва на сервер
+  fetch(url, {
+    method: method,
     headers: {
       "API-KEY": service_api_key,
       "Content-Type": "application/json",
@@ -46,26 +100,69 @@ submitReviewButton.addEventListener("click", () => {
   })
     .then((response) => {
       if (response.ok) {
-        // Запрос успешен
-        return response.json(); // Получаем JSON-ответ сервера
+        return response.json();
       } else {
-        // Ошибка на сервере
         throw new Error(
           "Ошибка при отправке отзыва. Код ошибки: " + response.status
         );
       }
     })
     .then((data) => {
-      // Обработка успешного ответа
       console.log("Отзыв успешно отправлен:", data);
-      alert("Спасибо за ваш отзыв!");
 
-      const reviewContainer = document.getElementById("review"); // Замени 'reviewContainer' на ID контейнера
-      reviewContainer.style.display = "none";
+      if (!existingReviewId) {
+        alert("Спасибо за ваш отзыв!");
+        existingReviewId = data.id; // Получаем ID нового отзыва
+        reviewHeading.textContent = "Редактировать отзыв"; // Изменяем заголовок
+        method = "PATCH";
+        url = `/api/reviews?id=${existingReviewId}`;
+        deleteReview.style.display = "block";
+      } else {
+        alert("Отзыв был успешно отредактирован");
+      }
+
+      // const reviewContainer = document.getElementById("review");
+      // reviewContainer.style.display = "none";
     })
     .catch((error) => {
-      // Обработка ошибок
       console.error("Ошибка при отправке отзыва:", error);
       alert("Произошла ошибка при отправке отзыва.");
+    });
+});
+
+deleteReview.addEventListener("click", () => {
+  fetch(`/api/reviews?id=${existingReviewId}`, {
+    method: "DELETE",
+    headers: {
+      "API-KEY": service_api_key,
+      "Content-Type": "application/json",
+    },
+  })
+    .then((response) => {
+      if (response.ok) {
+        console.log("Отзыв успешно удален");
+        alert("Ваш отзыв был удален.");
+
+        // Обновляем состояние и UI
+        existingReviewId = null;
+        method = "POST";
+        url = `/api/reviews/${current_user_username}`;
+        reviewHeading.textContent = "Оставить отзыв";
+
+        // Очищаем форму отзыва
+        viewedCheckbox.checked = false;
+        reviewText.value = "";
+        ratingInput.value = 5;
+
+        deleteReview.style.display = "none";
+      } else {
+        throw new Error(
+          "Ошибка при удалении отзыва. Код ошибки: " + response.status
+        );
+      }
+    })
+    .catch((error) => {
+      console.error("Ошибка при удалении отзыва:", error);
+      alert("Произошла ошибка при удалении отзыва.");
     });
 });

@@ -4,6 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Детали фильма</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
   </head>
   <body>
     <h1 id="movieTitle"></h1>
@@ -15,37 +19,25 @@
     />
     <p id="movieDescription"></p>
 
-    <div class="buttons">
-      <div class="container" id="review">
-        <button
-          class="btn btn-secondary dropdown-toggle"
-          type="button"
-          id="dropdownButton"
-          data-toggle="dropdown"
-          aria-expanded="false"
-        >
-          Оставить отзыв
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownGenresButton">
-          <label for="viewed">
-            <input type="checkbox" id="viewed" />
-            Просмотрен
-          </label>
-          <li>
-            <textarea
-              id="reviewText"
-              placeholder="Напишите ваш отзыв"
-            ></textarea>
-          </li>
-          <li>
-            <label for="rating">Оценка (1-10):</label>
-            <input type="number" id="rating" min="1" max="10" value="5" />
-          </li>
-          <li>
-            <button id="submitReview">Отправить</button>
-          </li>
-        </ul>
-      </div>
+    <div class="container" id="review">
+      <h3 id="reviewHeading"></h3>
+      <ul class="dropdown-menu" aria-labelledby="dropdownGenresButton">
+        <label for="viewed">
+          <input type="checkbox" id="viewed" />
+          Просмотрен
+        </label>
+        <li>
+          <textarea id="reviewText" placeholder="Напишите ваш отзыв"></textarea>
+        </li>
+        <li>
+          <label for="rating">Оценка (1-10):</label>
+          <input type="number" id="rating" min="1" max="10" value="5" />
+        </li>
+        <li>
+          <button id="submitReview">Отправить</button>
+          <button id="deleteReview">Удалить</button>
+        </li>
+      </ul>
     </div>
 
     <script>

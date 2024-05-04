@@ -35,6 +35,7 @@ def profile():
         )
 
     except:
+        print(get_jwt_identity())
         return "Войдите в аккаунт!"
 
 
@@ -63,7 +64,12 @@ def movie_page(movie_id):
         )
 
     except:
-        return "Войдите в аккаунт!"
+        return render_template(
+            'movie_page.html',
+            movie=get_movie_by_id(movie_id),
+            current_user_username=None,
+            service_api_key=config["SECRET_KEY"]
+        )
 
 
 @app.route("/search")
