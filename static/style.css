@@ -435,20 +435,18 @@ input[type="password"] {
   width: 250px;
 }
 
-
-.search{
+.search {
   background-color: #100e19;
   margin-top: 9px;
   width: 90px;
   margin-right: 24px;
 }
 
-.xxxx{
+.xxxx {
   background-color: #100e19;
   border: none;
   height: 31px;
   width: 74px;
-  
 }
 .searchButton {
   background-color: #100e19;
@@ -457,29 +455,28 @@ input[type="password"] {
   text-align: center;
   width: 74px;
   height: 31px;
-  
 }
 
-.lupa{
+.lupa {
   color: white;
   height: 30px;
   margin-top: 5px;
   margin-right: 3px;
 }
 
-.search_text{
+.search_text {
   color: white;
   margin-top: 9px;
   margin-left: 4px;
 }
 
-.main_profile{
+.main_profile {
   background-color: #100e19;
   margin-top: 6px;
   width: 90px;
 }
 
-.main_profile_button{
+.main_profile_button {
   background-color: #100e19;
   border: none;
   align-items: top;
@@ -507,7 +504,7 @@ li {
   text-align: center; /* Дополнительно гарантирует, что ссылка выровнена по центру в li */
 }
 
-.search_unlogin{
+.search_unlogin {
   background-color: #100e19;
   margin-top: 9px;
   width: 90px;
