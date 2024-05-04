@@ -55,14 +55,14 @@ def movie_detail(movie_id):
     # Запрашиваем данные о фильме из API
     try:
         film_response = requests.get(
-            url=f'https://api.kinopoisk.dev/v1.4/movie?externalId.imdb={movie_id}&selectFields=name,description,poster.url',
+            url = f'https://api.kinopoisk.dev/v1.4/movie?id={movie_id}&selectFields=id&selectFields=name&selectFields=description&selectFields=poster',
             headers={'X-API-KEY': os.getenv("MOVIES_API")}
         )
 
 
 
         movie = film_response.json()
-
+        print(movie)
         return render_template('movie_detail.html', movie=movie)
     except Exception as e:
         return {"error": str(e)}, 500

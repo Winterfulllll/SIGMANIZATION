@@ -1,11 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Фильм</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Детали фильма</title>
 </head>
 <body>
-    <h1>Пустая страница фильма</h1>
-    <p>Здесь будет информация о фильме.</p>
+    <h1 id="movieTitle"></h1>
+    <img id="moviePoster" src="" alt="Постер отсутствует" style="display: none;">
+    <p id="movieDescription"></p>
+
+
+    <script>
+        const movie = "{{ movie }}";
+      </script>
+    <script src="{{ url_for('static', filename='movie_detail.js') }}"></script>
 </body>
 </html>
