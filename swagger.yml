@@ -392,7 +392,7 @@ paths:
         - Generators
       operationId: utils.generators.generate_film_plot
       parameters:
-        - name: film
+        - name: film_name
           in: query
           required: true
           schema:
@@ -413,7 +413,7 @@ paths:
       security:
         - API-KEY: []
 
-  /generate_recomended_films:
+  /generate_recommended_films:
     get:
       summary: get a generated list of recomended films
       tags:
