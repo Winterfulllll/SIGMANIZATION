@@ -9,7 +9,7 @@ def home():
     try:
         verify_jwt_in_request()
         return render_template(
-            "index.html",
+            "base_user.html",
             current_user_username=get_jwt_identity(),
             movies_api_key=config["MOVIES_API"],
             service_api_key=config["SECRET_KEY"]
@@ -17,7 +17,7 @@ def home():
 
     except:
         return render_template(
-            "index.html",
+            "base_no_login.html",
             movies_api_key=config["MOVIES_API"],
             service_api_key=config["SECRET_KEY"]
         )

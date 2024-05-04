@@ -42,7 +42,6 @@
 
         <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
           <li><a href="/" class="nav-link px-2 link-secondary">Main</a></li>
-          <li><a href="/profile" class="nav-link px-2">Profile</a></li>
         </ul>
 
         <div class="col-md-3 text-end">
@@ -65,7 +64,20 @@
     </div>
 
     <div class="container" id="describe_sire">
-      {% block content %} {% endblock %}
+      <h2 class="default_text" id="top_body">Films watch online</h2>
+
+      <div class="container" id="search">
+        <p class="default_text" id="texting">
+          Do you like to watch movies online and spend a lot of time scouring websites
+          in search of something interesting? It is worth lingering on the ivi films
+          that we have collected, you will have enough for a long time. The collection
+          is constantly being updated as
+        </p>
+        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+          <li id="searchButton"><a href="/search"><i class="fa-solid fa-magnifying-glass fa-2xl" id="lupa"></i></a></li>
+          <li><a href="/search" class="searchText">Поиск</a></li>
+        </ul>
+      </div>
     </div>
 
     <div class="container" id="filters">
@@ -1834,20 +1846,6 @@
       </button>
     </div>
 
-    <div class="container" id="recommended">
-      <h2 class="default_text" id="top_body">Рекомендованное вам</h2>
-    </div>
-
-    <div class="container" id="movies-container-with-pagination-2">
-      <button id="prev-2" style="display: none">
-        <i class="fa-solid fa-angle-left fa-2xl"></i>
-      </button>
-      <div id="movies-container-2" class="row"></div>
-      <button id="next-2" style="display: none">
-        <i class="fa-solid fa-angle-right fa-2xl"></i>
-      </button>
-    </div>
-
     <div class="container" id="top-250-films">
       <h2 class="default_text" id="top_body">Топ 250 фильмов</h2>
     </div>
@@ -1863,10 +1861,9 @@
     </div>
 
     <script>
-      const current_user_username = "{{ current_user_username }}";
       const movies_api_key = "{{ movies_api_key }}";
       const service_api_key = "{{ service_api_key }}";
     </script>
-    <script src="{{ url_for('static', filename='mainpage.js') }}"></script>
+    <script src="{{ url_for('static', filename='mainpage_no_login.js') }}"></script>
   </body>
 </html>
