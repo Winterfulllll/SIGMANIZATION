@@ -5,6 +5,7 @@ from utils.preferences import get_preference
 from utils.reviews import get_review
 import requests
 import json
+import html
 
 
 def generate_film_plot(film_name: str) -> str:
@@ -21,11 +22,11 @@ def generate_film_plot(film_name: str) -> str:
         prompt = SystemMessage(
             content="Ты - полезный помощник с искусственным интеллектом, обладающий обширными знаниями о фильмах. " +
                     "Я сообщу тебе название фильма, а ты кратко изложишь сюжет. " +
-                    "Ответ должен быть в HTML формате")
+                    "Ответ должен быть строчным")
         human_message = HumanMessage(
             content=f"Какой сюжет у фильма: {film_name}")
         response = giga([prompt, human_message])
-        plot = {"plot": response.content}
+        plot = html.escape(response.content)
         return plot
 
     except Exception as e:

@@ -1,10 +1,12 @@
+from utils.generators import generate_film_plot
 from configuration import app_config as config
 import requests
 
 
-def get_film(movie_id):
-    film_response = requests.get(
-        url=f'https://api.kinopoisk.dev/v1.4/movie?externalId.imdb={movie_id}&selectFields=name,description,poster.url',
+def get_movie_by_id(movie_id):
+    movie_response = requests.get(
+        url=f'https://api.kinopoisk.dev/v1.4/movie?id={movie_id}&selectFields=id&selectFields=name&selectFields=poster',
         headers={'X-API-KEY': config["MOVIES_API"]}
-    )
-    return film_response.json()
+    ).json()
+    movie_response["docs"][0]["description"] = generate_film_plot(movie_response["docs"][0]["name"])
+    return movie_response

@@ -2,8 +2,8 @@ function fetchViewedFilms() {
   fetch("api/reviews/" + current_user_username, {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
       "API-KEY": service_api_key,
+      "Content-Type": "application/json",
     },
   })
     .then((response) => response.json())

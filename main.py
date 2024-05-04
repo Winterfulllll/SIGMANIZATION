@@ -1,7 +1,7 @@
 from flask import render_template
 from configuration import connexion_app as app, app_config as config
 from flask_jwt_extended import get_jwt_identity, verify_jwt_in_request
-from utils.getters import get_film
+from utils.getters import get_movie_by_id
 
 
 @app.route("/")
@@ -52,10 +52,10 @@ def settings():
 
 
 @app.route('/movie/<int:movie_id>')
-def movie_detail(movie_id):
+def movie_page(movie_id):
     return render_template(
-        'movie_detail.html',
-        movie=get_film(movie_id)
+        'movie_page.html',
+        movie=get_movie_by_id(movie_id)
     )
 
 
