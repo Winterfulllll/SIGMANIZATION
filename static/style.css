@@ -325,6 +325,16 @@ input[type="password"] {
   justify-content: space-between; /* Распределяет элементы равномерно */
 }
 
+#search-movies-container {
+  margin-top: 30px;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 5px; /* Расстояние между карточками фильмов */
+  height: 100%; /* Устанавливает высоту на 100% контейнера */
+  width: 100%;
+  justify-content: space-between; /* Распределяет элементы равномерно */
+}
+
 #prev,
 #prev-2,
 #prev-3 {

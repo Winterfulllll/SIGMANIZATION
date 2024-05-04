@@ -12,8 +12,8 @@ function registerUser() {
   fetch("/api/users", {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
       "API-KEY": service_api_key,
+      "Content-Type": "application/json",
     },
     body: JSON.stringify(userData),
   })
@@ -97,8 +97,8 @@ function sendPreference(username, type, category, typeValue) {
   return fetch(`/api/preferences/${username}`, {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
       "API-KEY": service_api_key,
+      "Content-Type": "application/json",
     },
     body: JSON.stringify(preferenceData),
   });
@@ -114,8 +114,8 @@ function loginUser() {
   fetch("/api/login", {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
       "API-KEY": service_api_key,
+      "Content-Type": "application/json",
     },
     body: JSON.stringify(loginData),
   })
@@ -234,7 +234,7 @@ function createMovieElement(movie) {
   return movieElement;
 }
 
-const allCheckboxes = document.querySelectorAll('input[type="checkbox"]');
+// =============================================================================================================================
 
 const filterCheckboxes = document.querySelectorAll(
   'input[name="filters-genre"], input[name="filters-country"], input[name="filters-year"], input[name="filters-rating"]'
@@ -368,7 +368,7 @@ const count = 20;
 
 function fetchRecommendedMovies() {
   fetch(
-    `/api/generate_recomended_films?username=${current_user_username}&count=${count}`,
+    `/api/generate_recommended_films?username=${current_user_username}&count=${count}`,
     {
       method: "GET",
       headers: {

@@ -55,20 +55,16 @@ def generate_recommended_films(username: str, count: int):
             "(Сами эти фильмы уже просмотрены, их пихать не нужно, повторов быть также не должно)\n"
         )
         text = f"Мои предпочтения:\n"
-        text += "".join(f'- {p.get("type")}: {p.get("type_value")
-                                              }\n' for p in get_preference(username)) + '\n'
+        text += "".join(f'- {p.get("type")}: {p.get("type_value")}\n' for p in get_preference(username)) + '\n'
 
         text += "Мои оценки фильмам:\n"
-        ratings_dict = {review["item_id"]: review["rating"] for review in get_review(
-            username) if review.get("rating", None)}
+        ratings_dict = {review["item_id"]: review["rating"] for review in get_review(username) if review.get("rating", None)}
         ids = [str(i) for i in ratings_dict]
         film_response = requests.get(
-            url=f'https://api.kinopoisk.dev/v1.4/movie?id={
-                "&id=".join(ids)}&selectFields=name&selectFields=id',
+            url=f'https://api.kinopoisk.dev/v1.4/movie?id={"&id=".join(ids)}&selectFields=name&selectFields=id',
             headers={'X-API-KEY': config["MOVIES_API"]}
         ).json()
-        text += "".join(f'- "{film_response["docs"][i]["name"]}": {
-                        ratings_dict[film_response["docs"][i]["id"]]}\n' for i in range(len(film_response["docs"])))
+        text += "".join(f'- "{film_response["docs"][i]["name"]}": {ratings_dict[film_response["docs"][i]["id"]]}\n' for i in range(len(film_response["docs"])))
 
         human_message = HumanMessage(content=text)
         response = giga([prompt, human_message])
@@ -76,8 +72,7 @@ def generate_recommended_films(username: str, count: int):
         attempts = 0
 
         while len(recommended_films) != count:
-            human_message = HumanMessage(content=f'Сгенируй JSON-массив названий фильмов ровно из {
-                                         count} фильмов без повторений и подобранных именно мне!')
+            human_message = HumanMessage(content=f'Сгенируй JSON-массив названий фильмов ровно из {count} фильмов без повторений и подобранных именно мне!')
             response = giga([prompt, human_message])
             recommended_films = json.loads(response.content)
             attempts += 1

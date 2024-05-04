@@ -15,7 +15,7 @@ function fetchViewedFilms() {
       // Для каждого ID выполняем запрос в Kinopoisk API
       movieIds.forEach((movieId) => {
         fetch(
-          `https://api.kinopoisk.dev/v1.4/movie/${movieId}?selectFields=id&selectFields=name&selectFields=poster¬NullFields=id¬NullFields=name¬NullFields=poster.url`,
+          `https://api.kinopoisk.dev/v1.4/movie/${movieId}?selectFields=id&selectFields=name&selectFields=poster&notNullFields=id&notNullFields=name&notNullFields=poster.url`,
           {
             method: "GET",
             headers: {
@@ -39,32 +39,4 @@ function fetchViewedFilms() {
     .catch((error) => {
       console.error("Ошибка при получении просмотренных фильмов:", error);
     });
-}
-
-function createMovieElement(movie) {
-  if (!movie || !movie.poster.previewUrl || !movie.name) {
-    return null;
-  }
-
-  // Создаем контейнер для карточки фильма
-  const movieElement = document.createElement("div");
-  movieElement.className = "movie-card";
-
-  // Создаем элемент изображения для постера фильма
-  const movieImage = document.createElement("img");
-  movieImage.src = movie.poster.previewUrl;
-  movieImage.alt = movie.name;
-  movieImage.className = "movie-image";
-
-  // Создаем название фильма
-  const movieTitle = document.createElement("h3");
-  movieTitle.textContent = movie.name;
-  movieTitle.className = "movie-title";
-
-  // Объединяем элементы внутри карточки фильма
-  movieElement.appendChild(movieImage);
-  movieElement.appendChild(movieTitle);
-
-  // Возвращаем готовый элемент
-  return movieElement;
 }

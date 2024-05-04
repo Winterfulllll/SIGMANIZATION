@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Поиск</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+  <body>
+    <h1>Поиск фильмов</h1>
+
+    <div class="search-container">
+      <input
+        type="text"
+        id="search-input"
+        placeholder="Введите название фильма"
+      />
+      <button id="search-button">Поиск</button>
+    </div>
+
+    <div class="container" id="search-movies-container"></div>
+    <script>
+      const movies_api_key = "{{ movies_api_key }}";
+    </script>
+    <script src="{{ url_for('static', filename='search.js') }}"></script>
+  </body>
+</html>
