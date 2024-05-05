@@ -33,7 +33,7 @@ def post_review(username, body):
         review_text = body.get('review', None)
         rating = body.get('rating', None)
 
-        if not all([item_id, item_category, viewed]):
+        if not all([item_id, item_category, viewed is not None]):
             return abort(400, "Empty required fields")
 
         if User.query.filter_by(username=username).one_or_none() is None:

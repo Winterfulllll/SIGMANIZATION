@@ -92,7 +92,7 @@ submitReviewButton.addEventListener("click", () => {
     },
     body: JSON.stringify({
       item_id: movie.id,
-      viewed: isViewed,
+      viewed: isViewed || false,
       item_category: "MOVIE",
       ...(review && { review: review }),
       ...(rating && { rating: parseInt(rating, 10) }),

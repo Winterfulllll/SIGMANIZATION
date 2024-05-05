@@ -72,58 +72,18 @@
 
           <div class="p-2 mb-2">
             <div>
-              <h2 class="default_text" id="top_body">Watched history:</h2>
+              <h2 class="default_text" id="top_body">Дневник просмотра:</h2>
             </div>
           </div>
 
-          <div class="container">
-            <div class="container" id="defolt">
-              <div id="movies-container" class="row"></div>
-            </div>
-          </div>
-
-          <div class="p-2 mb-2">
-            <div>
-              <h2 class="default_text" id="top_body">Watched diary:</h2>
-            </div>
-          </div>
-          <div class="row align-items-md-stretch">
-            <div class="col-md-2">
-              <div class="h-60 p-5 text-bg-dark rounded-3">
-                <h2>Name</h2>
-                <p>Short review</p>
-              </div>
-            </div>
-            <div class="col-md-2">
-              <div class="h-60 p-5 text-bg-dark rounded-3">
-                <h2>Name</h2>
-                <p>Short review</p>
-              </div>
-            </div>
-            <div class="col-md-2">
-              <div class="h-60 p-5 text-bg-dark rounded-3">
-                <h2>Name</h2>
-                <p>Short review</p>
-              </div>
-            </div>
-            <div class="col-md-2">
-              <div class="h-60 p-5 text-bg-dark rounded-3">
-                <h2>Name</h2>
-                <p>Short review</p>
-              </div>
-            </div>
-            <div class="col-md-2">
-              <div class="h-60 p-5 text-bg-dark rounded-3">
-                <h2>Name</h2>
-                <p>Short review</p>
-              </div>
-            </div>
-            <div class="col-md-2">
-              <div class="h-60 p-5 text-bg-dark rounded-3">
-                <h2>Name</h2>
-                <p>Short review</p>
-              </div>
-            </div>
+          <div class="container" id="movies-container-with-pagination">
+            <button id="prev" style="display: none">
+              <i class="fa-solid fa-angle-left fa-2xl"></i>
+            </button>
+            <div id="movies-container" class="row"></div>
+            <button id="next" style="display: none">
+              <i class="fa-solid fa-angle-right fa-2xl"></i>
+            </button>
           </div>
 
           <footer class="pt-3 mt-4 text-body-secondary border-top">
@@ -135,7 +95,8 @@
     <script>
       const movies_api_key = "{{ movies_api_key }}";
       const service_api_key = "{{ service_api_key }}";
+      const current_user_username = "{{ current_user_username }}";
     </script>
-    <script src="{{ url_for('static', filename='mainpage.js') }}"></script>
+    <script src="{{ url_for('static', filename='profile.js') }}"></script>
   </body>
 </html>
