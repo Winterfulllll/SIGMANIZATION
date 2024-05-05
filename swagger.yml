@@ -102,8 +102,6 @@ paths:
             schema:
               type: object
               properties:
-                username:
-                  type: string
                 email:
                   type: string
                 password:
@@ -136,18 +134,33 @@ paths:
         description: User object with updated information.
         required: true
         content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+                  format: password
+                surname:
+                  type: string
+                name:
+                  type: string
+                patronymic:
+                  type: string
+      responses:
+        "200":
+          description: User updated successfully.
+          content:
             application/json:
               schema:
                 type: object
                 properties:
-                  user:
-                    $ref: '#/components/schemas/User'
                   access_token:
                     type: string
-                    description: new JWT-token.
-      responses:
-        "200":
-          description: User updated successfully.
         "400":
           description: Invalid input.
         "404":

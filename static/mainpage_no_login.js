@@ -65,7 +65,8 @@ function registerUser() {
         // Отправляем все предпочтения и обрабатываем результат
         Promise.all(preferencePromises)
           .then(() => {
-            alert("Пользователь и предпочтения успешно сохранены!");
+            alert("Пользователь и его предпочтения успешно сохранены!");
+            location.reload();
           })
           .catch((error) => {
             fetch(`/api/users/${username}`, {
@@ -121,6 +122,7 @@ function loginUser() {
   })
     .then((response) => {
       if (response.ok) {
+        location.reload();
         return response.json();
       }
       throw new Error("Ошибка авторизации");

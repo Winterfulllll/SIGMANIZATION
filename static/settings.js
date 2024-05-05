@@ -126,18 +126,14 @@ async function handleProfileChange() {
     };
 
     // Обновление данных пользователя
-    const updateResponse = await updateUser(current_user_username, newUserData);
-    const updateData = await updateResponse.json();
-    const newAccessToken = updateData.access_token;
-
-    // Обновление cookie с новым токеном
-    document.cookie = `access_token_cookie=${newAccessToken}; path=/; secure; httponly; samesite=Strict`;
+    await updateUser(current_user_username, newUserData);
 
     // Удаление старых и добавление новых предпочтений
     await updatePreferences(username, preferencesData);
 
     alert("Данные профиля и предпочтения успешно обновлены!");
     current_user_username = username; // Обновляем имя пользователя
+    location.reload();
   } catch (error) {
     console.error("Ошибка при обновлении данных:", error);
     alert(error.message);
@@ -235,7 +231,7 @@ async function updateUser(username, userData) {
 
 async function updatePreferences(username, preferencesData) {
   // Удаление всех существующих предпочтений
-  await fetch(`/api/preferences/${username}`, {
+  await fetch(`/api/preferences/${current_user_username}`, {
     method: "DELETE",
     headers: {
       "API-KEY": service_api_key,

@@ -122,15 +122,16 @@ def get_user(username):
 
 def full_update_user(username, body):
     """
-    Updates the user's settings, including the ability to change the username.
+    Updates the user's settings, including the ability to change the user name.
 
-    Args:
-        - username: The current user's username.
-        - body: A dictionary with new user data.
+    Arguments:
+        - username: The current username.
+        - body: Dictionary with new user data.
 
     Returns:
-        JSON representation of the created user and status code 200 on success
-        or the corresponding error in case of failure.
+        JSON representation of an updated user with a new JWT token
+        and the status code 200 in case of success,
+        or an appropriate error in case of failure.
     """
     try:
         new_username = body.get('username', None)
@@ -139,52 +140,61 @@ def full_update_user(username, body):
         new_surname = body.get('surname', None)
         new_name = body.get('name', None)
         new_patronymic = body.get('patronymic', None)
+        access_token = None
 
         user = User.query.filter_by(username=username).one_or_none()
         if user is None:
-            return abort(404, f"User with username '{username}' not found")
+            return abort(404, f"Пользователь с именем '{username}' не найден")
 
         if not all([new_username, new_email, new_password]):
-            return jsonify(abort(400, "Missing required fields"))
+            return jsonify(abort(400, "Отсутствуют обязательные поля"))
 
         if new_username != username:
             if User.query.filter_by(username=new_username).one_or_none() is not None:
-                return abort(409, f"Username '{new_username}' already exists")
+                return abort(409, f"Имя пользователя '{new_username}' уже существует")
             if not validate_username(new_username):
-                return abort(400, f"Invalid username format")
+                return abort(400, f"Неверный формат имени пользователя")
             user.username = new_username
+
+            access_token = create_access_token(identity=new_username, expires_delta=timedelta(days=30))
 
         if new_email and new_email != user.email:
             try:
                 validate_email(new_email)
             except:
-                return abort(400, f"Invalid email format")
+                return abort(400, f"Неверный формат email")
 
             if User.query.filter_by(email=new_email).one_or_none() is not None:
-                return abort(409, f"Email '{new_email}' already exists")
+                return abort(409, f"Email '{new_email}' уже используется")
             user.email = new_email
 
         hashed_password = encryptor.encrypt_data(new_password)
         user.password = hashed_password
 
         if new_surname:
-            if (len(new_surname) > 50):
-                return abort(400, f"Your surname is too long. The maximum length is 50")
+            if len(new_surname) > 50:
+                return abort(400, f"Фамилия слишком длинная. Максимальная длина - 50 символов")
             user.surname = new_surname
 
         if new_name:
-            if (len(new_name) > 50):
-                return abort(400, f"Your name is too long. The maximum length is 50")
+            if len(new_name) > 50:
+                return abort(400, f"Имя слишком длинное. Максимальная длина - 50 символов")
             user.name = new_name
 
         if new_patronymic:
-            if (len(new_patronymic) > 50):
-                return abort(400, f"Your patronymic is too long. The maximum length is 50")
+            if len(new_patronymic) > 50:
+                return abort(400, f"Отчество слишком длинное. Максимальная длина - 50 символов")
             user.patronymic = new_patronymic
 
         db.session.commit()
-        access_token = create_access_token(identity=user.username, fresh=True)
-        return jsonify({'user': user_schema.dump(user), 'access_token': access_token}), 200
+
+        if not access_token:
+            access_token = create_access_token(identity=username, fresh=True)
+
+        response = make_response(jsonify(access_token=access_token), 200)
+        response.set_cookie('access_token_cookie', access_token,
+                            httponly=True, secure=True, samesite='Strict')
+        return response
 
     except DBAPIError as e:
         db.session.rollback()
