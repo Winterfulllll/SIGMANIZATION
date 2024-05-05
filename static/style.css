@@ -14,10 +14,10 @@ body {
 }
 
 .content {
-  height: 100px;
+  height: 70px;
   width: 100%;
   background-color: #1f1b2e;
-  border-radius: 10px;
+  border-radius: 9px;
 }
 
 #top_body {
@@ -34,18 +34,18 @@ body {
   width: 100%;
   height: 40px;
 
-  margin-top: 30px !important;
-  margin-bottom: 14px !important;
+  margin-top: 15px !important;
+  margin-bottom: 4px !important;
   margin-left: 2%;
 }
 
 .buttons {
-  height: 100px;
+  height: 70px;
   width: 100%;
 }
 
 .dropdown {
-  height: 100px;
+  height: 70px;
   width: 24.5%;
   display: inline-block !important;
 }
@@ -77,7 +77,7 @@ body {
 }
 
 /* Стиль для фона модального окна (полупрозрачный фон) */
-.modal-background {
+.modal-background1 {
   display: none;
   position: fixed;
   z-index: 1;
@@ -91,14 +91,41 @@ body {
 }
 
 /* Стиль для модального окна */
-.modal-content {
+.modal-content1 {
   font-family: Arial, sans-serif;
-  background-color: white;
+  color: white;
+  background-color: #1b1924;
   margin: 0 auto;
   margin-top: 50px; /* 15% сверху и центрировано по горизонтали */
   padding: 20px;
-  width: 1200px;
-  height: 670px;
+  width: 720px;
+  height: 380px;
+  border-radius: 5px;
+}
+
+.modal-background2 {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%; /* Полная высота */
+  overflow: auto; /* Включить прокрутку, если нужно */
+  background-color: rgb(0, 0, 0); /* Цвет фона */
+  background-color: rgba(0, 0, 0, 0.95); /* Черный с небольшой прозрачностью */
+}
+
+/* Стиль для модального окна */
+.modal-content2 {
+  font-family: Arial, sans-serif;
+  color: white;
+  background-color: #1b1924;
+  margin: 0 auto;
+  margin-top: 15%; /* 15% сверху и центрировано по горизонтали */
+  padding: 20px;
+  width: 400px;
+  height: 300px;
   border-radius: 5px;
 }
 
@@ -132,7 +159,6 @@ body {
 }
 
 .login-container {
-  background-color: white;
   padding: 20px;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -280,8 +306,8 @@ input[type="password"] {
 
 .preferences {
   margin-top: 30px;
-  width: 600px;
-  margin: 0 auto;
+  width: 680px;
+  margin-left: 20px;
 }
 
 .dropdown-group {
@@ -399,10 +425,6 @@ input[type="password"] {
   font-size: 20px;
 }
 
-.preferences {
-  width: 1200px;
-}
-
 .preferencesButtons {
   display: flex;
   width: 100%;
@@ -411,34 +433,12 @@ input[type="password"] {
 #dropdownButtonPreferenceGenre,
 #dropdownButtonPreferenceCountry,
 #dropdownButtonPreferenceYear {
-  width: 250px;
-}
-
-#dropdownButtonPreferenceGenre,
-#dropdownButtonPreferenceCountry,
-#dropdownButtonPreferenceYear {
-  width: 100px;
-}
-
-.preferences {
-  width: 1200px;
+  width: 150px;
 }
 
 .preferencesButtons {
   display: flex;
   width: 100%;
-}
-
-#dropdownButtonPreferenceGenre {
-  width: 250px;
-}
-
-#dropdownButtonPreferenceCountry {
-  width: 250px;
-}
-
-#dropdownButtonPreferenceYear {
-  width: 250px;
 }
 
 .search {
@@ -519,4 +519,177 @@ li {
 
 .white-link {
   color: white !important; /* !important гарантирует применение стиля в случае конфликтов */
+}
+
+#genre_list{
+  margin-left: 7px;
+  background-color: #312b45; /* Светлый фон для контейнера */
+  padding: 15px; /* Внутренний отступ для контейнера */
+  max-width: 350px; /* Максимальная ширина контейнера */
+  column-count: 2; /* Делит контент на 2 колонки */
+  color: white;
+}
+
+#genre_list label {
+  display: block; /* Каждый лейбл на новой строке */
+  margin-bottom: 5px;
+  padding: 2px;
+  cursor: pointer; /* Курсор в виде указателя */
+  border-radius: 5px;
+}
+
+#genre_list label:hover {
+  background-color: #787879; /* Светло-серый фон при наведении */
+}
+
+#contry_list {
+  margin-left: 7px;
+  background-color: #312b45; /* Светлый фон для контейнера */
+  padding: 15px; /* Внутренний отступ для контейнера */
+  max-width: 350px; /* Максимальная ширина контейнера */
+  column-count: 2; /* Делит контент на 2 колонки */
+  color: white;
+}
+
+#contry_list label {
+  display: block; /* Каждый лейбл на новой строке */
+  margin-bottom: 5px;
+  padding: 2px;
+  cursor: pointer; /* Курсор в виде указателя */
+  border-radius: 5px;
+}
+
+#contry_list label:hover {
+  background-color: #787879; /* Светло-серый фон при наведении */
+}
+
+#years_list {
+  margin-left: 7px;
+  background-color: #312b45; /* Светлый фон для контейнера */
+  padding: 15px; /* Внутренний отступ для контейнера */
+  max-width: 350px; /* Максимальная ширина контейнера */
+  column-count: 2; /* Делит контент на 2 колонки */
+  color: white;
+}
+
+#years_list label {
+  display: block; /* Каждый лейбл на новой строке */
+  margin-bottom: 5px;
+  padding: 2px;
+  cursor: pointer; /* Курсор в виде указателя */
+  border-radius: 5px;
+}
+
+#years_list label:hover {
+  background-color: #787879; /* Светло-серый фон при наведении */
+}
+
+#rating_list {
+  margin-left: 7px;
+  background-color: #312b45; /* Светлый фон для контейнера */
+  padding: 15px; /* Внутренний отступ для контейнера */
+  max-width: 350px; /* Максимальная ширина контейнера */
+  column-count: 2; /* Делит контент на 2 колонки, если требуется */
+  color: white;
+}
+
+#rating_list label {
+  display: block; /* Каждый лейбл на новой строке */
+  margin-bottom: 5px;
+  padding: 2px;
+  cursor: pointer; /* Курсор в виде указателя */
+  border-radius: 5px;
+}
+
+#rating_list label:hover {
+  background-color: #787879; /* Светло-серый фон при наведении */
+}
+
+input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: transparent;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  border: 2px solid #555;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+input[type="checkbox"]:checked {
+  background-color: white;
+  border-color: #555;
+}
+
+#describe_sire{
+  margin-bottom: 30px;
+}
+
+#texting{
+  margin-top: 15px;
+}
+
+#genre_list2{
+  background-color: #312b45; /* Светлый фон для контейнера */
+  padding: 15px; /* Внутренний отступ для контейнера */
+  max-width: 550px; /* Максимальная ширина контейнера */
+  column-count: 3; /* Делит контент на 2 колонки */
+  color: white;
+}
+
+#genre_list2 label {
+  display: block; /* Каждый лейбл на новой строке */
+  margin-bottom: 5px;
+  padding: 2px;
+  cursor: pointer; /* Курсор в виде указателя */
+  border-radius: 5px;
+  width: 140px;
+}
+
+#genre_list2 label:hover {
+  background-color: #787879; /* Светло-серый фон при наведении */
+}
+
+#contry_list2{
+  background-color: #312b45; /* Светлый фон для контейнера */
+  padding: 15px; /* Внутренний отступ для контейнера */
+  max-width: 550px; /* Максимальная ширина контейнера */
+  column-count: 3; /* Делит контент на 2 колонки */
+  color: white;
+}
+
+#contry_list2 label {
+  display: block; /* Каждый лейбл на новой строке */
+  margin-bottom: 5px;
+  padding: 2px;
+  cursor: pointer; /* Курсор в виде указателя */
+  border-radius: 5px;
+  width: 140px;
+}
+
+#contry_list2 label:hover {
+  background-color: #787879; /* Светло-серый фон при наведении */
+}
+
+#year_list2{
+  background-color: #312b45; /* Светлый фон для контейнера */
+  padding: 15px; /* Внутренний отступ для контейнера */
+  max-width: 550px; /* Максимальная ширина контейнера */
+  column-count: 2; /* Делит контент на 2 колонки */
+  color: white;
+}
+
+#year_list2 label {
+  display: block; /* Каждый лейбл на новой строке */
+  margin-bottom: 5px;
+  padding: 2px;
+  cursor: pointer; /* Курсор в виде указателя */
+  border-radius: 5px;
+  width: 160px;
+}
+
+#year_list2 label:hover {
+  background-color: #787879; /* Светло-серый фон при наведении */
 }

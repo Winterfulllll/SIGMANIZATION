@@ -13,6 +13,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='style.css') }}"
@@ -61,14 +62,14 @@
     </div>
 
     <div class="container" id="describe_sire">
-      <h2 class="default_text" id="top_body">Films watch online</h2>
+      <h2 class="default_text" id="top_body">Сервис по рекомендации фильмов</h2>
 
       <div class="container" id="search">
         <p class="default_text" id="texting">
-          Do you like to watch movies online and spend a lot of time scouring websites
-          in search of something interesting? It is worth lingering on the ivi films
-          that we have collected, you will have enough for a long time. The collection
-          is constantly being updated as
+          Вы любите смотреть фильмы онлайн и проводите много времени, просматривая веб-сайты
+          в поисках чего-нибудь интересного? Стоит остановиться на Reco.
+          Здесь вы можете найти выши любимые фильмы и получить
+          рекомендации от GigaСhat на основе ваших предпочтений.
         </p>
         <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
 
@@ -89,327 +90,327 @@
             >
               Жанры
             </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownGenresButton">
-              <label for="genre-anime">
-                <input
-                  type="checkbox"
-                  id="genre-anime"
-                  name="filters-genre"
-                  data-value="аниме"
-                />
-                Аниме
-              </label>
+              <ul class="dropdown-menu" aria-labelledby="dropdownGenresButton" id="genre_list">
+                <label for="genre-anime">
+                  <input
+                    type="checkbox"
+                    id="genre-anime"
+                    name="filters-genre"
+                    data-value="аниме"
+                  />
+                  Аниме
+                </label>
 
-              <label for="genre-biografiya">
-                <input
-                  type="checkbox"
-                  id="genre-biografiya"
-                  name="filters-genre"
-                  data-value="биография"
-                />
-                Биография
-              </label>
+                <label for="genre-biografiya">
+                  <input
+                    type="checkbox"
+                    id="genre-biografiya"
+                    name="filters-genre"
+                    data-value="биография"
+                  />
+                  Биография
+                </label>
 
-              <label for="genre-boevik">
-                <input
-                  type="checkbox"
-                  id="genre-boevik"
-                  name="filters-genre"
-                  data-value="боевик"
-                />
-                Боевик
-              </label>
+                <label for="genre-boevik">
+                  <input
+                    type="checkbox"
+                    id="genre-boevik"
+                    name="filters-genre"
+                    data-value="боевик"
+                  />
+                  Боевик
+                </label>
 
-              <label for="genre-vestern">
-                <input
-                  type="checkbox"
-                  id="genre-vestern"
-                  name="filters-genre"
-                  data-value="вестерн"
-                />
-                Вестерн
-              </label>
+                <label for="genre-vestern">
+                  <input
+                    type="checkbox"
+                    id="genre-vestern"
+                    name="filters-genre"
+                    data-value="вестерн"
+                  />
+                  Вестерн
+                </label>
 
-              <label for="genre-voennyy">
-                <input
-                  type="checkbox"
-                  id="genre-voennyy"
-                  name="filters-genre"
-                  data-value="военный"
-                />
-                Военный
-              </label>
+                <label for="genre-voennyy">
+                  <input
+                    type="checkbox"
+                    id="genre-voennyy"
+                    name="filters-genre"
+                    data-value="военный"
+                  />
+                  Военный
+                </label>
 
-              <label for="genre-detektiv">
-                <input
-                  type="checkbox"
-                  id="genre-detektiv"
-                  name="filters-genre"
-                  data-value="детектив"
-                />
-                Детектив
-              </label>
+                <label for="genre-detektiv">
+                  <input
+                    type="checkbox"
+                    id="genre-detektiv"
+                    name="filters-genre"
+                    data-value="детектив"
+                  />
+                  Детектив
+                </label>
 
-              <label for="genre-detskiy">
-                <input
-                  type="checkbox"
-                  id="genre-detskiy"
-                  name="filters-genre"
-                  data-value="детский"
-                />
-                Детский
-              </label>
+                <label for="genre-detskiy">
+                  <input
+                    type="checkbox"
+                    id="genre-detskiy"
+                    name="filters-genre"
+                    data-value="детский"
+                  />
+                  Детский
+                </label>
 
-              <label for="genre-dlya-vzroslyh">
-                <input
-                  type="checkbox"
-                  id="genre-dlya-vzroslyh"
-                  name="filters-genre"
-                  data-value="для взрослых"
-                />
-                Для взрослых
-              </label>
+                <label for="genre-dlya-vzroslyh">
+                  <input
+                    type="checkbox"
+                    id="genre-dlya-vzroslyh"
+                    name="filters-genre"
+                    data-value="для взрослых"
+                  />
+                  Для взрослых
+                </label>
 
-              <label for="genre-dokumentalnyy">
-                <input
-                  type="checkbox"
-                  id="genre-dokumentalnyy"
-                  name="filters-genre"
-                  data-value="документальный"
-                />
-                Документальный
-              </label>
+                <label for="genre-dokumentalnyy">
+                  <input
+                    type="checkbox"
+                    id="genre-dokumentalnyy"
+                    name="filters-genre"
+                    data-value="документальный"
+                  />
+                  Документал
+                </label>
 
-              <label for="genre-drama">
-                <input
-                  type="checkbox"
-                  id="genre-drama"
-                  name="filters-genre"
-                  data-value="драма"
-                />
-                Драма
-              </label>
+                <label for="genre-drama">
+                  <input
+                    type="checkbox"
+                    id="genre-drama"
+                    name="filters-genre"
+                    data-value="драма"
+                  />
+                  Драма
+                </label>
 
-              <label for="genre-igra">
-                <input
-                  type="checkbox"
-                  id="genre-igra"
-                  name="filters-genre"
-                  data-value="игра"
-                />
-                Игра
-              </label>
+                <label for="genre-igra">
+                  <input
+                    type="checkbox"
+                    id="genre-igra"
+                    name="filters-genre"
+                    data-value="игра"
+                  />
+                  Игра
+                </label>
 
-              <label for="genre-istoriya">
-                <input
-                  type="checkbox"
-                  id="genre-istoriya"
-                  name="filters-genre"
-                  data-value="история"
-                />
-                История
-              </label>
+                <label for="genre-istoriya">
+                  <input
+                    type="checkbox"
+                    id="genre-istoriya"
+                    name="filters-genre"
+                    data-value="история"
+                  />
+                  История
+                </label>
 
-              <label for="genre-komediya">
-                <input
-                  type="checkbox"
-                  id="genre-komediya"
-                  name="filters-genre"
-                  data-value="комедия"
-                />
-                Комедия
-              </label>
+                <label for="genre-komediya">
+                  <input
+                    type="checkbox"
+                    id="genre-komediya"
+                    name="filters-genre"
+                    data-value="комедия"
+                  />
+                  Комедия
+                </label>
 
-              <label for="genre-koncert">
-                <input
-                  type="checkbox"
-                  id="genre-koncert"
-                  name="filters-genre"
-                  data-value="концерт"
-                />
-                Концерт
-              </label>
+                <label for="genre-koncert">
+                  <input
+                    type="checkbox"
+                    id="genre-koncert"
+                    name="filters-genre"
+                    data-value="концерт"
+                  />
+                  Концерт
+                </label>
 
-              <label for="genre-korotkometrazhka">
-                <input
-                  type="checkbox"
-                  id="genre-korotkometrazhka"
-                  name="filters-genre"
-                  data-value="короткометражка"
-                />
-                Короткометражка
-              </label>
+                <label for="genre-korotkometrazhka">
+                  <input
+                    type="checkbox"
+                    id="genre-korotkometrazhka"
+                    name="filters-genre"
+                    data-value="короткометражка"
+                  />
+                  Коротком..
+                </label>
 
-              <label for="genre-kriminal">
-                <input
-                  type="checkbox"
-                  id="genre-kriminal"
-                  name="filters-genre"
-                  data-value="криминал"
-                />
-                Криминал
-              </label>
+                <label for="genre-kriminal">
+                  <input
+                    type="checkbox"
+                    id="genre-kriminal"
+                    name="filters-genre"
+                    data-value="криминал"
+                  />
+                  Криминал
+                </label>
 
-              <label for="genre-melodrama">
-                <input
-                  type="checkbox"
-                  id="genre-melodrama"
-                  name="filters-genre"
-                  data-value="мелодрама"
-                />
-                Мелодрама
-              </label>
+                <label for="genre-melodrama" id="mel">
+                  <input
+                    type="checkbox"
+                    id="genre-melodrama"
+                    name="filters-genre"
+                    data-value="мелодрама"
+                  />
+                  Мелодрама
+                </label>
 
-              <label for="genre-muzyka">
-                <input
-                  type="checkbox"
-                  id="genre-muzyka"
-                  name="filters-genre"
-                  data-value="музыка"
-                />
-                Музыка
-              </label>
+                <label for="genre-muzyka">
+                  <input
+                    type="checkbox"
+                    id="genre-muzyka"
+                    name="filters-genre"
+                    data-value="музыка"
+                  />
+                  Музыка
+                </label>
 
-              <label for="genre-multfilm">
-                <input
-                  type="checkbox"
-                  id="genre-multfilm"
-                  name="filters-genre"
-                  data-value="мультфильм"
-                />
-                Мультфильм
-              </label>
+                <label for="genre-multfilm">
+                  <input
+                    type="checkbox"
+                    id="genre-multfilm"
+                    name="filters-genre"
+                    data-value="мультфильм"
+                  />
+                  Мультфильм
+                </label>
 
-              <label for="genre-myuzikl">
-                <input
-                  type="checkbox"
-                  id="genre-myuzikl"
-                  name="filters-genre"
-                  data-value="мюзикл"
-                />
-                Мюзикл
-              </label>
+                <label for="genre-myuzikl">
+                  <input
+                    type="checkbox"
+                    id="genre-myuzikl"
+                    name="filters-genre"
+                    data-value="мюзикл"
+                  />
+                  Мюзикл
+                </label>
 
-              <label for="genre-novosti">
-                <input
-                  type="checkbox"
-                  id="genre-novosti"
-                  name="filters-genre"
-                  data-value="новости"
-                />
-                Новости
-              </label>
+                <label for="genre-novosti">
+                  <input
+                    type="checkbox"
+                    id="genre-novosti"
+                    name="filters-genre"
+                    data-value="новости"
+                  />
+                  Новости
+                </label>
 
-              <label for="genre-priklyucheniya">
-                <input
-                  type="checkbox"
-                  id="genre-priklyucheniya"
-                  name="filters-genre"
-                  data-value="приключения"
-                />
-                Приключения
-              </label>
+                <label for="genre-priklyucheniya">
+                  <input
+                    type="checkbox"
+                    id="genre-priklyucheniya"
+                    name="filters-genre"
+                    data-value="приключения"
+                  />
+                  Приключения
+                </label>
 
-              <label for="genre-realnoe-tv">
-                <input
-                  type="checkbox"
-                  id="genre-realnoe-tv"
-                  name="filters-genre"
-                  data-value="реальное ТВ"
-                />
-                Реальное ТВ
-              </label>
+                <label for="genre-realnoe-tv">
+                  <input
+                    type="checkbox"
+                    id="genre-realnoe-tv"
+                    name="filters-genre"
+                    data-value="реальное ТВ"
+                  />
+                  Реальное ТВ
+                </label>
 
-              <label for="genre-semeynyy">
-                <input
-                  type="checkbox"
-                  id="genre-semeynyy"
-                  name="filters-genre"
-                  data-value="семейный"
-                />
-                Семейный
-              </label>
+                <label for="genre-semeynyy">
+                  <input
+                    type="checkbox"
+                    id="genre-semeynyy"
+                    name="filters-genre"
+                    data-value="семейный"
+                  />
+                  Семейный
+                </label>
 
-              <label for="genre-sport">
-                <input
-                  type="checkbox"
-                  id="genre-sport"
-                  name="filters-genre"
-                  data-value="спорт"
-                />
-                Спорт
-              </label>
+                <label for="genre-sport">
+                  <input
+                    type="checkbox"
+                    id="genre-sport"
+                    name="filters-genre"
+                    data-value="спорт"
+                  />
+                  Спорт
+                </label>
 
-              <label for="genre-tok-shou">
-                <input
-                  type="checkbox"
-                  id="genre-tok-shou"
-                  name="filters-genre"
-                  data-value="ток-шоу"
-                />
-                Ток-шоу
-              </label>
+                <label for="genre-tok-shou">
+                  <input
+                    type="checkbox"
+                    id="genre-tok-shou"
+                    name="filters-genre"
+                    data-value="ток-шоу"
+                  />
+                  Ток-шоу
+                </label>
 
-              <label for="genre-triller">
-                <input
-                  type="checkbox"
-                  id="genre-triller"
-                  name="filters-genre"
-                  data-value="триллер"
-                />
-                Триллер
-              </label>
+                <label for="genre-triller">
+                  <input
+                    type="checkbox"
+                    id="genre-triller"
+                    name="filters-genre"
+                    data-value="триллер"
+                  />
+                  Триллер
+                </label>
 
-              <label for="genre-uzhasy">
-                <input
-                  type="checkbox"
-                  id="genre-uzhasy"
-                  name="filters-genre"
-                  data-value="ужасы"
-                />
-                Ужасы
-              </label>
+                <label for="genre-uzhasy">
+                  <input
+                    type="checkbox"
+                    id="genre-uzhasy"
+                    name="filters-genre"
+                    data-value="ужасы"
+                  />
+                  Ужасы
+                </label>
 
-              <label for="genre-fantastika">
-                <input
-                  type="checkbox"
-                  id="genre-fantastika"
-                  name="filters-genre"
-                  data-value="фантастика"
-                />
-                Фантастика
-              </label>
+                <label for="genre-fantastika">
+                  <input
+                    type="checkbox"
+                    id="genre-fantastika"
+                    name="filters-genre"
+                    data-value="фантастика"
+                  />
+                  Фантастика
+                </label>
 
-              <label for="genre-film-nuar">
-                <input
-                  type="checkbox"
-                  id="genre-film-nuar"
-                  name="filters-genre"
-                  data-value="фильм-нуар"
-                />
-                Фильм-нуар
-              </label>
+                <label for="genre-film-nuar">
+                  <input
+                    type="checkbox"
+                    id="genre-film-nuar"
+                    name="filters-genre"
+                    data-value="фильм-нуар"
+                  />
+                  Фильм-нуар
+                </label>
 
-              <label for="genre-fentezi">
-                <input
-                  type="checkbox"
-                  id="genre-fentezi"
-                  name="filters-genre"
-                  data-value="фэнтези"
-                />
-                Фэнтези
-              </label>
+                <label for="genre-fentezi">
+                  <input
+                    type="checkbox"
+                    id="genre-fentezi"
+                    name="filters-genre"
+                    data-value="фэнтези"
+                  />
+                  Фэнтези
+                </label>
 
-              <label for="genre-ceremoniya">
-                <input
-                  type="checkbox"
-                  id="genre-ceremoniya"
-                  name="filters-genre"
-                  data-value="церемония"
-                />
-                Церемония
-              </label>
-            </ul>
+                <label for="genre-ceremoniya">
+                  <input
+                    type="checkbox"
+                    id="genre-ceremoniya"
+                    name="filters-genre"
+                    data-value="церемония"
+                  />
+                  Церемония
+                </label>
+              </ul>
           </div>
 
           <div class="dropdown" id="filters">
@@ -422,7 +423,7 @@
             >
               Страны
             </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownCountriesButton">
+            <ul class="dropdown-menu" aria-labelledby="dropdownCountriesButton" id="contry_list">
               <label for="country-Avstraliya">
                 <input
                   type="checkbox"
@@ -490,7 +491,7 @@
                   name="filters-country"
                   data-value="Великобритания"
                 />
-                Великобритания
+                Великобри..
               </label>
 
               <label for="country-Vengriya">
@@ -640,7 +641,7 @@
                   name="filters-country"
                   data-value="Новая Зеландия"
                 />
-                Новая Зеландия
+                Новая Зел..
               </label>
 
               <label for="country-Norvegiya">
@@ -805,7 +806,7 @@
             >
               Годы
             </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownYearsButton">
+            <ul class="dropdown-menu" aria-labelledby="dropdownYearsButton" id="years_list">
               <label for="year-2024">
                 <input
                   type="checkbox"
@@ -959,67 +960,33 @@
           </div>
 
           <div class="dropdown" id="filters">
-            <button
-              class="btn btn-secondary dropdown-toggle"
-              type="button"
-              id="dropdownButton"
-              data-toggle="dropdown"
-              aria-expanded="false"
-            >
-              Рейтинг
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownButton"
+                    data-toggle="dropdown" aria-expanded="false">
+                Рейтинг
             </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownRatingsButton">
-              <label for="rating-9">
-                <input
-                  type="checkbox"
-                  id="rating-9"
-                  name="filters-rating"
-                  data-value="9-10"
-                />
-                Больше 9
-              </label>
-
-              <label for="rating-8">
-                <input
-                  type="checkbox"
-                  id="rating-8"
-                  name="filters-rating"
-                  data-value="8-10"
-                />
-                Больше 8
-              </label>
-
-              <label for="rating-7">
-                <input
-                  type="checkbox"
-                  id="rating-7"
-                  name="filters-rating"
-                  data-value="7-10"
-                />
-                Больше 7
-              </label>
-
-              <label for="rating-6">
-                <input
-                  type="checkbox"
-                  id="rating-6"
-                  name="filters-rating"
-                  data-value="6-10"
-                />
-                Больше 6
-              </label>
-
-              <label for="rating-5">
-                <input
-                  type="checkbox"
-                  id="rating-5"
-                  name="filters-rating"
-                  data-value="0-5"
-                />
-                5 и меньше
-              </label>
+            <ul class="dropdown-menu" aria-labelledby="dropdownRatingsButton" id="rating_list">
+                <label class="rating-option" for="rating-9">
+                    <input type="checkbox" id="rating-9" name="filters-rating" data-value="9-10" />
+                    Больше 9
+                </label>
+                <label class="rating-option" for="rating-8">
+                    <input type="checkbox" id="rating-8" name="filters-rating" data-value="8-10" />
+                    Больше 8
+                </label>
+                <label class="rating-option" for="rating-7">
+                    <input type="checkbox" id="rating-7" name="filters-rating" data-value="7-10" />
+                    Больше 7
+                </label>
+                <label class="rating-option" for="rating-6">
+                    <input type="checkbox" id="rating-6" name="filters-rating" data-value="6-10" />
+                    Больше 6
+                </label>
+                <label class="rating-option" for="rating-5">
+                    <input type="checkbox" id="rating-5" name="filters-rating" data-value="0-5" />
+                    5 и меньше
+                </label>
             </ul>
-          </div>
+        </div>
         </div>
       </div>
 
