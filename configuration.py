@@ -6,7 +6,7 @@ from flask_marshmallow import Marshmallow
 from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv
 from langchain.chat_models.gigachat import GigaChat
-from utils.encryptor import Encryptor
+from utils.encryptors import Encryptor
 from flask_jwt_extended import JWTManager
 
 

@@ -183,7 +183,8 @@ def full_update_user(username, body):
             user.patronymic = new_patronymic
 
         db.session.commit()
-        return user_schema.dump(user), 200
+        access_token = create_access_token(identity=user.username, fresh=True)
+        return jsonify({'user': user_schema.dump(user), 'access_token': access_token}), 200
 
     except DBAPIError as e:
         db.session.rollback()
@@ -293,6 +294,24 @@ def login(body):
         response.set_cookie('access_token_cookie', access_token,
                             httponly=True, secure=True, samesite='Strict')
         return response
+
+    except DBAPIError as e:
+        return {"error": str(e)}, 500
+
+
+def password_check(body) -> bool:
+    try:
+        username = body.get('username', None)
+        password = body.get('password', None)
+        user = User.query.filter_by(username=username).one_or_none()
+
+        if not all([username, password]):
+            return abort(400, "Missing required fields")
+
+        if user is None:
+            return abort(404, f"User with username '{username}' not found")
+
+        return encryptor.check_equivalence(password, user.password)
 
     except DBAPIError as e:
         return {"error": str(e)}, 500

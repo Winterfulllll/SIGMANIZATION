@@ -15,7 +15,7 @@ class User(db.Model):
 class Preference(db.Model):
     __tablename__ = "preferences"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    username = db.Column(db.String(25), db.ForeignKey('users.username'),
+    username = db.Column(db.String(25), db.ForeignKey('users.username', onupdate='CASCADE'),
                          nullable=False)
     type = db.Column(db.String(50), nullable=False)
     type_value = db.Column(db.Text)
@@ -29,7 +29,7 @@ class Preference(db.Model):
 class Review(db.Model):
     __tablename__ = "reviews"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    username = db.Column(db.String(25), db.ForeignKey('users.username'),
+    username = db.Column(db.String(25), db.ForeignKey('users.username', onupdate='CASCADE'),
                          nullable=False)
     item_id = db.Column(db.Integer, nullable=False)
     item_category = db.Column(db.String(50), nullable=False)

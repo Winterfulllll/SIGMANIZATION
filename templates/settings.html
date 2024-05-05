@@ -41,10 +41,10 @@
           </div>
         </div>
 
-        <div class="container" id="password-container">
-          <label for="password">Пароль</label>
-          <div class="input-group" id="password-input">
-            <input type="password" id="password" name="password" />
+        <div class="container" id="new-password-container">
+          <label for="new-password">Новый пароль</label>
+          <div class="input-group" id="new-password-input">
+            <input type="new-password" id="new-password" name="new-password" />
           </div>
         </div>
 
@@ -77,6 +77,13 @@
           <label for="patronymic">Отчество</label>
           <div class="input-group">
             <input type="text" id="patronymic" name="patronymic" />
+          </div>
+        </div>
+
+        <div class="container" id="password-container">
+          <label for="password">Введите пароль для подтверждения изменений</label>
+          <div class="input-group" id="password-input">
+            <input type="password" id="password" name="password" />
           </div>
         </div>
 
@@ -842,11 +849,12 @@
           </div>
         </div>
 
-        <button id="change-profile">Изменить</button>
+        <button id="change-profile">Применить изменения</button>
+        <button id="delete-preferences">Сбросить предпочтения</button>
       </div>
     </div>
     <script>
-      const current_user_username = "{{ current_user_username }}";
+      let current_user_username = "{{ current_user_username }}";
       const service_api_key = "{{ service_api_key }}";
     </script>
     <script src="{{ url_for('static', filename='settings.js') }}"></script>

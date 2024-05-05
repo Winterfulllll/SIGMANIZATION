@@ -126,7 +126,7 @@ paths:
         - API-KEY: []
 
     put:
-      summary: Update a user by username.
+      summary: Update a user by username and get new JWT-token.
       tags:
         - Users
       operationId: utils.users.full_update_user
@@ -136,9 +136,15 @@ paths:
         description: User object with updated information.
         required: true
         content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/User"
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    $ref: '#/components/schemas/User'
+                  access_token:
+                    type: string
+                    description: new JWT-token.
       responses:
         "200":
           description: User updated successfully.
@@ -196,6 +202,46 @@ paths:
                     type: string
         "401":
           description: Invalid credentials.
+      security:
+        - API-KEY: []
+
+  /password_check:
+    post:
+      summary: Checks if the entered password matches the user's password.
+      tags:
+        - Auth
+      operationId: utils.users.password_check
+      requestBody:
+        description: Username and password for verification.
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  description: The username of the user.
+                password:
+                  type: string
+                  description: The user's password.
+      responses:
+        "200":
+          description: Password check result.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  password_match:
+                    type: boolean
+                    description: True if the password matches, False otherwise.
+        "400":
+          description: Missing required fields.
+        "404":
+          description: User not found.
+        "500":
+          description: Internal server error.
       security:
         - API-KEY: []
 

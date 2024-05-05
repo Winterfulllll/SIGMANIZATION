@@ -35,7 +35,6 @@ def profile():
         )
 
     except:
-        print(get_jwt_identity())
         return "Войдите в аккаунт!"
 
 
