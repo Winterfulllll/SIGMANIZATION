@@ -78,14 +78,14 @@
     </div>
 
     <div class="container" id="describe_sire">
-      <h2 class="default_text" id="top_body">Films watch online</h2>
+      <h2 class="default_text" id="top_body">Сервис по рекомендации фильмов</h2>
 
       <div class="container" id="search">
         <p class="default_text" id="texting">
-          Do you like to watch movies online and spend a lot of time scouring
-          websites in search of something interesting? It is worth lingering on
-          the ivi films that we have collected, you will have enough for a long
-          time. The collection is constantly being updated as
+          Вы любите смотреть фильмы онлайн и проводите много времени, просматривая веб-сайты
+          в поисках чего-нибудь интересного? Стоит остановиться на Reco.
+          Здесь вы можете найти выши любимые фильмы и получить
+          рекомендации от GigaСhat на основе ваших предпочтений.
         </p>
       </div>
     </div>
@@ -103,7 +103,7 @@
             >
               Жанры
             </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownGenresButton">
+            <ul class="dropdown-menu" aria-labelledby="dropdownGenresButton" id="genre_list">
               <label for="genre-filter-anime">
                 <input
                   type="checkbox"
@@ -191,7 +191,7 @@
                   name="filters-genre"
                   data-value="документальный"
                 />
-                Документальный
+                Документа..
               </label>
 
               <label for="genre-filter-drama">
@@ -251,7 +251,7 @@
                   name="filters-genre"
                   data-value="короткометражка"
                 />
-                Короткометражка
+                Короткоме..
               </label>
 
               <label for="genre-filter-kriminal">
@@ -436,7 +436,7 @@
             >
               Страны
             </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownCountriesButton">
+            <ul class="dropdown-menu" aria-labelledby="dropdownCountriesButton" id="contry_list">
               <label for="country-filter-Avstraliya">
                 <input
                   type="checkbox"
@@ -504,7 +504,7 @@
                   name="filters-country"
                   data-value="Великобритания"
                 />
-                Великобритания
+                Великобрит..
               </label>
 
               <label for="country-filter-Vengriya">
@@ -654,7 +654,7 @@
                   name="filters-country"
                   data-value="Новая Зеландия"
                 />
-                Новая Зеландия
+                Новая Зела..
               </label>
 
               <label for="country-filter-Norvegiya">
@@ -819,7 +819,7 @@
             >
               Годы
             </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownYearsButton">
+            <ul class="dropdown-menu" aria-labelledby="dropdownYearsButton" id="years_list">
               <label for="year-filter-2024">
                 <input
                   type="checkbox"
@@ -982,7 +982,7 @@
             >
               Рейтинг
             </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownRatingsButton">
+            <ul class="dropdown-menu" aria-labelledby="dropdownRatingsButton" id="rating_list">
               <label for="rating-filter-9">
                 <input
                   type="checkbox"
@@ -1037,9 +1037,9 @@
         </div>
       </div>
 
-      <div id="myModal" class="modal-background">
+      <div id="myModal" class="modal-background1">
         <!-- Содержимое модального окна -->
-        <div class="modal-content">
+        <div class="modal-content1">
           <span class="close-button">&times;</span>
           <div class="login-container">
             <h2>Пожалуйста, зарегистрируйтесь</h2>
@@ -1073,6 +1073,7 @@
                 <ul
                   class="dropdown-menu"
                   aria-labelledby="dropdownGenresButton"
+                  id="genre_list2"
                 >
                   <label for="genre-preference-anime">
                     <input
@@ -1161,7 +1162,7 @@
                       name="preference-genre"
                       data-value="документальный"
                     />
-                    Документальный
+                    Документ..
                   </label>
 
                   <label for="genre-preference-drama">
@@ -1221,7 +1222,7 @@
                       name="preference-genre"
                       data-value="короткометражка"
                     />
-                    Короткометражка
+                    Короткоме..
                   </label>
 
                   <label for="genre-preference-kriminal">
@@ -1409,6 +1410,7 @@
                 <ul
                   class="dropdown-menu"
                   aria-labelledby="dropdownCountriesButton"
+                  id="contry_list2"
                 >
                   <label for="country-preference-Avstraliya">
                     <input
@@ -1477,7 +1479,7 @@
                       name="preference-country"
                       data-value="Великобритания"
                     />
-                    Великобритания
+                    Великобри..
                   </label>
 
                   <label for="country-preference-Vengriya">
@@ -1627,7 +1629,7 @@
                       name="preference-country"
                       data-value="Новая Зеландия"
                     />
-                    Новая Зеландия
+                    Новая Зела..
                   </label>
 
                   <label for="country-preference-Norvegiya">
@@ -1792,7 +1794,7 @@
                 >
                   Годы
                 </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownYearsButton">
+                <ul class="dropdown-menu" aria-labelledby="dropdownYearsButton" id="year_list2">
                   <label for="newFilms-preference">
                     <input
                       type="checkbox"
@@ -1819,9 +1821,9 @@
         </div>
       </div>
 
-      <div id="myModal2" class="modal-background">
+      <div id="myModal2" class="modal-background2">
         <!-- Содержимое модального окна -->
-        <div class="modal-content">
+        <div class="modal-content2">
           <span class="close-button2">&times;</span>
           <div id="login-form">
             <h2>Пожалуйста, войдите в систему</h2>

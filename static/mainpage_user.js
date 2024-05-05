@@ -347,3 +347,29 @@ filterCheckboxes.forEach((checkbox) => {
 
 fetchMoviesByFilters();
 document.addEventListener("DOMContentLoaded", fetchRecommendedMovies);
+
+document.addEventListener('DOMContentLoaded', function() {
+  // Прикрепляем обработчик событий к каждой кнопке открытия списка
+  document.querySelectorAll('.dropdown-toggle').forEach(button => {
+      button.addEventListener('click', function(event) {
+          event.stopPropagation(); // Останавливаем всплытие события
+          // Находим связанный с кнопкой список и переключаем его отображение
+          var dropdownMenu = this.nextElementSibling;
+          dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+      });
+  });
+
+  // Скрытие всех выпадающих списков при клике вне их
+  document.addEventListener('click', function() {
+      document.querySelectorAll('.dropdown-menu').forEach(menu => {
+          menu.style.display = 'none';
+      });
+  });
+
+  // Предотвращение закрытия при клике внутри списка
+  document.querySelectorAll('.dropdown-menu').forEach(menu => {
+      menu.addEventListener('click', function(event) {
+          event.stopPropagation();
+      });
+  });
+});
