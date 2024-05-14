@@ -201,7 +201,11 @@ function collectPreferences() {
     }
   });
 
-  return { genres: selectedGenres, countries: selectedCountries, years: selectedYears };
+  return {
+    genres: selectedGenres,
+    countries: selectedCountries,
+    years: selectedYears,
+  };
 }
 
 async function updateUser(username, userData) {
@@ -245,7 +249,9 @@ async function updatePreferences(username, preferencesData) {
     preferencePromises.push(sendPreference(username, "GENRE", "MOVIE", genre))
   );
   preferencesData.countries.forEach((country) =>
-    preferencePromises.push(sendPreference(username, "COUNTRY", "MOVIE", country))
+    preferencePromises.push(
+      sendPreference(username, "COUNTRY", "MOVIE", country)
+    )
   );
   preferencesData.years.forEach((year) =>
     preferencePromises.push(sendPreference(username, "YEAR", "MOVIE", year))

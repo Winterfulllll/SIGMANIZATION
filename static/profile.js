@@ -1,4 +1,4 @@
-let viewedMovieIds = []
+let viewedMovieIds = [];
 const moviesContainer = document.getElementById("movies-container");
 
 async function fetchViewedMovieIds() {
