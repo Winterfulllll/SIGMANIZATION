@@ -247,6 +247,11 @@ input[type="password"] {
   margin: 0 auto;
 }
 
+.breadcrumbs{
+  margin-top: 15px;
+  color: white;
+}
+
 .breadcrumbs a,
 .breadcrumbs span {
   color: #8d8d8d;
@@ -379,12 +384,15 @@ input[type="password"] {
 }
 
 #search-movies-container {
+  color: white;
   margin-top: 30px;
-  display: flex;
+  margin-left: 30px;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
   flex-wrap: nowrap;
   gap: 5px; /* Расстояние между карточками фильмов */
   height: 100%; /* Устанавливает высоту на 100% контейнера */
-  width: 100%;
+  width: 98%;
   justify-content: space-between; /* Распределяет элементы равномерно */
 }
 
@@ -421,7 +429,7 @@ input[type="password"] {
 .movie-card {
   flex: 1; /* Элементы не будут растягиваться или сжиматься */
   max-width: 245px; /* Установите фиксированную ширину для карточек */
-  max-height: 90%;
+  max-height: 100%;
   overflow: hidden;
 }
 
@@ -795,4 +803,43 @@ input[type="checkbox"]:checked {
 #delete-preferences:hover {
   background: linear-gradient(45deg, #706679, #3a3346);
   transform: translateY(-2px);
+}
+
+.searching{
+  margin-left: 30px;
+}
+
+.search-container input {
+  padding: 10px 15px;
+  width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 30px;
+  margin-right: -5px;
+  outline: none;
+  font-size: 16px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.search-container input:focus {
+  border-color: #3498db;
+  box-shadow: 0 0 8px rgba(52, 152, 219, 0.5);
+}
+
+.search-container button {
+  margin-left: 5px;
+  padding: 10px 20px;
+  border: none;
+  border-radius:30px;
+  background-color: #3498db;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  outline: none;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.search-container button:hover {
+  background-color: #2980b9;
+  transform: scale(1.05);
 }
