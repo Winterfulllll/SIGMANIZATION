@@ -218,6 +218,26 @@ paths:
       security:
         - API-KEY: []
 
+  /logout:
+    post:
+      summary: Logout user and clear JWT cookie.
+      tags:
+        - Auth
+      operationId: utils.users.logout
+      responses:
+        "200":
+          description: Successful logout.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Logout success message.
+      security:
+        - API-KEY: []
+
   /password_check:
     post:
       summary: Checks if the entered password matches the user's password.

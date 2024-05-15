@@ -156,7 +156,8 @@ def full_update_user(username, body):
                 return abort(400, f"Неверный формат имени пользователя")
             user.username = new_username
 
-            access_token = create_access_token(identity=new_username, expires_delta=timedelta(days=30))
+            access_token = create_access_token(
+                identity=new_username, expires_delta=timedelta(days=30))
 
         if new_email and new_email != user.email:
             try:
@@ -296,7 +297,8 @@ def login(body):
             return abort(401, "Invalid password")
 
         if remember_me:
-            access_token = create_access_token(identity=username, expires_delta=timedelta(days=30))
+            access_token = create_access_token(
+                identity=username, expires_delta=timedelta(days=30))
         else:
             access_token = create_access_token(identity=username, fresh=True)
 
@@ -325,3 +327,16 @@ def password_check(body) -> bool:
 
     except DBAPIError as e:
         return {"error": str(e)}, 500
+
+
+def logout():
+    """
+    Logs out the user by clearing the JWT cookie.
+
+    Returns:
+        A message indicating successful logout and status code 200.
+    """
+    response = make_response(
+        jsonify({"message": "Logged out successfully"}), 200)
+    response.set_cookie('access_token_cookie', '', expires=0)
+    return response

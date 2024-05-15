@@ -252,7 +252,7 @@ input[type="password"] {
   margin: 0 auto;
 }
 
-.breadcrumbs{
+.breadcrumbs {
   margin-top: 15px;
   color: white;
 }
@@ -282,7 +282,7 @@ input[type="password"] {
   border-radius: 10px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
   margin: 20px auto;
-  font-family: 'Arial', sans-serif;
+  font-family: "Arial", sans-serif;
 }
 
 .form-container h2 {
@@ -458,7 +458,6 @@ input[type="password"] {
 .preferencesButtons {
   display: flex;
   width: 100%;
-
 }
 
 #dropdownButtonPreferenceGenre,
@@ -561,7 +560,7 @@ li {
   color: white !important; /* !important гарантирует применение стиля в случае конфликтов */
 }
 
-#genre_list{
+#genre_list {
   margin-left: 7px;
   background-color: #312b45; /* Светлый фон для контейнера */
   padding: 15px; /* Внутренний отступ для контейнера */
@@ -624,7 +623,7 @@ li {
   background-color: #787879; /* Светло-серый фон при наведении */
 }
 
-#genre_list2{
+#genre_list2 {
   margin-left: 7px;
   background-color: #312b45; /* Светлый фон для контейнера */
   padding: 15px; /* Внутренний отступ для контейнера */
@@ -726,15 +725,15 @@ input[type="checkbox"]:checked {
   border-color: #555;
 }
 
-#describe_sire{
+#describe_sire {
   margin-bottom: 30px;
 }
 
-#texting{
+#texting {
   margin-top: 15px;
 }
 
-#genre_list2{
+#genre_list2 {
   background-color: #312b45; /* Светлый фон для контейнера */
   padding: 15px; /* Внутренний отступ для контейнера */
   max-width: 550px; /* Максимальная ширина контейнера */
@@ -755,7 +754,7 @@ input[type="checkbox"]:checked {
   background-color: #787879; /* Светло-серый фон при наведении */
 }
 
-#contry_list2{
+#contry_list2 {
   background-color: #312b45; /* Светлый фон для контейнера */
   padding: 15px; /* Внутренний отступ для контейнера */
   max-width: 550px; /* Максимальная ширина контейнера */
@@ -776,7 +775,7 @@ input[type="checkbox"]:checked {
   background-color: #787879; /* Светло-серый фон при наведении */
 }
 
-#year_list2{
+#year_list2 {
   background-color: #312b45; /* Светлый фон для контейнера */
   padding: 15px; /* Внутренний отступ для контейнера */
   max-width: 550px; /* Максимальная ширина контейнера */
@@ -813,14 +812,13 @@ input[type="checkbox"]:checked {
   margin-right: 12px;
 }
 
-
 #change-profile:hover,
 #delete-preferences:hover {
   background: linear-gradient(45deg, #706679, #3a3346);
   transform: translateY(-2px);
 }
 
-.searching{
+.searching {
   margin-left: 30px;
 }
 
@@ -845,7 +843,7 @@ input[type="checkbox"]:checked {
   margin-left: 5px;
   padding: 10px 20px;
   border: none;
-  border-radius:30px;
+  border-radius: 30px;
   background-color: #3498db;
   color: white;
   cursor: pointer;
@@ -859,7 +857,7 @@ input[type="checkbox"]:checked {
   transform: scale(1.05);
 }
 
-#registration_button{
+#registration_button {
   width: 100%;
   padding: 10px;
   border: none;
@@ -878,7 +876,7 @@ input[type="checkbox"]:checked {
   transform: translateY(-2px);
 }
 
-#login_button{
+#login_button {
   width: 56%;
   padding: 10px;
   border: none;
@@ -897,6 +895,6 @@ input[type="checkbox"]:checked {
   background: linear-gradient(45deg, #706679, #3a3346);
   transform: translateY(-2px);
 }
-.registration_types{
+.registration_types {
   margin-top: 10px;
 }

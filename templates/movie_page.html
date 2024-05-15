@@ -42,7 +42,7 @@
                   <h3 id="reviewHeading"></h3>
                   <label for="viewed">
                     <input type="checkbox" id="viewed" />
-                    Просмотрен
+                    <span class="label-text">Просмотрен</span>
                   </label>
                   <div>
                     <textarea
@@ -52,7 +52,13 @@
                   </div>
                   <div>
                     <label for="rating">Оценка (1-10):</label>
-                    <input type="number" id="rating" min="1" max="10" value="5" />
+                    <input
+                      type="number"
+                      id="rating"
+                      min="1"
+                      max="10"
+                      value="5"
+                    />
                   </div>
                   <div>
                     <button id="submitReview">Отправить</button>

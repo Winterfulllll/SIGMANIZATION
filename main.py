@@ -1,4 +1,4 @@
-from flask import render_template
+from flask import render_template, redirect
 from configuration import connexion_app as app, app_config as config
 from flask_jwt_extended import get_jwt_identity, verify_jwt_in_request
 from utils.getters import get_movie_by_id
@@ -35,7 +35,7 @@ def profile():
         )
 
     except:
-        return "Войдите в аккаунт!"
+        return redirect("/")
 
 
 @app.route("/settings")
@@ -49,7 +49,7 @@ def settings():
         )
 
     except:
-        return "Войдите в аккаунт!"
+        return redirect("/")
 
 
 @app.route('/movie/<int:movie_id>')
@@ -78,6 +78,13 @@ def search():
         'search.html',
         movies_api_key=config["MOVIES_API"]
     )
+
+
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def catch_all(path):
+    return redirect('/')
+
 
 if __name__ == "__main__":
     app.run("main:app", host="0.0.0.0", port=8000)

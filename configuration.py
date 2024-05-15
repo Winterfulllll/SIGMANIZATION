@@ -13,7 +13,9 @@ from flask_jwt_extended import JWTManager
 load_dotenv()
 base_dir = pathlib.Path(__file__).parent.resolve()
 connexion_app = connexion.App(__name__, specification_dir=base_dir)
-connexion_app.add_api("swagger.yml")
+connexion_app.add_api("swagger.yml",
+                      options={"swagger_ui": True,
+                               "exclude_paths": ['/', '/<path:path>']})
 app = connexion_app.app
 
 
