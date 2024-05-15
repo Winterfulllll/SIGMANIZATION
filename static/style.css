@@ -51,8 +51,9 @@ body {
 }
 
 .dropdown2 {
-  height: 100px;
-  width: 10%;
+  height: 70px;
+  width: 125px;
+  margin-right: 10px;
   display: inline-block !important;
 }
 
@@ -176,8 +177,8 @@ form {
 
 input[type="name"],
 input[type="password"] {
+  width: 100%;
   padding: 10px;
-  margin-bottom: 10px;
   border: 1px solid #ddd;
   border-radius: 5px;
 }
@@ -234,11 +235,15 @@ input[type="password"] {
   background-color: #100e19;
   color: white;
   margin: 0;
-  padding: 50px;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+
+  height: 100vh;
 }
 
 .profile-edit-container {
-  max-width: 600px;
+  max-width: 450px;
   margin: 0 auto;
 }
 
@@ -262,16 +267,25 @@ input[type="password"] {
 }
 
 .form-container {
-  background-color: #333;
+  background-color: #312b45;
   padding: 20px;
-  border-radius: 8px;
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  margin: 20px auto;
+  font-family: 'Arial', sans-serif;
 }
+
+.form-container h2 {
+  color: #ffffff;
+}
+
 .form-container button {
   margin-top: 10px;
 }
 
 .input-group {
   margin-bottom: 15px;
+  position: relative;
 }
 
 .input-group label {
@@ -282,12 +296,12 @@ input[type="password"] {
 .input-group input[type="text"],
 .input-group input[type="email"],
 .input-group input[type="tel"] {
-  width: 50%;
+  width: 100%;
   padding: 10px;
-  margin-right: 10px;
-  border: none;
-  border-radius: 4px;
-  background-color: #aaa;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .input-group button {
@@ -305,9 +319,9 @@ input[type="password"] {
 }
 
 .preferences {
-  margin-top: 30px;
-  width: 680px;
-  margin-left: 20px;
+
+  width: 410px;
+
 }
 
 .dropdown-group {
@@ -428,6 +442,7 @@ input[type="password"] {
 .preferencesButtons {
   display: flex;
   width: 100%;
+
 }
 
 #dropdownButtonPreferenceGenre,
@@ -436,9 +451,11 @@ input[type="password"] {
   width: 150px;
 }
 
-.preferencesButtons {
-  display: flex;
-  width: 100%;
+#dropdownButtonPreferenceGenre2,
+#dropdownButtonPreferenceCountry2,
+#dropdownButtonPreferenceYear2 {
+  width: 120px;
+  background-color: #1b1924;
 }
 
 .search {
@@ -584,6 +601,69 @@ li {
   background-color: #787879; /* Светло-серый фон при наведении */
 }
 
+#genre_list2{
+  margin-left: 7px;
+  background-color: #312b45; /* Светлый фон для контейнера */
+  padding: 15px; /* Внутренний отступ для контейнера */
+  max-width: 350px; /* Максимальная ширина контейнера */
+  column-count: 2; /* Делит контент на 2 колонки */
+  color: white;
+}
+
+#genre_list2 label {
+  display: block; /* Каждый лейбл на новой строке */
+  margin-bottom: 5px;
+  padding: 2px;
+  cursor: pointer; /* Курсор в виде указателя */
+  border-radius: 5px;
+}
+
+#genre_list2 label:hover {
+  background-color: #787879; /* Светло-серый фон при наведении */
+}
+
+#contry_list2 {
+  margin-left: 7px;
+  background-color: #312b45; /* Светлый фон для контейнера */
+  padding: 15px; /* Внутренний отступ для контейнера */
+  max-width: 350px; /* Максимальная ширина контейнера */
+  column-count: 2; /* Делит контент на 2 колонки */
+  color: white;
+}
+
+#contry_list2 label {
+  display: block; /* Каждый лейбл на новой строке */
+  margin-bottom: 5px;
+  padding: 2px;
+  cursor: pointer; /* Курсор в виде указателя */
+  border-radius: 5px;
+}
+
+#contry_list2 label:hover {
+  background-color: #787879; /* Светло-серый фон при наведении */
+}
+
+#years_list2 {
+  margin-left: 7px;
+  background-color: #312b45; /* Светлый фон для контейнера */
+  padding: 15px; /* Внутренний отступ для контейнера */
+  max-width: 350px; /* Максимальная ширина контейнера */
+  column-count: 2; /* Делит контент на 2 колонки */
+  color: white;
+}
+
+#years_list2 label {
+  display: block; /* Каждый лейбл на новой строке */
+  margin-bottom: 5px;
+  padding: 2px;
+  cursor: pointer; /* Курсор в виде указателя */
+  border-radius: 5px;
+}
+
+#years_list2 label:hover {
+  background-color: #787879; /* Светло-серый фон при наведении */
+}
+
 #rating_list {
   margin-left: 7px;
   background-color: #312b45; /* Светлый фон для контейнера */
@@ -692,4 +772,27 @@ input[type="checkbox"]:checked {
 
 #year_list2 label:hover {
   background-color: #787879; /* Светло-серый фон при наведении */
+}
+
+#change-profile,
+#delete-preferences {
+  width: 43%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background: linear-gradient(45deg, #383042, #574a68);
+  color: #fff;
+  font-weight: bold;
+  transition: background 0.3s ease, transform 0.3s ease;
+  margin-bottom: 10px;
+  margin-left: 12px;
+  margin-right: 12px;
+}
+
+
+#change-profile:hover,
+#delete-preferences:hover {
+  background: linear-gradient(45deg, #706679, #3a3346);
+  transform: translateY(-2px);
 }
