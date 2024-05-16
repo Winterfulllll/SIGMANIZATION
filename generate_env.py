@@ -12,8 +12,8 @@ with open('.env', 'w') as env_file:
     env_file.write('MOVIES_API=""\n')
     env_file.write('GIGACHAT_AUTH=""\n')
 
-print("Файл .env создан со следующими переменными:")
-print(f"SECRET_KEY: {secret_key}")
-print(f"FERNET_KEY: {fernet_key}")
-print(f"MOVIES_API: {kinopoisk_api_key}")
-print(f"GIGACHAT_AUTH: {gigachat_api_key}")
+print('File ".env" is created with the following variables:\n')
+print(f'SECRET_KEY: "{secret_key}"')
+print(f'FERNET_KEY: "{fernet_key}"')
+print(f'MOVIES_API: "{kinopoisk_api_key}"')
+print(f'GIGACHAT_AUTH: "{gigachat_api_key}"')
