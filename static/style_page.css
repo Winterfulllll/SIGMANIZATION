@@ -5,6 +5,12 @@ body {
   background-color: #100e19;
 }
 
+.header_logo {
+  height: 34px;
+  width: 87px;
+  margin-top: 11px;
+}
+
 .content_card {
   display: grid;
   grid-auto-columns: 62.5% 37.5%;

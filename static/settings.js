@@ -13,7 +13,7 @@ newPasswordInput.addEventListener("input", () => {
   }
 });
 
-// =============================================================================================================================
+// =====================================================================
 
 fetchUserInfoAndPreferences();
 
@@ -71,7 +71,7 @@ function setPreferenceCheckboxes(checkboxes, preferences) {
   });
 }
 
-// =============================================================================================================================
+// =====================================================================
 
 const preferenceCheckboxes = document.querySelectorAll(
   'input[name="preference-genre"], input[name="preference-country"], input[name="preference-year"]'
@@ -90,7 +90,13 @@ resetButton.addEventListener("click", resetPreferenceCheckboxes);
 const changeButton = document.getElementById("change-profile");
 changeButton.addEventListener("click", handleProfileChange);
 
-// =============================================================================================================================
+const logoutButton = document.getElementById("user-logout");
+logoutButton.addEventListener("click", UserLogout);
+
+const deleteButton = document.getElementById("delete-account");
+deleteButton.addEventListener("click", DeleteProfile);
+
+// =====================================================================
 
 async function handleProfileChange() {
   const username = document.getElementById("username").value;
@@ -158,6 +164,12 @@ function sendPreference(username, type, category, typeValue) {
 }
 
 async function checkPassword(username, password) {
+  if (!password) {
+    throw new Error(
+      "Введите ваш текущий пароль для подтверждения удаления профиля!"
+    );
+  }
+
   const passwordCheckResponse = await fetch("/api/password_check", {
     method: "POST",
     headers: {
@@ -168,7 +180,6 @@ async function checkPassword(username, password) {
   });
 
   if (!passwordCheckResponse.ok) {
-    // Обработка ошибок ответа сервера (например, 400, 401)
     const errorData = await passwordCheckResponse.json();
     throw new Error(`Ошибка проверки пароля: ${errorData.message}`);
   }
@@ -258,4 +269,95 @@ async function updatePreferences(username, preferencesData) {
   );
 
   await Promise.all(preferencePromises);
+}
+
+// =====================================================================
+
+async function UserLogout() {
+  try {
+    const response = await fetch("/api/logout", {
+      method: "POST",
+      headers: {
+        "API-KEY": service_api_key,
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (response.ok) {
+      location.reload();
+      alert("Вы успешно вышли из системы!");
+    } else {
+      const errorData = await response.json();
+      const errorMessage = errorData.message || "Ошибка при выходе из системы";
+      alert(errorMessage);
+    }
+  } catch (error) {
+    alert("Произошла ошибка: " + error.message);
+  }
+}
+
+async function DeleteProfile() {
+  const currentPassword = document.getElementById("password").value;
+
+  try {
+    await checkPassword(current_user_username, currentPassword);
+
+    // Удаление всех предпочтений пользователя
+    await fetch(`/api/preferences/${current_user_username}`, {
+      method: "DELETE",
+      headers: {
+        "API-KEY": service_api_key,
+        "Content-Type": "application/json",
+      },
+    });
+
+    // Удаление всех отзывов пользователя
+    await fetch(`/api/reviews/${current_user_username}`, {
+      method: "DELETE",
+      headers: {
+        "API-KEY": service_api_key,
+        "Content-Type": "application/json",
+      },
+    });
+
+    // Удаление пользователя
+    const response = await fetch(`/api/users/${current_user_username}`, {
+      method: "DELETE",
+      headers: {
+        "API-KEY": service_api_key,
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (response.ok) {
+      alert("Профиль успешно удален!");
+      try {
+        const response = await fetch("/api/logout", {
+          method: "POST",
+          headers: {
+            "API-KEY": service_api_key,
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (response.ok) {
+          location.reload();
+        } else {
+          const errorData = await response.json();
+          const errorMessage =
+            errorData.message || "Ошибка при выходе из системы";
+          alert(errorMessage);
+        }
+      } catch (error) {
+        alert("Произошла ошибка: " + error.message);
+      }
+    } else {
+      const errorData = await response.json();
+      const errorMessage = errorData.message || "Ошибка при удалении профиля";
+      alert(errorMessage);
+    }
+  } catch (error) {
+    console.error("Ошибка при удалении профиля:", error);
+    alert(error.message);
+  }
 }

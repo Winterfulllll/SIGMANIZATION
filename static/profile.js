@@ -19,14 +19,14 @@ async function fetchViewedMovieIds() {
     if (viewedMovieIds.length > 0) {
       fetchViewedFilmsWithPagination();
     } else {
-      moviesContainer.innerHTML = "<p>Здесь пока пусто! =(</p>";
+      moviesContainer.innerHTML = `<p class="empty_list_text"><b>Вы не отметили ни один фильм просмотренным!</b> <i>(Сделать это можно на странице фильма)</i></p>`;
     }
   } catch (error) {
     console.error("Ошибка при получении просмотренных фильмов:", error);
   }
 }
 
-// =============================================================================================================================
+// =====================================================================
 
 function createMovieElement(movie) {
   if (!movie || !movie.poster.previewUrl || !movie.name) {
@@ -61,7 +61,7 @@ function createMovieElement(movie) {
   return movieElement;
 }
 
-// =============================================================================================================================
+// =====================================================================
 
 let onPage = 5;
 let currentPage = 1;
@@ -127,6 +127,6 @@ function handleNextClick() {
   fetchViewedFilmsWithPagination();
 }
 
-// =============================================================================================================================
+// =====================================================================
 
 document.addEventListener("DOMContentLoaded", fetchViewedMovieIds);

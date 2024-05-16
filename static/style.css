@@ -68,6 +68,20 @@ body {
   color: white;
 }
 
+.empty_list_text {
+  color: white;
+  margin-left: 10px;
+}
+
+#description {
+  margin-right: 40px;
+}
+
+#h4 {
+  color: white;
+  margin-right: 5%;
+}
+
 #button_profile {
   color: white;
   display: inline-block; /* Позволяет контролировать размеры и отступы элемента */
@@ -221,10 +235,10 @@ input[type="password"] {
 }
 
 .edit-profile-button a {
-  background-color: #555; /* Серый фон для кнопки */
+  background-color: #555;
   color: white;
   border: none;
-  padding: 10px 20px; /* Примерное значение, регулируйте по вашему усмотрению */
+  padding: 10px 20px;
   cursor: pointer; /* Курсор в виде руки при наведении на кнопку */
   transition: background-color 0.3s; /* Плавное изменение фона при наведении */
   margin-top: 16px;
@@ -243,7 +257,7 @@ input[type="password"] {
   padding: 0;
   display: flex;
   justify-content: center;
-
+  text-align: center;
   height: 100vh;
 }
 
@@ -796,7 +810,6 @@ input[type="checkbox"]:checked {
   background-color: #787879; /* Светло-серый фон при наведении */
 }
 
-#change-profile,
 #delete-preferences {
   width: 43%;
   padding: 10px;
@@ -812,9 +825,65 @@ input[type="checkbox"]:checked {
   margin-right: 12px;
 }
 
-#change-profile:hover,
-#delete-preferences:hover {
+#change-profile {
+  width: 43%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background: linear-gradient(45deg, #2c4b34, #4fe15e);
+  color: #fff;
+  font-weight: bold;
+  transition: background 0.3s ease, transform 0.3s ease;
+  margin-bottom: 10px;
+  margin-left: 12px;
+  margin-right: 12px;
+}
+
+#user-logout {
+  width: 93%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background: linear-gradient(45deg, #383042, #574a68);
+  color: #fff;
+  font-weight: bold;
+  transition: background 0.3s ease, transform 0.3s ease;
+  margin-bottom: 10px;
+  margin-left: 12px;
+  margin-right: 12px;
+}
+
+#delete-account {
+  width: 93%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background: linear-gradient(45deg, #5d2222, #e24e4e);
+  color: #fff;
+  font-weight: bold;
+  transition: background 0.3s ease, transform 0.3s ease;
+  margin-bottom: 10px;
+  margin-left: 12px;
+  margin-right: 12px;
+
+}
+
+#change-profile:hover {
+  background: linear-gradient(45deg, #3a6b44, #2fe247);
+  transform: translateY(-2px);
+}
+
+#delete-preferences:hover,
+#user-logout:hover {
   background: linear-gradient(45deg, #706679, #3a3346);
+  transform: translateY(-2px);
+}
+
+#delete-account:hover {
+  background: linear-gradient(45deg, #a22b2b, #f24e4e);
   transform: translateY(-2px);
 }
 
