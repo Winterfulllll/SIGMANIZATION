@@ -1,5 +1,5 @@
 let viewedMovieIds = [];
-const moviesContainer = document.getElementById("movies-container");
+const moviesContainer = document.getElementById("movies-container-4");
 
 async function fetchViewedMovieIds() {
   try {
@@ -107,8 +107,7 @@ function updatePaginationButtons() {
   const nextButton = document.getElementById("next");
 
   prevButton.style.display = currentPage === 1 ? "none" : "block";
-  nextButton.style.display =
-    currentPage * onPage >= viewedMovieIds.length ? "none" : "block";
+  nextButton.style.display = currentPage * onPage >= viewedMovieIds.length ? "none" : "block";
 
   prevButton.removeEventListener("click", handlePrevClick);
   nextButton.removeEventListener("click", handleNextClick);
