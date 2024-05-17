@@ -405,13 +405,14 @@ input[type="password"] {
   justify-content: space-between; /* Распределяет элементы равномерно */
 }
 
-#movies-container-4{
+#movies-container-4 {
   margin-top: 30px;
   display: flex;
   flex-wrap: nowrap;
   gap: 5px; /* Расстояние между карточками фильмов */
   height: 100%; /* Устанавливает высоту на 100% контейнера */
-  width: 100%;  
+  width: 100%;
+  margin-left: 1px;
 }
 
 #search-movies-container {
@@ -877,7 +878,6 @@ input[type="checkbox"]:checked {
   margin-bottom: 10px;
   margin-left: 12px;
   margin-right: 12px;
-
 }
 
 #change-profile:hover {
