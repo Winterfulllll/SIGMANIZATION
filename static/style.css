@@ -405,6 +405,15 @@ input[type="password"] {
   justify-content: space-between; /* Распределяет элементы равномерно */
 }
 
+#movies-container-4{
+  margin-top: 30px;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 5px; /* Расстояние между карточками фильмов */
+  height: 100%; /* Устанавливает высоту на 100% контейнера */
+  width: 100%;  
+}
+
 #search-movies-container {
   color: white;
   margin-top: 30px;
