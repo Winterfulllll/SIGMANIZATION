@@ -433,14 +433,25 @@ filterCheckboxes.forEach((checkbox) => {
 fetchMoviesByFilters();
 
 document.addEventListener("DOMContentLoaded", function () {
+  let openDropdownMenu = null; // Переменная для хранения открытого меню
+
   // Прикрепляем обработчик событий к каждой кнопке открытия списка
   document.querySelectorAll(".dropdown-toggle").forEach((button) => {
     button.addEventListener("click", function (event) {
       event.stopPropagation(); // Останавливаем всплытие события
-      // Находим связанный с кнопкой список и переключаем его отображение
+
+      // Если уже есть открытое меню и это не текущее, закрываем его
+      if (openDropdownMenu && openDropdownMenu !== this.nextElementSibling) {
+        openDropdownMenu.style.display = "none";
+      }
+
+      // Переключаем отображение текущего меню
       var dropdownMenu = this.nextElementSibling;
       dropdownMenu.style.display =
         dropdownMenu.style.display === "block" ? "none" : "block";
+
+      // Обновляем ссылку на текущее открытое меню
+      openDropdownMenu = dropdownMenu.style.display === "block" ? dropdownMenu : null;
     });
   });
 
@@ -449,6 +460,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.querySelectorAll(".dropdown-menu").forEach((menu) => {
       menu.style.display = "none";
     });
+    openDropdownMenu = null; // Сбрасываем ссылку на открытое меню
   });
 
   // Предотвращение закрытия при клике внутри списка
