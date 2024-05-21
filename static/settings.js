@@ -166,7 +166,7 @@ function sendPreference(username, type, category, typeValue) {
 async function checkPassword(username, password) {
   if (!password) {
     throw new Error(
-      "Введите ваш текущий пароль для подтверждения удаления профиля!"
+      "Введите ваш текущий пароль для подтверждения изменений!"
     );
   }
 
