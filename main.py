@@ -1,7 +1,7 @@
 from flask import render_template, redirect
 from configuration import connexion_app as app, app_config as config
 from flask_jwt_extended import get_jwt_identity, verify_jwt_in_request
-from utils.getters import get_movie_by_id
+from utils.getters import get_movie_info_by_id
 
 
 @app.route("/")
@@ -58,7 +58,7 @@ def movie_page(movie_id):
         verify_jwt_in_request()
         return render_template(
             'movie_page.html',
-            movie=get_movie_by_id(movie_id),
+            movie=get_movie_info_by_id(movie_id),
             current_user_username=get_jwt_identity(),
             service_api_key=config["SECRET_KEY"]
         )
@@ -66,7 +66,7 @@ def movie_page(movie_id):
     except:
         return render_template(
             'movie_page.html',
-            movie=get_movie_by_id(movie_id),
+            movie=get_movie_info_by_id(movie_id),
             current_user_username=None,
             service_api_key=config["SECRET_KEY"]
         )

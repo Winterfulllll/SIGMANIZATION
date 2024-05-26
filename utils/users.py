@@ -3,10 +3,11 @@ from sqlalchemy.exc import DBAPIError
 from flask_jwt_extended import create_access_token
 from datetime import timedelta
 
-from configuration import db, encryptor
+from configuration import db
 from entities import User
 from schemas import users_schema, user_schema
 from utils.validators import validate_username
+from utils.hashing import hash_string, check_equivalence
 from email_validator import validate_email
 
 
@@ -57,7 +58,7 @@ def register_user(body):
             else:
                 return abort(409, f"User with email '{email}' already exists")
 
-        hashed_password = encryptor.encrypt_data(password)
+        hashed_password = hash_string(password)
 
         new_user = User(username=username, email=email,
                         password=hashed_password, surname=surname,
@@ -169,7 +170,7 @@ def full_update_user(username, body):
                 return abort(409, f"Email '{new_email}' уже используется")
             user.email = new_email
 
-        hashed_password = encryptor.encrypt_data(new_password)
+        hashed_password = hash_string(new_password)
         user.password = hashed_password
 
         if new_surname:
@@ -244,7 +245,7 @@ def partial_update_user(username, body):
             user.email = new_email
 
         if new_password:
-            hashed_password = encryptor.encrypt_data(new_password)
+            hashed_password = hash_string(new_password)
             user.password = hashed_password
 
         if new_surname:
@@ -293,7 +294,7 @@ def login(body):
         if user is None:
             return abort(404, f"User with username '{username}' not found")
 
-        if not encryptor.check_equivalence(password, user.password):
+        if not check_equivalence(password, user.password):
             return abort(401, "Invalid password")
 
         if remember_me:
@@ -323,7 +324,7 @@ def password_check(body) -> bool:
         if user is None:
             return abort(404, f"User with username '{username}' not found")
 
-        return encryptor.check_equivalence(password, user.password)
+        return check_equivalence(password, user.password)
 
     except DBAPIError as e:
         return {"error": str(e)}, 500

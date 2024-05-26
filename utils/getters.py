@@ -3,7 +3,7 @@ from configuration import app_config as config
 import requests
 
 
-def get_movie_by_id(movie_id):
+def get_movie_info_by_id(movie_id):
     movie_response = requests.get(
         url=f'https://api.kinopoisk.dev/v1.4/movie?id={
             movie_id}&selectFields=id&selectFields=name&selectFields=poster',

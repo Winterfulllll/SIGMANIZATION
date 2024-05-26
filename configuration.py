@@ -6,7 +6,6 @@ from flask_marshmallow import Marshmallow
 from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv
 from langchain.chat_models.gigachat import GigaChat
-from utils.encryptors import Encryptor
 from flask_jwt_extended import JWTManager
 
 
@@ -40,6 +39,5 @@ def api_key_auth(token, required_scopes):
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
 jwt = JWTManager(app)
-encryptor = Encryptor(os.getenv("FERNET_KEY"))
 giga = GigaChat(credentials=os.getenv("GIGACHAT_AUTH"),
                 verify_ssl_certs=False, model="GigaChat-Pro")
